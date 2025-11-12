@@ -59,9 +59,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 4. 모달 (팝업) 로직 [신규] ---
     
     // 4-1. 필요한 HTML 요소 가져오기
-    const modalOverlay = document.getElementById('modal-overlay');
-    const modal = document.getElementById('modal');
-    const modalCloseBtn = document.getElementById('modal-close-btn');
+const modalOverlay = document.getElementById('srv-error-overlay');
+    const modal = document.getElementById('srv-error');
+    const modalCloseBtn = document.getElementById('srv-error-close-btn');
     
     // (HTML에서 추가한) '.modal-trigger' 클래스를 가진 모든 링크
     const modalTriggers = document.querySelectorAll('.modal-trigger');
@@ -93,5 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 뒷 배경(오버레이) 클릭 시 모달 닫기
     modalOverlay.addEventListener('click', closeModal);
+
 
 }); // <-- document.addEventListener의 닫는 괄호 (이 뒤의 불필요한 } 제거됨)
