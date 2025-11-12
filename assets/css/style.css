@@ -304,6 +304,30 @@ body.light-mode #theme-toggle .fa-sun { display: none; }
     color: var(--primary-color);
 }
 
+.card-wide-half {
+    /* 1. 너비: 그리드 2칸 차지 */
+    /* (그리드가 1줄인 모바일에선 자동으로 1칸만 차지합니다.) */
+    grid-column: span 2;
+    
+    /* 2. 높이: 기존 min-height 170px의 절반(85px) */
+    min-height: 85px; 
+
+    /* 3. 내부 레이아웃: 가로 정렬 (기존: 세로) */
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* [신규] 와이드 카드 내부의 링크 아이콘 스타일 재정의 */
+/* (기존의 absolute 위치를 해제하고 flex 아이템으로 만듭니다.) */
+.card-wide-half .card-link {
+    position: relative; /* absolute 해제 */
+    z-index: 2;
+    bottom: auto;
+    left: auto;
+    font-size: 1.5rem; /* 아이콘 크기 키움 */
+}
+
 
 /* --- 11. '정보' 탭 --- */
 /* '정보' 탭의 2단 그리드 및 아이템 스타일입니다. */
