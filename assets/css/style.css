@@ -1,6 +1,8 @@
 /* --- 1. 폰트 불러오기 --- */
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap');
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display.swap");
+/* [수정] 마크다운 코드용 D2Coding 폰트 추가 */
+@import url("https://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css");
 
 /* --- 2. CSS 변수 설정 (기본: 다크 모드) --- */
 /* :root 변수는 사이트 전체의 디자인 시스템(색상, 폰트)을 관리합니다. */
@@ -59,11 +61,13 @@ body {
     padding: 1rem;
 }
 
+/* [수정] 색상 전환 애니메이션 부드럽게 */
 .card,
 .btn,
 .tabs,
 .tab,
-footer {
+footer,
+.info-grid {
     transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
 }
 
@@ -146,8 +150,8 @@ body.light-mode #theme-toggle .fa-sun { display: none; }
     transform: scale(1.1);
 }
 
-/* --- 7. 메인 버튼 (현재 HTML에서 사용 안 함) --- */
-/* 이 스타일은 팝업창의 '확인' 버튼에서도 사용됩니다. */
+/* --- 7. 메인 버튼 (팝업 버튼 공용 스타일) --- */
+/* (HTML에서 사용되진 않지만, .btn 스타일이 팝업에서 사용됩니다) */
 .main-buttons {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -155,7 +159,7 @@ body.light-mode #theme-toggle .fa-sun { display: none; }
     margin-bottom: 2.5rem;
 }
 
-/* [수정] 팝업 버튼을 위한 .btn 스타일 추가 */
+/* 팝업 '확인' 버튼을 위한 .btn 스타일 */
 .btn {
     display: inline-block;
     padding: 0.8rem 1.5rem;
@@ -184,7 +188,7 @@ body.light-mode #theme-toggle .fa-sun { display: none; }
 
 
 /* --- 8. 탭 네비게이션 --- */
-/* '서비스'/'정보'를 전환하는 탭 버튼 스타일입니다. */
+/* '정보'/'서비스'/'향후 계획'을 전환하는 탭 버튼 스타일입니다. */
 .tabs {
     display: flex;
     justify-content: center;
@@ -192,7 +196,7 @@ body.light-mode #theme-toggle .fa-sun { display: none; }
     background-color: var(--btn-secondary-bg);
     border-radius: 8px;
     padding: 0.5rem;
-    max-width: 300px;
+    max-width: 400px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -234,8 +238,7 @@ body.light-mode #theme-toggle .fa-sun { display: none; }
 }
 
 
-/* --- 10. 프로젝트 카드 --- */
-/* '서비스' 탭의 각 카드 아이템 스타일입니다. */
+/* --- 10. 프로젝트 카드 ('서비스' 탭) --- */
 .card-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -261,7 +264,9 @@ body.light-mode #theme-toggle .fa-sun { display: none; }
     justify-content: space-between;
     transition: transform 0.2s, box-shadow 0.2s;
     overflow: hidden; /* 오버레이가 테두리를 넘지 않도록 */
-    /* height: 100%; */
+    
+    /* [수정] 데스크탑에서 같은 행의 카드 높이를 맞춥니다. */
+    height: 100%;
 }
 
 /* * [핵심] 카드 오버레이 (가상 요소)
@@ -313,25 +318,18 @@ body.light-mode #theme-toggle .fa-sun { display: none; }
     color: var(--primary-color);
 }
 
+/* 'Admin Service' 같은 와이드 카드 스타일 */
 .card-wide-half {
-    /* 1. 너비: 그리드 2칸 차지 */
-    /* (그리드가 1줄인 모바일에선 자동으로 1칸만 차지합니다.) */
-    grid-column: span 2;
-    
-    /* 2. 높이: 기존 min-height 170px의 절반(85px) */
-    min-height: 85px; 
-
-    /* 3. 내부 레이아웃: 가로 정렬 (기존: 세로) */
-    flex-direction: row;
+    grid-column: span 2; /* 그리드 2칸 차지 */
+    min-height: 85px; /* 절반 높이 */
+    flex-direction: row; /* 가로 정렬 */
     justify-content: space-between;
     align-items: center;
 }
 
-/* [신규] 와이드 카드 내부의 링크 아이콘 스타일 재정의 */
-/* (기존의 absolute 위치를 해제하고 flex 아이템으로 만듭니다.) */
+/* 와이드 카드 내부의 링크 아이콘 스타일 재정의 */
 .card-wide-half .card-link {
     position: relative; /* absolute 해제 */
-    z-index: 2;
     bottom: auto;
     left: auto;
     font-size: 1.5rem; /* 아이콘 크기 키움 */
@@ -402,14 +400,12 @@ footer {
 
 /* --- 13. 페이지 로드 애니메이션 --- */
 /* 페이지가 처음 로드될 때 요소들이 순차적으로 나타나는 효과입니다. */
-/* 1. 애니메이션 초기 상태 (숨김) */
 .profile, .stats, .main-buttons, .tabs, .tab-content-wrapper, footer {
     opacity: 0;
     transform: translateY(-20px);
     transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 
-/* 2. 애니메이션 발동 상태 (순차적 표시) */
 /* script.js가 body.loaded 클래스를 추가하면 이 스타일이 적용됩니다. */
 body.loaded .profile {
     opacity: 1;
@@ -514,23 +510,79 @@ body.loaded footer {
     width: 100%; /* 버튼을 꽉 채움 */
 }
 
+/* --- 15. '향후 계획' 탭 마크다운 스타일 --- */
+/* Marked.js가 변환한 HTML에 스타일을 적용합니다. */
+#plans-content {
+    grid-column: span 2; /* 2컬럼을 1컬럼으로 병합 */
+}
 
-/* --- 15. 모바일 반응형 --- */
+#plans-content h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--card-border-color);
+    padding-bottom: 0.5rem;
+}
+#plans-content h3:first-child {
+    margin-top: 0;
+}
+
+#plans-content p {
+    color: var(--text-color-secondary);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+#plans-content ul {
+    list-style: none; /* 기본 점 제거 */
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+#plans-content li {
+    position: relative;
+    color: var(--text-color-secondary);
+    padding-bottom: 0.5rem;
+}
+/* Font Awesome 아이콘으로 리스트 아이콘(•) 대체 */
+#plans-content li::before {
+    content: '\f058'; /* Font Awesome 'check-circle' 아이콘 */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: var(--primary-color);
+    position: absolute;
+    left: -1.5rem;
+    top: 0;
+}
+
+#plans-content code {
+    background-color: var(--btn-secondary-bg);
+    border-radius: 4px;
+    padding: 0.2em 0.4em;
+    font-family: 'D2Coding', 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+}
+
+
+/* --- 16. 모바일 반응형 --- */
 /* 화면 크기에 따라 레이아웃을 조정합니다. */
-@media (max-width: 700px) {
+/* [수정] 700px -> 820px로 기준점 확대 (더 넓은 모바일 화면 대응) */
+@media (max-width: 820px) {
     /* '정보' 탭 2단 -> 1단 */
     .info-grid {
         grid-template-columns: 1fr;
         gap: 2.5rem;
     }
-    /* 카드 전체를 세로 레이아웃으로 */
+    
+    /* '서비스' 탭: 카드 전체를 세로(column)로 쌓음 */
     .card-container {
         display: flex;
         flex-direction: column;
         gap: 1.2rem;
     }
 
-    /* 각 카드 내부 레이아웃을 가로 정렬 (텍스트 왼쪽, 아이콘 오른쪽) */
+    /* '서비스' 탭: 각 카드 내부 레이아웃을 가로(row)로 변경 */
     .card {
         display: flex;
         flex-direction: row;
@@ -538,14 +590,15 @@ body.loaded footer {
         align-items: center;
         padding: 1.2rem 1.5rem;
         position: relative;
+        height: auto; /* [수정] height: 100% 덮어쓰기 */
     }
 
-    /* 카드 내용 영역 */
+    /* 카드 내용 영역 (왼쪽) */
     .card-content {
-        flex: 1; /* 텍스트가 왼쪽 영역을 차지 */
+        flex: 1; 
     }
 
-    /* 링크 아이콘을 오른쪽 정렬 */
+    /* 카드 링크 아이콘 (오른쪽) */
     .card-link {
         position: relative; /* absolute 해제 */
         bottom: auto;
@@ -556,13 +609,16 @@ body.loaded footer {
         color: var(--text-color-secondary);
         flex-shrink: 0; /* 아이콘 크기 고정 */
     }
-
-    /* 터치 시 반응 */
     .card-link:hover {
         color: var(--primary-color);
         transform: scale(1.1);
     }
-}
+
+    /* 와이드 카드도 일반 카드와 동일하게 보이도록 높이 강제 */
+    .card-wide-half {
+        min-height: auto; 
+    }
+} /* <-- @media (max-width: 820px) 닫는 괄호 */
 
 @media (max-width: 600px) {
     /* 모바일용으로 전반적인 패딩, 폰트, 이미지 크기 조정 */
@@ -600,4 +656,4 @@ body.loaded footer {
     .card-container {
         gap: 1rem;
     }
-}
+} /* <-- @media (max-width: 600px) 닫는 괄호 */

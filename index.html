@@ -12,6 +12,8 @@
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@latest/themes/purple/pace-theme-flash.css">
     <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
 
@@ -22,17 +24,17 @@
         
         <header class="profile">
             <img src="assets/img/profile.png" alt="프로필 사진" class="profile-img">
-            <h1 class="profile-name">HANGGOK</h1>
-            <p class="profile-handle">행국</p>
+            <h1 class="profile-name">행국</h1>
+            <p class="profile-handle">HANGGOK</p>
 
             <div class="profile-links">
-                <a href="https://www.instagram.com/hs1xh_k/" title="Instagram DM">
+                <a href="https://www.instagram.com/hs1xh_k/" target="_blank" title="Instagram DM">
                     <i class="fa-brands fa-instagram"></i>
                 </a>
                 <a href="https://github.com/alexjeon5" target="_blank" title="깃허브 방문">
                     <i class="fa-brands fa-github"></i>
                 </a>
-                <a href="https://www.youtube.com/@HANGGOK" title="유튜브 채널">
+                <a href="https://www.youtube.com/@HANGGOK" target="_blank" title="유튜브 채널">
                     <i class="fa-brands fa-youtube"></i> </a>
             </div>
         </header>
@@ -40,6 +42,7 @@
         <nav class="tabs">
             <button class="tab active" data-tab="info">정보</button>
             <button class="tab" data-tab="projects">서비스</button>
+            <button class="tab" data-tab="plans">향후 계획</button>
         </nav>
 
         <div class="tab-content-wrapper">
@@ -58,7 +61,7 @@
                             <i class="fa-solid fa-briefcase fa-fw"></i>
                             <div>
                                 <span class="info-item-title">직업</span>
-                                <span class="info-item-value">학생</span> </div>
+                                <span class="info-item-value">대학생</span> </div>
                         </div>
                         <div class="info-item">
                             <i class="fa-solid fa-globe fa-fw"></i>
@@ -68,7 +71,7 @@
                         </div>
                     </div>
                     <div class="info-column">
-                        <h3 class="info-title">Server is running on</h3>
+                        <h3 class="info-title">서버는 여기서 돌아가고 있어요</h3>
                         <div class="info-item">
                             <i class="fa-brands fa-raspberry-pi fa-fw"></i>
                             <div>
@@ -106,7 +109,7 @@
                     <div class="card">
                         <div class="card-content">
                             <h3>티스토리 블로그</h3>
-                            <p>HANGGOK의 IT 블로그로 연결됩니다.</p>
+                            <p>IT 블로그로 연결됩니다.</p>
                         </div>
                         <a href="https://blog.hanggok.com/" class="card-link" title="사이트 방문">
                             <i class="fa-solid fa-link"></i>
@@ -118,10 +121,19 @@
                             <p>NAS 드라이브로 연결됩니다.</p>
                         </div>
                         <a href="#" class="card-link srv-error" title="사이트 방문">
-                            <i class="fa-solid fa-layer-group"></i>
+                            <i class="fa-solid fa-link"></i>
                         </a>
                     </div>
-                    
+                    <div class="card">
+                        <div class="card-content">
+                            <h3>맛집 리스트</h3>
+                            <p>경대 주변 맛집 리스트를 확인할 수 있어요.</p>
+                            <p>* 네이버 로그인이 필요할 수 있어요.</p>
+                        </div>
+                        <a href="https://www.hanggok.com/myKNUplace" class="card-link" title="사이트 방문">
+                            <i class="fa-solid fa-link"></i>
+                        </a>
+                    </div>
                     <div class="card">
                         <div class="card-content">
                             <h3>Old Edition</h3>
@@ -140,6 +152,15 @@
                             <i class="fa-solid fa-link"></i>
                         </a>
                     </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <h3>Developing..</h3>
+                            <p>추후 개발을 기대해주세요!</p>
+                        </div>
+                        <a href="#" class="card-link srv-error" title="사이트 방문">
+                            <i class="fa-solid fa-link"></i>
+                        </a>
+                    </div>
                     <div class="card card-wide-half">
                         <div class="card-content">
                             <h3>Admin Service</h3>
@@ -151,11 +172,23 @@
                     </div>
                 </div>
             </section>
+
+            <section id="plans" class="tab-panel">
+                <div class="info-grid">
+                    <div id="plans-content">
+                        <p style="color: var(--text-color-secondary);">
+                            <i class="fa-solid fa-spinner fa-spin"></i> 
+                            콘텐츠를 불러오는 중...
+                        </p>
+                    </div>
+                </div>
+            </section>
+            
             
         </div> </div> <div id="srv-error-overlay"></div>
     <div id="srv-error">
         <h2><i class="fa-solid fa-triangle-exclamation"></i> 알림</h2>
-        <p>아직 서비스하지 않는 기능입니다.</p>
+        <p>아직 추가되지 않은 기능입니다.</p>
         <button id="srv-error-close-btn" class="btn btn-secondary">확인</button>
     </div>
     

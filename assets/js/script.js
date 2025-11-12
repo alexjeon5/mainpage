@@ -2,12 +2,13 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- 1. 페이지 로드 애니메이션 발동 ---
-    // 페이지가 로드되면 body에 'loaded' 클래스를 추가하여
+    // 페이지 로드 시 body에 'loaded' 클래스를 추가하여
     // style.css에 정의된 'Fade-in & Slide-down' 애니메이션을 시작시킵니다.
     document.body.classList.add('loaded');
 
 
     // --- 2. 테마 토글 (라이트/다크 모드) 로직 ---
+    // 페이지 우측 상단의 테마 토글 버튼을 제어합니다.
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
 
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         body.classList.add('light-mode'); // 저장된 값이 'light'면 라이트 모드 적용
     }
 
-    // 2-2. 테마 버튼 클릭 시:
+    // 2-2. 토글 버튼 클릭 이벤트
     themeToggle.addEventListener('click', () => {
         body.classList.toggle('light-mode'); // body의 'light-mode' 클래스를 토글
         
@@ -30,7 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    // --- 3. 탭 스위칭 로직 ('서비스' / '정보') ---
+    // --- 3. 탭 스위칭 로직 ('정보' / '서비스' / '향후 계획') ---
+    // 탭 버튼 클릭 시 해당하는 탭 콘텐츠(패널)를 보여줍니다.
     const tabs = document.querySelectorAll('.tab');
     const panels = document.querySelectorAll('.tab-panel');
 
@@ -51,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     
     // --- 4. 팝업 모달 ('서비스 준비 중') 로직 ---
+    // 'srv-error' 클래스가 있는 링크 클릭 시 팝업창을 제어합니다.
     
     // 4-1. 팝업에 필요한 HTML 요소들을 가져옴
     const modalOverlay = document.getElementById('srv-error-overlay'); // 뒷 배경
@@ -64,14 +67,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const openModal = () => {
         modalOverlay.classList.add('active');
         modal.classList.add('active');
-        modalCloseBtn.focus(); // 접근성 향상
-        document.body.style.overflow = 'hidden'; // 스크롤 잠금
+        modalCloseBtn.focus(); // 팝업이 열리면 '확인' 버튼에 포커스
+        document.body.style.overflow = 'hidden'; // 뒷 배경 스크롤 잠금
     };
 
+    // 4-3. 모달 닫는 함수
     const closeModal = () => {
         modalOverlay.classList.remove('active');
         modal.classList.remove('active');
-        document.body.style.overflow = ''; // 스크롤 복원
+        document.body.style.overflow = ''; // 스크롤 잠금 해제
     };
 
     // 4-4. 이벤트 연결
@@ -90,12 +94,44 @@ document.addEventListener('DOMContentLoaded', () => {
     // 뒷 배경(오버레이) 클릭 시 모달 닫기
     modalOverlay.addEventListener('click', closeModal);
 
-    // Esc 키로 모달 닫기 기능 추가
+    // 'Esc' 키로 모달 닫기
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape' && modal.classList.contains('active')) {
             closeModal();
         }
     });
+
+    
+    // --- 5. '향후 계획' 탭 마크다운 불러오기 ---
+    // '향후 계획' 탭의 .md 파일을 불러와 HTML로 변환하여 표시합니다.
+    const loadMarkdown = async () => {
+        try {
+            // [경로] /assets/md/plans.md 파일을 불러옵니다.
+            const response = await fetch('assets/md/plans.md');
+            
+            if (!response.ok) {
+                // 파일을 못 찾거나(404) 오류가 나면 에러 메시지 표시
+                throw new Error('plans.md 파일을 불러올 수 없습니다.');
+            }
+            
+            const markdownText = await response.text();
+            
+            // Marked.js 라이브러리를 사용해 마크다운을 HTML로 변환
+            const htmlContent = marked.parse(markdownText);
+            
+            // 변환된 HTML을 #plans-content div에 삽입
+            document.getElementById('plans-content').innerHTML = htmlContent;
+            
+        } catch (error) {
+            console.error(error);
+            // 에러 발생 시 사용자에게 메시지 표시
+            document.getElementById('plans-content').innerHTML = 
+                '<p style="color: var(--text-color-secondary);">콘텐츠를 불러오는 데 실패했습니다.</p>';
+        }
+    };
+    
+    // 페이지 로드 시 마크다운 파일 불러오기 실행
+    loadMarkdown();
 
 
 }); // <-- document.addEventListener의 닫는 괄호
