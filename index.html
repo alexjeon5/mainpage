@@ -3,20 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- github-markdown-light 테마 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.6.1/github-markdown-light.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- prism code theme -->
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hi098123/prism-for-tistory/prism.css"> -->
-    <!-- md-block -->
-    <script type="module" src="https://md-block.verou.me/md-block.js"> </script>
     <title>HANGGOK SERVER</title>
+    
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@latest/themes/purple/pace-theme-flash.css">
+    <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
 </head>
 <body>
-    <div class="markdown-body">
-        <md-block src="/readme.md">
-            <!-- README.md 로드 실패시 보이는 문구 -->
-            `readme.md` 로딩 중 
-        </md-block>
+
+    <button id="theme-toggle" title="테마 전환">
+        <i class="fa-solid fa-sun"></i> <i class="fa-solid fa-moon"></i> </button>
+
+    <div class="container">
+        
+        <header class="profile">
+            <img src="assets/img/profile.png" alt="프로필 사진" class="profile-img">
+            <h1 class="profile-name">HANGGOK</h1>
+            <p class="profile-handle">행국</p>
+
+            <div class="profile-links">
+                <a href="mailto:alexjeon5@gmail.com" title="메일 보내기">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+                <a href="https://github.com/alexjeon5" target="_blank" title="깃허브 방문">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="javascript:location.reload();" title="새로고침">
+                    <i class="fa-solid fa-rotate-right"></i> </a>
+            </div>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab active" data-tab="projects">서비스</button>
+            <button class="tab" data-tab="info">정보</button>
+        </nav>
+
+        <div class="tab-content-wrapper">
+
+            <section id="projects" class="tab-panel active">
+                <div class="card-container">
+                    
+                    <div class="card" style="background-image: url('assets/img/project1.png');">
+                        <div class="card-content">
+                            <h3>HANGGOK의 서버</h3>
+                            <p>MSDN ISO 다운로더 UI</p>
+                        </div>
+                        <a href="#" class="card-link" title="사이트 방문">
+                            <i class="fa-solid fa-link"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="card" style="background-image: url('project2.jpg');">
+                        <div class="card-content">
+                            <h3>HANGGOK의 드라이브</h3>
+                            <p>MSDN ISO 미러 서버</p>
+                        </div>
+                        <a href="#" class="card-link srv-error" title="사이트 방문">
+                            <i class="fa-solid fa-link"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-content">
+                            <h3>티스토리 블로그</h3>
+                            <p>HANGGOK의 IT 블로그</p>
+                        </div>
+                        <a href="https://blog.hanggok.com/" class="card-link" title="사이트 방문">
+                            <i class="fa-solid fa-link"></i>
+                        </a>
+                    </div>
+<!--                     
+                    <div class="card">
+                        <div class="card-content">
+                            <h3>YouTube Vanced Mirror</h3>
+                            <p>유튜브 밴스드 미러 서버</p>
+                        </div>
+                        <a href="#" class="card-link" title="사이트 방문">
+                            <i class="fa-solid fa-link"></i>
+                        </a>
+                    </div> -->
+                </div>
+            </section>
+
+            <section id="info" class="tab-panel">
+                <div class="info-grid">
+                    <div class="info-column">
+                        <h3 class="info-title">Who is HANGGOK?</h3> <div class="info-item">
+                            <i class="fa-solid fa-user-circle"></i>
+                            <div>
+                                <span class="info-item-title">닉네임</span>
+                                <span class="info-item-value">행국</span> </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa-solid fa-briefcase"></i>
+                            <div>
+                                <span class="info-item-title">직업</span>
+                                <span class="info-item-value">학생</span> </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa-solid fa-globe"></i>
+                            <div>
+                                <span class="info-item-title">영문 닉네임</span>
+                                <span class="info-item-value">HANGGOK</span> </div>
+                        </div>
+                    </div>
+                    <div class="info-column">
+                        <h3 class="info-title">Server is running on</h3>
+                        <div class="info-item">
+                            <i class="fa-brands fa-raspberry-pi fa-fw"></i>
+                            <div>
+                                <span class="info-item-title">Hardware</span>
+                                <span class="info-item-value">Raspberry Pi 3B</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa-brands fa-debian fa-fw"></i>
+                            <div>
+                                <span class="info-item-title">Operating System</span>
+                                <span class="info-item-value">Raspberry Pi OS</span>
+                                <span class="info-item-value">- Debian Trixie Based</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa-brands fa-docker fa-fw"></i>
+                            <div>
+                                <span class="info-item-title">Container</span>
+                                <span class="info-item-value">Docker Based System</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa-solid fa-server fa-fw"></i>
+                            <div>
+                                <span class="info-item-title">Web Server</span>
+                                <span class="info-item-value">Nginx Proxy Manager (NPM)<br>Reverse Proxy</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div> 
+    </div> 
+
+    <div id="srv-error-overlay"></div>
+    <div id="srv-error">
+        <h2><i class="fa-solid fa-triangle-exclamation"></i> 알림</h2>
+        <p>아직 서비스하지 않는 기능입니다.</p>
+        <button id="srv-error-close-btn" class="btn btn-secondary">확인</button>
     </div>
+    
+    <footer>
+        &copy; 2025. HANGGOK All Rights Reserved.
+    </footer>
+    
+    <script src="assets/js/script.js"></script>
 </body>
 </html>

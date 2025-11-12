@@ -1,0 +1,493 @@
+/* --- 1. 폰트 불러오기 --- */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+/* --- 2. CSS 변수 설정 (기본: 다크 모드) --- */
+:root {
+    /* 색상 */
+    --bg-color: #0d1117;
+    --text-color: #e0e0e0;
+    --text-color-secondary: #8b949e;
+    --primary-color: #58a6ff;
+    
+    /* 카드 (글래스모피즘) */
+    --card-bg-color: rgba(22, 27, 34, 0.7);
+    --card-border-color: rgba(255, 255, 255, 0.1);
+    
+    /* 버튼 */
+    --btn-primary-bg: #238636;
+    --btn-primary-color: #ffffff;
+    --btn-secondary-bg: #21262d;
+    --btn-secondary-border: #30363d;
+    
+    /* 폰트 */
+    --body-font: 'IBM Plex Sans KR', 'Poppins', sans-serif;
+}
+
+/* --- 3. 라이트 모드 변수 설정 --- */
+/* body.light-mode 클래스가 있을 때 이 변수들이 :root를 덮어씁니다. */
+body.light-mode {
+    --bg-color: #f4f7f6;
+    --text-color: #111;
+    --text-color-secondary: #555;
+    --primary-color: #007bff;
+    
+    --card-bg-color: rgba(255, 255, 255, 0.6);
+    --card-border-color: rgba(0, 0, 0, 0.1);
+    
+    --btn-primary-bg: #28a745;
+    --btn-primary-color: #ffffff;
+    --btn-secondary-bg: #f0f0f0;
+    --btn-secondary-border: #ddd;
+}
+
+/* --- 4. 기본 스타일 (Reset) --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--body-font); /* :root에 정의된 폰트 적용 */
+    line-height: 1.6;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+    padding: 1rem;
+}
+
+.container {
+    max-width: 800px;
+    margin: 1rem auto;
+}
+
+/* --- 5. 테마 토글 버튼 --- */
+#theme-toggle {
+    position: fixed; /* 화면 우측 상단에 고정 */
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem; /* 아이콘 크기 */
+    color: var(--text-color-secondary);
+    cursor: pointer;
+    z-index: 1000; /* 다른 요소들 위에 표시 */
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: color 0.2s, background-color 0.2s;
+}
+
+#theme-toggle:hover {
+    color: var(--text-color);
+    background-color: var(--card-bg-color); /* 호버 시 유리 효과 배경 */
+}
+
+/* 테마별 아이콘 표시/숨김 */
+/* 기본 (다크) : 달 숨기고 태양 표시 */
+#theme-toggle .fa-moon { display: none; }
+#theme-toggle .fa-sun { display: block; }
+
+/* 라이트 모드 : 태양 숨기고 달 표시 */
+body.light-mode #theme-toggle .fa-moon { display: block; }
+body.light-mode #theme-toggle .fa-sun { display: none; }
+
+
+/* --- 6. 프로필 섹션 --- */
+.profile {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.profile-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 100%; /* 완전한 원형 */
+    object-fit: cover; /* 이미지가 찌그러지지 않게 */
+    border: 3px solid var(--card-border-color);
+    box-shadow: 0 0 20px rgba(88, 166, 255, 0.3);
+}
+
+.profile-name {
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    color: var(--text-color);
+}
+
+.profile-handle {
+    font-size: 1.1rem;
+    color: var(--text-color-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.profile-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.profile-links a {
+    font-size: 1.5rem;
+    color: var(--text-color-secondary);
+    transition: color 0.2s, transform 0.2s;
+}
+
+.profile-links a:hover {
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+/* --- 7. 메인 버튼 (현재 HTML에서 주석 처리됨) --- */
+.main-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+}
+/* ... (이하 .btn 관련 스타일) ... */
+
+/* --- 8. 탭 네비게이션 --- */
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    background-color: var(--btn-secondary-bg); /* 탭 바 배경 */
+    border-radius: 8px;
+    padding: 0.5rem;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tab {
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    background: none;
+    border: none;
+    color: var(--text-color-secondary);
+    padding: 0.5rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: color 0.2s, background-color 0.2s;
+    flex: 1;
+    text-align: center;
+}
+
+/* 활성화된 탭 스타일 */
+.tab.active {
+    color: var(--text-color);
+    background-color: var(--bg-color); 
+}
+
+.tab:not(.active):hover {
+    color: var(--text-color);
+}
+
+
+/* --- 9. 탭 콘텐츠 (패널) --- */
+.tab-panel {
+    display: none; /* 기본적으로 모든 탭 콘텐츠 숨기기 */
+}
+
+.tab-panel.active {
+    display: block; /* 'active' 클래스가 있는 탭만 보여주기 */
+}
+
+
+/* --- 10. 프로젝트 카드 --- */
+.card-container {
+    display: grid;
+    /* 카드의 최소 너비는 280px, 공간이 남으면 1fr씩 나눠가짐 (반응형) */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.card {
+    /* HTML에서 style로 배경 이미지가 주입됨 */
+    background-size: cover;
+    background-position: center;
+    
+    /* 글래스모피즘 (유리 효과) */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--card-border-color);
+    
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: relative; /* ::before 오버레이를 위한 기준 */
+    min-height: 170px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s, box-shadow 0.2s;
+    overflow: hidden; /* ::before 오버레이가 테두리를 넘지 않도록 */
+}
+
+/* * [핵심] 카드 오버레이 (가상 요소)
+ * 이 오버레이가 반투명 배경(유리색)을 제공합니다.
+ * 배경 이미지가 없는 카드는 이 오버레이가 배경처럼 보입니다.
+ */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: var(--card-bg-color); /* 반투명 유리 색상 */
+    z-index: 1; /* 콘텐츠(z-index: 2)보다 아래에 위치 */
+    border-radius: 12px; 
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* 카드 텍스트 콘텐츠 */
+.card-content {
+    position: relative; /* z-index 적용을 위해 */
+    z-index: 2; /* 오버레이(::before) 위에 표시 */
+}
+
+.card-content h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.card-content p {
+    font-size: 1rem;
+    color: var(--text-color-secondary);
+}
+
+/* 카드 링크 아이콘 */
+.card-link {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    font-size: 1.2rem;
+    color: var(--text-color-secondary);
+    text-decoration: none;
+    z-index: 2; /* 오버레이(::before) 위에 표시 */
+}
+.card-link:hover {
+    color: var(--primary-color);
+}
+
+
+/* --- 11. '정보' 탭 --- */
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2단 그리드 */
+    gap: 2rem;
+    
+    /* 정보 탭에도 글래스모피즘 적용 */
+    background-color: var(--card-bg-color);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--card-border-color);
+    border-radius: 12px;
+    padding: 2rem;
+}
+
+.info-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+}
+
+.info-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.info-item i {
+    font-size: 1.1rem;
+    color: var(--text-color-secondary);
+    margin-right: 1rem;
+    margin-top: 0.25rem;
+}
+
+.info-item div {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-item-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.info-item-value {
+    font-size: 0.9rem;
+    color: var(--text-color-secondary);
+}
+
+
+/* --- 12. 푸터 --- */
+footer {
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 0.9rem;
+    color: var(--text-color-secondary);
+}
+
+/* --- 13. 페이지 로드 애니메이션 --- */
+/* 1. 애니메이션 초기 상태 (숨김) */
+/* body.loaded 클래스가 없을 때 적용 */
+.profile, .stats, .main-buttons, .tabs, .tab-content-wrapper, footer {
+    opacity: 0;
+    transform: translateY(-20px); /* 20px 위에서 시작 */
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+/* 2. 애니메이션 발동 상태 (순차적 표시) */
+/* body.loaded 클래스가 있을 때 적용 */
+body.loaded .profile {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.1s; /* 0.1초 뒤 */
+}
+body.loaded .stats { /* .stats 클래스가 현재 HTML에 없지만, 규칙은 남아있음 */
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.2s;
+}
+body.loaded .main-buttons {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.3s;
+}
+body.loaded .tabs {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.4s;
+}
+body.loaded .tab-content-wrapper {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.5s;
+}
+body.loaded footer {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.6s;
+}
+
+/* --- 15. 모달 (팝업) 스타일 [신규] --- */
+
+/* 1. 뒷 배경 (오버레이) */
+#srv-error-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* 2. 모달 본체 */
+#srv-error {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background-color: var(--card-bg-color);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--card-border-color);
+    border-radius: 12px;
+    padding: 2rem;
+    z-index: 1001;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+/* 3. 모달이 활성화되었을 때 */
+#srv-error-overlay.active,
+#srv-error.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+#srv-error.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* 4. 모달 내부 요소 스타일 */
+#srv-error h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+#srv-error h2 .fa-solid {
+    margin-right: 0.5rem;
+    color: var(--primary-color);
+}
+
+#srv-error p {
+    font-size: 1rem;
+    color: var(--text-color-secondary);
+    margin-bottom: 2rem;
+}
+
+#srv-error-close-btn {
+    width: 100%;
+}
+
+
+/* --- 14. 모바일 반응형 --- */
+
+/* 태블릿 사이즈 (700px 이하) */
+@media (max-width: 700px) {
+    /* '정보' 탭 2단 -> 1단 */
+    .info-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+}
+
+/* 모바일 사이즈 (600px 이하) */
+@media (max-width: 600px) {
+    body {
+        padding: 0.5rem;
+    }
+    .container {
+        margin: 0.5rem auto;
+    }
+    .profile-img {
+        width: 100px;
+        height: 100px;
+    }
+    .profile-name {
+        font-size: 1.8rem;
+    }
+    .stats { /* .stats 클래스가 현재 HTML에 없지만, 규칙은 남아있음 */
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    .main-buttons {
+        grid-template-columns: 1fr; /* 버튼 세로로 쌓기 */
+    }
+    .tabs {
+        max-width: 100%;
+    }
+    .tab {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+    }
+}
