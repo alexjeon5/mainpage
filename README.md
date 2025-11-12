@@ -1,4 +1,4 @@
-# HANGGOK SERVER
+# [HANGGOK SERVER](https://www.hanggok.com)
 ![Static Badge](https://img.shields.io/badge/Maintained-Yes-green) ![Static Badge](https://img.shields.io/badge/License-MIT-blue)
 
 #### 해당 문서는 **Google Gemini**를 사용하여 작성되었음을 고지합니다.
