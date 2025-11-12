@@ -253,6 +253,7 @@ body.light-mode #theme-toggle .fa-sun { display: none; }
     justify-content: space-between;
     transition: transform 0.2s, box-shadow 0.2s;
     overflow: hidden; /* 오버레이가 테두리를 넘지 않도록 */
+    /* height: 100%; */
 }
 
 /* * [핵심] 카드 오버레이 (가상 요소)
@@ -508,11 +509,15 @@ body.loaded footer {
 
 /* --- 15. 모바일 반응형 --- */
 /* 화면 크기에 따라 레이아웃을 조정합니다. */
-@media (max-width: 700px) {
+@media (max-width: 820px) {
     /* '정보' 탭 2단 -> 1단 */
     .info-grid {
         grid-template-columns: 1fr;
         gap: 2.5rem;
+    }
+    /* [추가] 모바일/태블릿에서 '서비스' 탭을 1줄(1fr)로 강제 */
+    .card-container {
+        grid-template-columns: 2fr;
     }
 }
 
