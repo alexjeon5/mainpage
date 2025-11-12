@@ -1,1 +1,1 @@
-# hgk_mainpage
+# mainpage
