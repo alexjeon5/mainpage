@@ -64,12 +64,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const openModal = () => {
         modalOverlay.classList.add('active');
         modal.classList.add('active');
+        modalCloseBtn.focus(); // 접근성 향상
+        document.body.style.overflow = 'hidden'; // 스크롤 잠금
     };
 
-    // 4-3. 모달 닫는 함수
     const closeModal = () => {
         modalOverlay.classList.remove('active');
         modal.classList.remove('active');
+        document.body.style.overflow = ''; // 스크롤 복원
     };
 
     // 4-4. 이벤트 연결
@@ -87,5 +89,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 뒷 배경(오버레이) 클릭 시 모달 닫기
     modalOverlay.addEventListener('click', closeModal);
+
+    // Esc 키로 모달 닫기 기능 추가
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+
 
 }); // <-- document.addEventListener의 닫는 괄호

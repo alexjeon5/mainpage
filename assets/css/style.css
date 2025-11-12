@@ -59,6 +59,14 @@ body {
     padding: 1rem;
 }
 
+.card,
+.btn,
+.tabs,
+.tab,
+footer {
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+}
+
 .container {
     max-width: 800px;
     margin: 1rem auto;
@@ -509,15 +517,50 @@ body.loaded footer {
 
 /* --- 15. 모바일 반응형 --- */
 /* 화면 크기에 따라 레이아웃을 조정합니다. */
-@media (max-width: 820px) {
+@media (max-width: 700px) {
     /* '정보' 탭 2단 -> 1단 */
     .info-grid {
         grid-template-columns: 1fr;
         gap: 2.5rem;
     }
-    /* [추가] 모바일/태블릿에서 '서비스' 탭을 1줄(1fr)로 강제 */
+    /* 카드 전체를 세로 레이아웃으로 */
     .card-container {
-        grid-template-columns: 2fr;
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+    }
+
+    /* 각 카드 내부 레이아웃을 가로 정렬 (텍스트 왼쪽, 아이콘 오른쪽) */
+    .card {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.2rem 1.5rem;
+        position: relative;
+    }
+
+    /* 카드 내용 영역 */
+    .card-content {
+        flex: 1; /* 텍스트가 왼쪽 영역을 차지 */
+    }
+
+    /* 링크 아이콘을 오른쪽 정렬 */
+    .card-link {
+        position: relative; /* absolute 해제 */
+        bottom: auto;
+        left: auto;
+        right: 0;
+        margin-left: 1rem;
+        font-size: 1.4rem;
+        color: var(--text-color-secondary);
+        flex-shrink: 0; /* 아이콘 크기 고정 */
+    }
+
+    /* 터치 시 반응 */
+    .card-link:hover {
+        color: var(--primary-color);
+        transform: scale(1.1);
     }
 }
 
@@ -545,5 +588,16 @@ body.loaded footer {
     .tab {
         padding: 0.5rem 0.75rem;
         font-size: 0.9rem;
+    }
+    .container {
+        margin: 0;
+        padding: 0.5rem;
+    }
+    .card {
+        border-radius: 10px;
+        padding: 1.2rem;
+    }
+    .card-container {
+        gap: 1rem;
     }
 }
