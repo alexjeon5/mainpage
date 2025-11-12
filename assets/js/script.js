@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('srv-error'); // 팝업창 본체
     const modalCloseBtn = document.getElementById('srv-error-close-btn'); // 닫기 버튼
     
-    // [오류 수정] 팝업을 띄울 링크(index.html의 .srv-error 클래스)들을 모두 찾음
+    // 팝업을 띄울 링크(index.html의 .srv-error 클래스)들을 모두 찾음
     const modalTriggers = document.querySelectorAll('.srv-error');
 
     // 4-2. 모달 여는 함수
@@ -89,5 +89,3 @@ document.addEventListener('DOMContentLoaded', () => {
     modalOverlay.addEventListener('click', closeModal);
 
 }); // <-- document.addEventListener의 닫는 괄호
-
-/* [오류 수정] 파일 끝에 있던 불필요한 } 제거 */
