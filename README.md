@@ -1,50 +1,45 @@
 # [HANGGOK SERVER](https://www.hanggok.com)
 ![Static Badge](https://img.shields.io/badge/Maintained-Yes-green) ![Static Badge](https://img.shields.io/badge/License-MIT-blue)
 
-#### 해당 문서는 **Google Gemini**를 사용하여 작성되었음을 고지합니다.
+## 📌 프로젝트 소개
+**HANGGOK SERVER**는 개인 서버 랜딩 페이지이자 포트폴리오 사이트입니다.
+Vanilla JS와 CSS3를 사용하여 **글래스모피즘(Glassmorphism)** 디자인을 구현했으며, 사용자 경험(UX)과 웹 접근성(A11y), 검색 엔진 최적화(SEO)를 고려하여 설계되었습니다.
 
-## ✨ 주요 기능
+## ✨ 주요 기능 및 변경 사항
 
-이 프로젝트는 Vanilla JS(순수 JavaScript)를 기반으로 다양한 인터랙티브 기능을 구현했습니다.
+### 🎨 디자인 (UI/UX)
+* **고도화된 글래스모피즘**: 배경에 은은한 그라디언트 애니메이션(`radial-gradient`)을 추가하여 유리 질감을 극대화했습니다.
+* **다크 / 라이트 모드**: 시스템 설정 감지 및 수동 토글을 지원하며, `localStorage`를 통해 사용자의 선호 테마를 저장합니다.
+* **커스텀 스크롤바**: 전체 테마와 어우러지는 모던한 스크롤바 디자인을 적용했습니다.
+* **완전 반응형 레이아웃**:
+    * **Desktop**: CSS Grid를 활용하여 카드를 균일하게 배치합니다.
+    * **Mobile**: 모바일 환경에 맞춰 레이아웃을 최적화하였으며, 카드 내 **링크 아이콘을 우측 하단으로 정렬**하여 터치 접근성과 시각적 균형을 개선했습니다.
 
-* 🎨 **모던 글래스모피즘 디자인**: `backdrop-filter`를 사용한 세련된 유리 질감의 UI
-* 🌗 **다크 / 라이트 모드**: 사용자의 시스템 설정을 감지하고, 수동 토글을 통해 테마를 전환할 수 있습니다. 선택한 테마는 `localStorage`에 저장되어 다음 방문 시에도 유지됩니다.
-* 📱 **완전 반응형**: 데스크톱(Grid)과 모바일(Flex) 환경에 맞춰 레이아웃이 유동적으로 변경됩니다.
-    * **데스크톱**: 그리드 레이아웃을 사용하여 카드 높이를 자동으로 맞춥니다.
-    * **모바일 (820px 이하)**: '서비스' 탭이 세로(Flex Column)로 쌓이고, 각 카드는 가로(Flex Row)로 정렬되어 가독성을 높입니다.
-* 📑 **탭 기반 인터페이스**: '정보', '서비스', '향후 계획' 3개의 탭으로 콘텐츠를 분리하여 제공합니다. (기본 탭: '정보')
-* 🚀 **동적 마크다운 로딩**: `Marked.js` 라이브러리를 사용하여 `assets/md/plans.md` 파일을 `fetch`한 후, '향후 계획' 탭에 HTML로 자동 변환하여 표시합니다.
-* **팝업 모달**: '서비스' 탭에서 준비 중인 항목(`.srv-error` 클래스)을 클릭하면, 스크롤 잠금 및 `Esc` 키 닫기 기능이 포함된 모달창이 뜹니다.
-* 🎞️ **로드 애니메이션**: `Pace.js` 로딩 바와 함께, 페이지 로드 시 요소들이 순차적으로 나타나는(Fade-in & Slide-down) 애니메이션이 적용되어 있습니다.
+### ⚙️ 기능 및 성능
+* **동적 마크다운 렌더링**: `Marked.js`를 사용하여 `assets/md/plans.md` 파일을 비동기(`fetch`)로 불러와 HTML로 변환하여 표시합니다.
+* **SEO 최적화**: Open Graph(OG) 태그와 메타 설명을 추가하여 검색 엔진 및 SNS 공유 시 미리보기를 최적화했습니다.
+* **웹 접근성(Accessibility) 강화**:
+    * WAI-ARIA 속성(`role`, `aria-selected`, `aria-controls`)을 적용하여 스크린 리더 사용자도 탭과 모달을 쉽게 이용할 수 있습니다.
+    * 시맨틱 태그를 사용하여 문서 구조를 명확히 했습니다.
+* **인터랙티브 모달**: '서비스 준비 중' 항목 클릭 시 키보드 접근성(`Esc` 키 지원)이 포함된 모달 창이 활성화됩니다.
+* **로딩 애니메이션**: `Pace.js` 로딩 바와 콘텐츠 페이드인 효과를 적용하여 부드러운 화면 전환을 제공합니다.
 
-## 🛠️ 사용 기술
+## 🛠️ 기술 스택
 
-* **HTML5**
-* **CSS3** (Flexbox, Grid, CSS Variables, Media Queries)
-* **Vanilla JavaScript (ES6+)**
-    * DOM 조작
-    * `fetch` API (비동기)
-    * `localStorage`
+* **Core**: HTML5, CSS3, Vanilla JavaScript (ES6+)
+* **Libraries**:
+    * [Marked.js](https://marked.js.org/) (Markdown Parsing)
+    * [Pace.js](https://codebyzach.github.io/pace/) (Loading Progress)
+    * [Font Awesome](https://fontawesome.com/) & [Remixicon](https://remixicon.com/) (Icons)
+* **Font**: Pretendard, IBM Plex Sans KR
 
-### 라이브러리 (CDN)
+## 🚀 사용 방법
 
-* **[Marked.js](https://marked.js.org/)**: '향후 계획' 탭의 마크다운(.md) 파일을 파싱합니다.
-* **[Pace.js](https://github.com/CodeByZach/pace/)**: 페이지 로드 시 상단에 로딩 바를 표시합니다.
-* **[Font Awesome](https://fontawesome.com/)**: 아이콘 폰트
-* **[Remixicon](https://remixicon.com/)**: 아이콘 폰트
+이 프로젝트는 정적(Static) 웹사이트입니다. 별도의 빌드 과정 없이 바로 사용할 수 있습니다.
 
-### 폰트
-
-* **`Pretendard`**: 사이트의 기본 메인 폰트로 사용됩니다.
-* **`IBM Plex Sans KR` / `Poppins`**: '향후 계획' 탭의 인라인 `<code>` 블록 폰트로 사용됩니다.
-
----
-
-## 🚀 '향후 계획' 탭 관리하기
-
-이 프로젝트의 '향후 계획' 탭은 정적 HTML이 아닌, **`assets/md/plans.md`** 파일을 동적으로 불러와 표시합니다.
-
-**계획을 수정하려면 `plans.md` 파일만 수정하고 저장(푸시)하면 됩니다.** `script.js`가 자동으로 해당 파일을 읽어 웹페이지에 반영합니다.
+1.  리포지토리를 클론하거나 다운로드합니다.
+2.  `index.html` 파일을 브라우저에서 실행하면 바로 확인할 수 있습니다.
+3.  **내용 수정**: '타임 라인' 탭의 내용을 수정하려면 `assets/md/plans.md` 파일만 편집하면 됩니다.
 
 ## 🧑‍💻 제작자
 
@@ -52,4 +47,4 @@
 
 ## 📄 라이선스
 
-* 이 프로젝트는 [MIT 라이선스](https://opensource.org/licenses/MIT)를 따릅니다.
+이 프로젝트는 [MIT License](https://opensource.org/licenses/MIT)를 따릅니다.
