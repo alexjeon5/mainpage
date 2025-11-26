@@ -1,6 +1,8 @@
 # [HANGGOK SERVER](https://www.hanggok.com)
 ![Static Badge](https://img.shields.io/badge/Maintained-Yes-green) ![Static Badge](https://img.shields.io/badge/License-MIT-blue)
 
+#### 해당 문서는 **Google Gemini**를 사용하여 작성되었음을 고지합니다.
+
 ## 📌 프로젝트 소개
 **HANGGOK SERVER**는 개인 서버 랜딩 페이지이자 포트폴리오 사이트입니다.
 Vanilla JS와 CSS3를 사용하여 **글래스모피즘(Glassmorphism)** 디자인을 구현했으며, 사용자 경험(UX)과 웹 접근성(A11y), 검색 엔진 최적화(SEO)를 고려하여 설계되었습니다.
