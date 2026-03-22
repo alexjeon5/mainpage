@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/img/icon.png" type="image/png">
+    
+    <title>HANGGOK - Admin Console</title>
+    
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@latest/themes/purple/pace-theme-flash.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+
+    <button id="theme-toggle" title="테마 전환" aria-label="테마 전환">
+        <i class="fa-regular fa-sun"></i> <i class="fa-solid fa-moon"></i> 
+    </button>
+
+    <div class="container">
+        
+        <header class="profile">
+            <h1 class="profile-name">Admin Console</h1>
+            <p class="profile-handle">Server Management</p>
+            
+            <div class="profile-links">
+                <a href="../index.html" title="홈으로 이동" aria-label="Home">
+                    <i class="fa-solid fa-house"></i>
+                </a>
+            </div>
+        </header>
+
+        <main id="admin-services">
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Nginx Proxy Manager</h3>
+                        <p>Reverse Proxy 및 SSL 인증서 관리</p>
+                    </div>
+                    <a href="http://your-npm-address:81" target="_blank" class="card-link" aria-label="NPM 접속">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Portainer</h3>
+                        <p>Docker 컨테이너 시각화 및 관리</p>
+                    </div>
+                    <a href="http://your-portainer-address:9000" target="_blank" class="card-link" aria-label="Portainer 접속">
+                        <i class="fa-brands fa-docker"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <h3>System Monitor</h3>
+                        <p>Raspberry Pi 3B 리소스 모니터링</p>
+                    </div>
+                    <a href="#" class="card-link srv-error" aria-label="모니터링 접속">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </a>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Proxmox VE</h3>
+                        <p>가상화 시스템 관리 (준비 중)</p>
+                    </div>
+                    <a href="#" class="card-link srv-error" aria-label="Proxmox 접속">
+                        <i class="fa-solid fa-server"></i>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div> 
+
+    <div id="srv-error-overlay" aria-hidden="true"></div>
+    <div id="srv-error" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+        <h2 id="modal-title"><i class="fa-solid fa-triangle-exclamation"></i> 알림</h2>
+        <p>현재 서비스 준비 중이거나 내부망에서만 접근 가능합니다.</p>
+        <button id="srv-error-close-btn" class="btn btn-secondary">확인</button>
+    </div>
+    
+    <footer>
+        <p>Administrator Page</p>
+        <p>&copy; 2025 HANGGOK. All Rights Reserved.</p>
+    </footer>
+    
+    <script src="../assets/js/script.js"></script>
+</body>
+</html>
