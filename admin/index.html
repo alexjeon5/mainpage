@@ -14,7 +14,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
 </head>
-<body>
+<body data-page="admin">
     <div class="bg-gradient"></div>
 
     <button id="theme-toggle" title="테마 전환" aria-label="테마 전환">
@@ -79,18 +79,39 @@
         </main>
     </div> 
 
-    <div id="srv-error-overlay" aria-hidden="true"></div>
-    <div id="srv-error" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
-        <h2 id="modal-title"><i class="fa-solid fa-triangle-exclamation"></i> 알림</h2>
-        <p>현재 서비스 준비 중이거나 내부망에서만 접근 가능합니다.</p>
+    <div id="admin-warn-overlay" class="modal-overlay"></div>
+    <div id="admin-warn" class="modal-window">
+        <h2><i class="fa-solid fa-shield-halved"></i> 보안 경고</h2>
+        <p>관리자 전용 구역입니다. 인가되지 않은 접근은 제한됩니다.</p>
+        <button id="admin-warn-close-btn" class="btn btn-secondary">확인</button>
+    </div>
+
+    <div id="srv-error-overlay" class="modal-overlay"></div>
+    <div id="srv-error" class="modal-window">
+        <h2><i class="fa-solid fa-triangle-exclamation"></i> 알림</h2>
+        <p>현재 서비스 준비 중입니다.</p>
         <button id="srv-error-close-btn" class="btn btn-secondary">확인</button>
     </div>
-    
+
     <footer>
         <p>Administrator Page</p>
         <p>&copy; 2025 HANGGOK. All Rights Reserved.</p>
     </footer>
     
     <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/script.js"></script> <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // 기존 script.js에 정의된 모달 제어 함수와 클래스를 활용하여 모달을 띄움
+        const overlay = document.getElementById('srv-error-overlay');
+        const modal = document.getElementById('srv-error');
+        
+        // active 클래스를 추가하여 모달 표시
+        overlay.classList.add('active');
+        modal.classList.add('active');
+        
+        // 배경 스크롤 방지
+        document.body.style.overflow = 'hidden';
+    });
+    </script>
 </body>
 </html>

@@ -177,7 +177,7 @@
                             <i class="fa-solid fa-link"></i>
                         </a>
                     </div>
-                    <!-- <div class="card card-wide-half">
+                    <div class="card card-wide-half">
                         <div class="card-content">
                             <h3>Admin Console</h3>
                             <p>서버 관리자 전용</p>
@@ -185,7 +185,7 @@
                         <a href="admin/index.html" class="card-link" aria-label="관리자 페이지">
                             <i class="fa-solid fa-link"></i>
                         </a>
-                    </div> -->
+                    </div>
                 </div>
             </section>
 
@@ -202,9 +202,9 @@
         </div>
     </div> 
 
-    <div id="srv-error-overlay" aria-hidden="true"></div>
-    <div id="srv-error" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
-        <h2 id="modal-title"><i class="fa-solid fa-triangle-exclamation"></i> 알림</h2>
+    <div id="srv-error-overlay" class="modal-overlay"></div>
+    <div id="srv-error" class="modal-window">
+        <h2><i class="fa-solid fa-triangle-exclamation"></i> 알림</h2>
         <p>현재 준비 중인 서비스입니다.<br>조금만 기다려주세요!</p>
         <button id="srv-error-close-btn" class="btn btn-secondary">확인</button>
     </div>
