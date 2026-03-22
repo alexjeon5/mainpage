@@ -40,52 +40,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 4. 모달 시스템 (공용 함수)
     function createModal(overlayId, modalId, closeBtnId) {
-    const overlay = document.getElementById(overlayId);
-    const modal = document.getElementById(modalId);
-    const closeBtn = document.getElementById(closeBtnId);
+        const overlay = document.getElementById(overlayId);
+        const modal = document.getElementById(modalId);
+        const closeBtn = document.getElementById(closeBtnId);
 
-    if (!overlay || !modal) return null; // 요소가 없으면 건너뜀
+        if (!overlay || !modal) return null;
 
-    const toggle = (show) => {
-        const action = show ? 'add' : 'remove';
-        overlay.classList[action]('active');
-        modal.classList[action]('active');
-        overlay.setAttribute('aria-hidden', !show);
-        modal.setAttribute('aria-hidden', !show);
-        document.body.style.overflow = show ? 'hidden' : '';
-    };
+        const toggle = (show) => {
+            const action = show ? 'add' : 'remove';
+            overlay.classList[action]('active');
+            modal.classList[action]('active');
+            overlay.setAttribute('aria-hidden', !show);
+            modal.setAttribute('aria-hidden', !show);
+            document.body.style.overflow = show ? 'hidden' : '';
+        };
 
-    if (closeBtn) closeBtn.addEventListener('click', () => toggle(false));
-    overlay.addEventListener('click', () => toggle(false));
+        if (closeBtn) closeBtn.addEventListener('click', () => toggle(false));
+        overlay.addEventListener('click', () => toggle(false));
 
-    // ESC 키로 닫기 공통 적용
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('active')) toggle(false);
-    });
-
-    return { toggle };
-}
-
-    document.addEventListener('DOMContentLoaded', () => {
-        // [A] 기본 서비스 준비 중 모달 설정
-        const srvErrorModal = createModal('srv-error-overlay', 'srv-error', 'srv-error-close-btn');
-
-        // 모든 .srv-error 링크에 이벤트 연결
-        document.querySelectorAll('.srv-error').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                srvErrorModal?.toggle(true);
-            });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) toggle(false);
         });
 
-    // [B] 관리자 보안 경고 모달 설정 (관리자 페이지인 경우)
+        return { toggle };
+    }
+
+    // 모달 설정 초기화
+    const srvErrorModal = createModal('srv-error-overlay', 'srv-error', 'srv-error-close-btn');
     const adminWarnModal = createModal('admin-warn-overlay', 'admin-warn', 'admin-warn-close-btn');
-    
-    // 현재 페이지가 admin 폴더 안에 있거나 body에 특정 클래스가 있다면 자동 실행
-    if (adminWarnModal && document.body.classList.contains('admin-page')) {
+
+    // 서비스 준비 중 알림 (.srv-error 클릭 시)
+    document.querySelectorAll('.srv-error').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            srvErrorModal?.toggle(true);
+        });
+    });
+
+    // 관리자 페이지 접속 시 보안 경고 자동 실행
+    // HTML의 <body data-page="admin">과 일치시킵니다.
+    if (adminWarnModal && document.body.dataset.page === 'admin') {
         adminWarnModal.toggle(true);
     }
-});
 
     // 5. 마크다운 로드
     async function loadPlans() {

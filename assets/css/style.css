@@ -254,7 +254,6 @@ body.light-mode #theme-toggle .fa-sun { display: none; }
 }
 
 /* 모달 본체 */
-/* 모달 본체 */
 .modal-window {
     position: fixed; 
     top: 50%; 
@@ -295,8 +294,39 @@ body.light-mode #theme-toggle .fa-sun { display: none; }
 }
 
 /* 활성화 상태 */
-.modal-overlay.active, .modal-window.active { opacity: 1; visibility: visible; }
-.modal-window.active { transform: translate(-50%, -50%); }
+.modal-overlay.active, .modal-window.active { 
+    opacity: 1; 
+    visibility: visible; 
+}
+
+.modal-window.active { 
+    transform: translate(-50%, -50%); /* 시작 위치(-40%)에서 중앙(-50%)으로 이동하며 나타남 */
+}
+
+/* [버튼 스타일 - 이미지의 기본 버튼을 대체] */
+.btn {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    font-family: inherit;
+}
+
+.btn-secondary {
+    background: var(--btn-secondary-bg);
+    color: var(--text-color);
+    border: 1px solid var(--btn-secondary-border);
+}
+
+.btn-secondary:hover {
+    background: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
 
 /* =========================================
    6. 타임라인 & 향후 계획 (Plans Tab)
