@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/img/icon.png" type="image/png">
+    
+    <title>HANGGOK - Admin Console</title>
+    
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@latest/themes/purple/pace-theme-flash.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
+</head>
+<body data-page="admin">
+    <div class="bg-gradient"></div>
+
+    <button id="theme-toggle" title="테마 전환" aria-label="테마 전환">
+        <i class="fa-regular fa-sun"></i> <i class="fa-solid fa-moon"></i> 
+    </button>
+
+    <div class="container">
+        
+        <header class="profile">
+            <h1 class="profile-name">Admin Console</h1>
+            <p class="admin-profile-handle">Server Management & Self-Hosted Services</p>
+            <p class="profile-handle">일반 사용자는 해당 페이지의 서비스 이용이 어려울 수 있어요.</p>
+            
+            <div class="profile-links">
+                <a href="../" title="홈으로 이동" aria-label="Home">
+                    <i class="fa-solid fa-house"></i>
+                </a>
+            </div>
+        </header>
+
+        <main id="admin-services">
+            <section class="service-group">
+                <h2 class="group-title">
+                    <i class="fa-solid fa-circle-check" style="color: #2ecc71;"></i> 운영 중인 서비스
+                </h2>
+                <div class="card-container">
+                    <div class="card">
+                        <span class="status-badge online">Online</span>
+                        <div class="card-content">
+                            <h3>Main Page</h3>
+                            <p>기본 접속시 표시되는 페이지</p>
+                        </div>
+                        <a href="../" target="_blank" class="card-link" aria-label="NPM 접속">
+                            <i class="fa-solid fa-earth"></i>
+                        </a>
+                    </div>
+
+
+                    <div class="card">
+                        <span class="status-badge online">Online</span>
+                        <div class="card-content">
+                            <h3>Nginx Proxy Manager</h3>
+                            <p>Reverse Proxy 및 SSL 인증서 관리</p>
+                        </div>
+                        <a href="https://npm.hanggok.com/" target="_blank" class="card-link" aria-label="NPM 접속">
+                            <i class="fa-solid fa-server"></i>
+                        </a>
+                    </div>
+
+                    <div class="card">
+                        <span class="status-badge online">Online</span>
+                        <div class="card-content">
+                            <h3>Portainer</h3>
+                            <p>Docker 컨테이너 시각화 및 관리</p>
+                        </div>
+                        <a href="https://portainer.hanggok.com/" target="_blank" class="card-link" aria-label="Portainer 접속">
+                            <i class="fa-brands fa-docker"></i>
+                        </a>
+                    </div>
+
+
+                    <div class="card">
+                        <span class="status-badge online">Online</span>
+                        <div class="card-content">
+                            <h3>Adguard Home</h3>
+                            <p>광고 차단 및 콘텐츠 필터링</p>
+                        </div>
+                        <a href="https://adguard.hanggok.com/" target="_blank" class="card-link" aria-label="Adguard Home 접속">
+                            <i class="fa-solid fa-shield-alt"></i>
+                        </a>
+                    </div>
+
+                    
+                </div>
+            </section>
+
+            <section class="service-group">
+                <h2 class="group-title">
+                    <i class="fa-solid fa-clock" style="color: var(--text-color-secondary);"></i> 준비 중인 서비스
+                </h2>
+                <div class="card-container">
+                    
+                    <div class="card inactive-card">
+                        <span class="status-badge offline">Offline</span>
+                        <div class="card-content">
+                            <h3>Tasks.md</h3>
+                            <p>작업 관리 및 기록</p>
+                        </div>
+                        <!-- <a href="https://tasks.hanggok.com/" target="_blank" class="card-link" aria-label="Tasks.md 접속"> -->
+                        <a href="#" class="card-link srv-error" aria-label="">
+                            <i class="fa-solid fa-list-check"></i>
+                        </a>
+                    </div>
+
+
+                    <div class="card inactive-card">
+                        <span class="status-badge offline">Offline</span>
+                        <div class="card-content">
+                            <h3>Spooty</h3>
+                            <p>Spotify에서 찾은 음악을 수집하고 관리합니다.</p>
+                        </div>
+                        <!-- <a href="https://spooty.hanggok.com/" target="_blank" class="card-link" aria-label="Spooty 접속"> -->
+                        <a href="#" class="card-link srv-error" aria-label="">
+                            <i class="fa-brands fa-spotify"></i>
+                        </a>
+                    </div>
+
+                    <div class="card inactive-card">
+                        <span class="status-badge offline">Offline</span>
+                        <div class="card-content">
+                            <h3>Metube</h3>
+                            <p>YouTube에서 찾은 영상을 수집하고 관리합니다.</p>
+                        </div>
+                        <!-- <a href="https://metube.hanggok.com/" target="_blank" class="card-link" aria-label="Metube 접속"> -->
+                        <a href="#" class="card-link srv-error" aria-label="">
+                            <i class="fa-brands fa-youtube"></i>
+                        </a>
+                    </div>
+
+                    <div class="card inactive-card">
+                        <span class="status-badge offline">Offline</span>
+                        <div class="card-content">
+                            <h3>UpSnap</h3>
+                            <p>WoL (Wake-on-LAN) 서비스를 제공합니다.</p>
+                        </div>
+                        <!-- <a href="https://wol.hanggok.com/" target="_blank" class="card-link" aria-label="UpSnap 접속"> -->
+                        <a href="#" class="card-link srv-error" aria-label="">
+                            <i class="fa-solid fa-power-off"></i>
+                        </a>
+                    </div>
+
+
+                    <div class="card inactive-card">
+                        <span class="status-badge offline">Offline</span>
+                        <div class="card-content">
+                            <h3>Proxmox VE</h3>
+                            <p>가상화 시스템 관리</p>
+                        </div>
+                        <a href="#" class="card-link srv-error" aria-label="Proxmox 접속">
+                            <i class="fa-solid fa-server"></i>
+                        </a>
+                    </div>
+
+                    <div class="card inactive-card">
+                        <span class="status-badge offline">Offline</span>
+                        <div class="card-content">
+                            <h3>Constructing..</h3>
+                            <p>또 어떤 기능이 추가될까요?</p>
+                        </div>
+                        <a href="#" class="card-link srv-error" aria-label="">
+                            <i class="fa-solid fa-link"></i>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div> 
+
+    <div id="admin-warn-overlay" class="modal-overlay"></div>
+    <div id="admin-warn" class="modal-window">
+        <h2><i class="fa-solid fa-shield-halved"></i> 보안 경고</h2>
+        <p>관리자 전용 구역입니다. 서비스 이용이 제한될 수 있습니다.</p>
+        <button id="admin-warn-close-btn" class="btn btn-secondary">확인</button>
+    </div>
+
+    <div id="srv-error-overlay" class="modal-overlay"></div>
+    <div id="srv-error" class="modal-window">
+        <h2><i class="fa-solid fa-triangle-exclamation"></i> 알림</h2>
+        <p>현재 준비 중인 서비스입니다.<br>조금만 기다려주세요!</p>
+        <button id="srv-error-close-btn" class="btn btn-secondary">확인</button>
+    </div>
+
+    <footer>
+        <p>Administrator Page</p>
+        <p>&copy; 2025 HANGGOK. All Rights Reserved.</p>
+    </footer>
+    
+    <script src="../assets/js/script.js"></script>
+   
+</body>
+</html>

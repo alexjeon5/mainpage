@@ -145,6 +145,7 @@ body.light-mode #theme-toggle .fa-sun { display: none; }
     transition: color 0.2s, transform 0.2s;
 }
 .profile-links a:hover { color: var(--primary-color); transform: translateY(-3px); }
+.admin-profile-handle { color: var(--primary-color); font-weight: 500; margin-top: 0.5rem; }
 
 /* --- 탭 네비게이션 --- */
 .tabs {
@@ -240,44 +241,111 @@ body.light-mode #theme-toggle .fa-sun { display: none; }
 .card-wide-half { grid-column: span 2; flex-direction: row; align-items: center; min-height: auto; }
 .card-wide-half .card-link { margin: 0; padding: 0; }
 
+/* 서비스 준비 중(.srv-error)인 카드의 배경을 어둡게 조정 */
+.card:has(.srv-error) {
+    background-color: rgba(0, 0, 0, 0.4); /* 기본 다크 모드에서 더 어두운 배경 */
+    border-color: rgba(255, 255, 255, 0.05); /* 테두리도 은은하게 변경 */
+}
+
+/* 라이트 모드일 때의 배경 조정 */
+body.light-mode .card:has(.srv-error) {
+    background-color: rgba(0, 0, 0, 0.1); /* 밝은 배경에서 회색조로 어둡게 처리 */
+}
+
+/* 준비 중인 항목의 마우스 호버 효과 제한 (선택 사항) */
+.card:has(.srv-error):hover {
+    transform: none; /* 들뜸 효과 제거 */
+    box-shadow: none;
+    border-color: var(--card-border-color);
+}
+
 /* --- 모달 (Popup) --- */
-#srv-error-overlay {
+/* =========================================
+   6. 모달 시스템 (공용 디자인 반영)
+   ========================================= */
+
+/* 배경 레이어 */
+.modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0,0,0,0.6); z-index: 1000;
     opacity: 0; visibility: hidden; transition: 0.3s;
     backdrop-filter: blur(4px);
 }
-#srv-error {
-    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -40%);
-    background: var(--bg-color); border: 1px solid var(--card-border-color);
-    border-radius: 16px; padding: 3rem; width: 80%; max-width: 500px;
-    z-index: 1001; text-align: center;
-    opacity: 0; visibility: hidden; transition: 0.3s;
+
+/* 모달 본체 */
+.modal-window {
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -40%); 
+    background: var(--bg-color); 
+    border: 1px solid var(--card-border-color);
+    border-radius: 16px; 
+    padding: 3rem; 
+    width: 80%; 
+    max-width: 500px;
+    z-index: 1001; 
+    text-align: center;
+    opacity: 0; 
+    visibility: hidden; 
+    transition: 0.3s;
     box-shadow: 0 20px 50px rgba(0,0,0,0.3);
 }
 
-#srv-error h2 {
-    margin-bottom: 1.2rem;   /* 제목과 본문 사이의 간격 */
+/* [이미지 수정사항 반영] 제목 스타일 */
+.modal-window h2 {
+    margin-bottom: 1.2rem;   /* 제목과 본문 사이 간격 */
     font-size: 1.4rem;
 }
 
-#srv-error p {
-    line-height: 1.8;         /* 줄 간격을 벌려 가독성 향상 */
-    margin-bottom: 1.8rem;    /* 본문과 아래 확인 버튼 사이의 간격 */
-    word-break: keep-all;     /* 한글 단어가 중간에 끊기지 않게 설정 */
+/* [이미지 수정사항 반영] 본문 스타일 */
+.modal-window p {
+    line-height: 1.8;         /* 줄 간격 가독성 향상 */
+    margin-bottom: 1.8rem;    /* 본문과 버튼 사이 간격 */
+    word-break: keep-all;     /* 한글 단어 끊김 방지 */
     color: var(--text-color);
 }
 
-#srv-error i {
-    margin-right: 8px;        /* 아이콘과 '알림' 글자 사이 간격 */
-    color: #f1c40f;           /* 경고 아이콘 색상 강조 (선택 사항) */
+/* [이미지 수정사항 반영] 아이콘 스타일 */
+.modal-window i {
+    margin-right: 8px;        /* 아이콘과 텍스트 사이 간격 */
+    color: #f1c40f;           /* 경고 아이콘 색상 강조 */
 }
 
-#srv-error-overlay.active, #srv-error.active { opacity: 1; visibility: visible; }
-#srv-error.active { transform: translate(-50%, -50%); }
-.btn { padding: 0.7rem 1.5rem; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; transition: 0.2s; }
-.btn-secondary { background: var(--btn-secondary-bg); color: var(--text-color); border: 1px solid var(--btn-secondary-border); }
-.btn-secondary:hover { background: var(--text-color-secondary); color: #fff; }
+/* 활성화 상태 */
+.modal-overlay.active, .modal-window.active { 
+    opacity: 1; 
+    visibility: visible; 
+}
+
+.modal-window.active { 
+    transform: translate(-50%, -50%); /* 시작 위치(-40%)에서 중앙(-50%)으로 이동하며 나타남 */
+}
+
+/* [버튼 스타일 - 이미지의 기본 버튼을 대체] */
+.btn {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    font-family: inherit;
+}
+
+.btn-secondary {
+    background: var(--btn-secondary-bg);
+    color: var(--text-color);
+    border: 1px solid var(--btn-secondary-border);
+}
+
+.btn-secondary:hover {
+    background: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
 
 /* =========================================
    6. 타임라인 & 향후 계획 (Plans Tab)
@@ -338,11 +406,15 @@ body.light-mode #theme-toggle .fa-sun { display: none; }
 #plans-content ul:first-of-type li {
     border-left: 2px solid var(--card-border-color);
 }
-/* 첫 번째 목록은 줄 위에 점이 위치하도록 조정 */
+/* [수정] 첫 번째 목록(타임라인)의 점 위치 정밀 조정 */
 #plans-content ul:first-of-type li::before {
-    left: -5px;
+    /* 기존: left: -5px; */
+    left: -1px; /* 2px 두께의 선(border-left) 정중앙에 맞춤 */
+    transform: translateX(-50%); /* 점의 너비에 관계없이 항상 중심 정렬 */
+    top: 0.6rem; /* 텍스트 높이에 맞춰 세로 위치 미세 조정 */
 }
-/* 첫 번째 목록의 마지막 아이템은 줄 끊기 */
+
+/* [추가] 마지막 아이템의 줄이 아래로 삐져나오지 않게 처리 */
 #plans-content ul:first-of-type li:last-child {
     border-left: 2px solid transparent;
 }
@@ -360,6 +432,74 @@ body.light-mode #theme-toggle .fa-sun { display: none; }
     padding: 0.2em 0.4em;
     font-family: 'IBM Plex Sans KR', 'Poppins', sans-serif;
     font-size: 0.9em;
+}
+
+/* 섹션 그룹 스타일 */
+.service-group {
+    margin-bottom: 3rem;
+}
+
+.group-title {
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    /* padding-left: 0.5rem; */
+    /* border-left: 4px solid var(--primary-color); */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 비활성화된 카드 스타일 (.srv-error 포함 카드) */
+.inactive-card {
+    background-color: rgba(0, 0, 0, 0.4) !important; /* 배경을 더 어둡게 */
+    opacity: 0.8;
+    filter: grayscale(0.5); /* 약간의 회색조 처리 */
+    border: 1px dashed var(--card-border-color); /* 테두리를 점선으로 변경 */
+}
+
+.inactive-card:hover {
+    transform: none; /* 호버 시 들뜸 효과 제거 */
+    box-shadow: none;
+}
+
+/* 라이트 모드 대응 */
+body.light-mode .inactive-card {
+    background-color: rgba(0, 0, 0, 0.05) !important;
+    filter: grayscale(0.8);
+}
+
+/* 상태 배지 기본 스타일 */
+.status-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(4px);
+    z-index: 2;
+}
+
+/* Online 상태 (초록색 계열) */
+.status-badge.online {
+    background: rgba(46, 204, 113, 0.15);
+    color: #2ecc71;
+    border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+/* Offline 상태 (빨간색/회색 계열) */
+.status-badge.offline {
+    background: rgba(231, 76, 60, 0.15);
+    color: #e74c3c;
+    border: 1px solid rgba(231, 76, 60, 0.3);
+}
+
+/* 비활성화된 카드 스타일 (이전 가이드 포함 내용) */
+.inactive-card {
+    background-color: rgba(0, 0, 0, 0.4) !important;
+    opacity: 0.8;
 }
 
 /* =========================================

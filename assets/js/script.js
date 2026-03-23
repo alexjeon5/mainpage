@@ -38,33 +38,50 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 4. 모달 시스템
-    const overlay = document.getElementById('srv-error-overlay');
-    const modal = document.getElementById('srv-error');
-    const closeBtn = document.getElementById('srv-error-close-btn');
+    // 4. 모달 시스템 (공용 함수)
+    function createModal(overlayId, modalId, closeBtnId) {
+        const overlay = document.getElementById(overlayId);
+        const modal = document.getElementById(modalId);
+        const closeBtn = document.getElementById(closeBtnId);
 
-    function toggleModal(show) {
-        const action = show ? 'add' : 'remove';
-        overlay.classList[action]('active');
-        modal.classList[action]('active');
-        overlay.setAttribute('aria-hidden', !show);
-        modal.setAttribute('aria-hidden', !show);
-        document.body.style.overflow = show ? 'hidden' : '';
+        if (!overlay || !modal) return null;
+
+        const toggle = (show) => {
+            const action = show ? 'add' : 'remove';
+            overlay.classList[action]('active');
+            modal.classList[action]('active');
+            overlay.setAttribute('aria-hidden', !show);
+            modal.setAttribute('aria-hidden', !show);
+            document.body.style.overflow = show ? 'hidden' : '';
+        };
+
+        if (closeBtn) closeBtn.addEventListener('click', () => toggle(false));
+        overlay.addEventListener('click', () => toggle(false));
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) toggle(false);
+        });
+
+        return { toggle };
     }
 
+    // 모달 설정 초기화
+    const srvErrorModal = createModal('srv-error-overlay', 'srv-error', 'srv-error-close-btn');
+    const adminWarnModal = createModal('admin-warn-overlay', 'admin-warn', 'admin-warn-close-btn');
+
+    // 서비스 준비 중 알림 (.srv-error 클릭 시)
     document.querySelectorAll('.srv-error').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
-            toggleModal(true);
-            closeBtn.focus();
+            srvErrorModal?.toggle(true);
         });
     });
 
-    closeBtn.addEventListener('click', () => toggleModal(false));
-    overlay.addEventListener('click', () => toggleModal(false));
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('active')) toggleModal(false);
-    });
+    // 관리자 페이지 접속 시 보안 경고 자동 실행
+    // HTML의 <body data-page="admin">과 일치시킵니다.
+    if (adminWarnModal && document.body.dataset.page === 'admin') {
+        adminWarnModal.toggle(true);
+    }
 
     // 5. 마크다운 로드
     async function loadPlans() {
