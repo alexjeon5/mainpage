@@ -145,6 +145,7 @@ body.light-mode #theme-toggle .fa-sun { display: none; }
     transition: color 0.2s, transform 0.2s;
 }
 .profile-links a:hover { color: var(--primary-color); transform: translateY(-3px); }
+.admin-profile-handle { color: var(--primary-color); font-weight: 500; margin-top: 0.5rem; }
 
 /* --- 탭 네비게이션 --- */
 .tabs {
@@ -239,6 +240,24 @@ body.light-mode #theme-toggle .fa-sun { display: none; }
 /* 와이드 카드 (관리자용 등) */
 .card-wide-half { grid-column: span 2; flex-direction: row; align-items: center; min-height: auto; }
 .card-wide-half .card-link { margin: 0; padding: 0; }
+
+/* 서비스 준비 중(.srv-error)인 카드의 배경을 어둡게 조정 */
+.card:has(.srv-error) {
+    background-color: rgba(0, 0, 0, 0.4); /* 기본 다크 모드에서 더 어두운 배경 */
+    border-color: rgba(255, 255, 255, 0.05); /* 테두리도 은은하게 변경 */
+}
+
+/* 라이트 모드일 때의 배경 조정 */
+body.light-mode .card:has(.srv-error) {
+    background-color: rgba(0, 0, 0, 0.1); /* 밝은 배경에서 회색조로 어둡게 처리 */
+}
+
+/* 준비 중인 항목의 마우스 호버 효과 제한 (선택 사항) */
+.card:has(.srv-error):hover {
+    transform: none; /* 들뜸 효과 제거 */
+    box-shadow: none;
+    border-color: var(--card-border-color);
+}
 
 /* --- 모달 (Popup) --- */
 /* =========================================
