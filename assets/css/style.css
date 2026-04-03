@@ -25,6 +25,11 @@
     
     /* 기본 폰트 */
     --body-font: "Pretendard Variable", Pretendard, sans-serif;
+    
+    /* 상태 및 포인트 컬러 */
+    --warn-color: #f1c40f;
+    --success-color: #2ecc71;
+    --danger-color: #e74c3c;
 }
 
 body.light-mode {
@@ -39,6 +44,11 @@ body.light-mode {
     
     --btn-secondary-bg: #f6f8fa;
     --btn-secondary-border: #d0d7de;
+    
+    /* 라이트 모드용 상태 컬러 (시인성을 위해 약간 어둡게 조정 가능) */
+    --warn-color: #d4ac0d;
+    --success-color: #27ae60;
+    --danger-color: #c0392b;
 }
 
 /* =========================================
@@ -235,6 +245,14 @@ body.light-mode #theme-toggle .fa-sun { display: none; }
     margin-top: auto; padding-top: 1rem;
     font-size: 1.2rem; color: var(--text-color); opacity: 0.6;
 }
+
+/* [추가] 카드 전체 영역 클릭 확장 */
+.card-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
 .card-link:hover { color: var(--primary-color); opacity: 1; }
 
 /* 와이드 카드 (관리자용 등) */
@@ -309,7 +327,7 @@ body.light-mode .card:has(.srv-error) {
 /* [이미지 수정사항 반영] 아이콘 스타일 */
 .modal-window i {
     margin-right: 8px;        /* 아이콘과 텍스트 사이 간격 */
-    color: #f1c40f;           /* 경고 아이콘 색상 강조 */
+    color: var(--warn-color); /* 경고 아이콘 색상 강조 */
 }
 
 /* 활성화 상태 */
@@ -485,15 +503,15 @@ body.light-mode .inactive-card {
 /* Online 상태 (초록색 계열) */
 .status-badge.online {
     background: rgba(46, 204, 113, 0.15);
-    color: #2ecc71;
-    border: 1px solid rgba(46, 204, 113, 0.3);
+    color: var(--success-color);
+    border: 1px solid var(--success-color);
 }
 
 /* Offline 상태 (빨간색/회색 계열) */
 .status-badge.offline {
     background: rgba(231, 76, 60, 0.15);
-    color: #e74c3c;
-    border: 1px solid rgba(231, 76, 60, 0.3);
+    color: var(--danger-color);
+    border: 1px solid var(--danger-color);
 }
 
 /* 비활성화된 카드 스타일 (이전 가이드 포함 내용) */

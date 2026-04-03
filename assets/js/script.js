@@ -6,9 +6,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
     
-    // 초기 테마 설정 (시스템 설정 반영 가능하면 좋음)
+    // 2-1. 시스템 기본 테마 설정 감지
+    const prefersLightScheme = window.matchMedia('(prefers-color-scheme: light)').matches;
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') body.classList.add('light-mode');
+    
+    if (savedTheme === 'light' || (!savedTheme && prefersLightScheme)) {
+        body.classList.add('light-mode');
+    }
 
     themeToggle.addEventListener('click', () => {
         body.classList.toggle('light-mode');
@@ -20,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tabs = document.querySelectorAll('.tab');
     const panels = document.querySelectorAll('.tab-panel');
 
-    tabs.forEach(tab => {
+    tabs.forEach((tab, index) => {
         tab.addEventListener('click', () => {
             const targetId = tab.getAttribute('data-tab');
 
@@ -35,6 +39,22 @@ document.addEventListener('DOMContentLoaded', () => {
             tab.classList.add('active');
             tab.setAttribute('aria-selected', 'true');
             document.getElementById(targetId).classList.add('active');
+        });
+
+        // [추가] 키보드 방향키로 탭 탐색 지원
+        tab.addEventListener('keydown', (e) => {
+            let targetIndex = index;
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                targetIndex = (index + 1) % tabs.length;
+                e.preventDefault();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                targetIndex = (index - 1 + tabs.length) % tabs.length;
+                e.preventDefault();
+            }
+            if (targetIndex !== index) {
+                tabs[targetIndex].click();
+                tabs[targetIndex].focus();
+            }
         });
     });
 
@@ -53,10 +73,35 @@ document.addEventListener('DOMContentLoaded', () => {
             overlay.setAttribute('aria-hidden', !show);
             modal.setAttribute('aria-hidden', !show);
             document.body.style.overflow = show ? 'hidden' : '';
+
+            // [추가] 모달 열림 시 포커스를 모달 내부 첫 번째 요소로 이동
+            if (show) {
+                const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                if (focusableElements.length) {
+                    setTimeout(() => focusableElements[0].focus(), 50); // 화면에 나타난 직후 포커스 부여
+                }
+            }
         };
 
         if (closeBtn) closeBtn.addEventListener('click', () => toggle(false));
         overlay.addEventListener('click', () => toggle(false));
+
+        // [추가] 포커스 트랩(Focus Trap) 로직
+        modal.addEventListener('keydown', (e) => {
+            if (e.key !== 'Tab') return;
+            
+            const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            const firstElement = focusableElements[0];
+            const lastElement = focusableElements[focusableElements.length - 1];
+
+            if (e.shiftKey && document.activeElement === firstElement) {
+                lastElement.focus();
+                e.preventDefault();
+            } else if (!e.shiftKey && document.activeElement === lastElement) {
+                firstElement.focus();
+                e.preventDefault();
+            }
+        });
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && modal.classList.contains('active')) toggle(false);
@@ -90,7 +135,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const res = await fetch('assets/md/plans.md');
             if (!res.ok) throw new Error('File not found');
             const text = await res.text();
-            container.innerHTML = marked.parse(text);
+            const rawHtml = marked.parse(text);
+            container.innerHTML = DOMPurify.sanitize(rawHtml);
         } catch (err) {
             console.error(err);
             container.innerHTML = `<p style="text-align:center; padding: 1rem; color: var(--text-color-secondary);">

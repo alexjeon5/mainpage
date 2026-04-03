@@ -12,16 +12,29 @@
     <meta property="og:url" content="https://www.hanggok.com">
     <meta name="theme-color" content="#0d1117">
 
+    <!-- [추가] 브라우저 보안 정책(CSP 및 Referrer) -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self';">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
     <title>HANGGOK SERVER</title>
     
     <link rel="stylesheet" href="assets/css/style.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@latest/themes/purple/pace-theme-flash.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/purple/pace-theme-flash.css">
 
-    <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- DOMPurify CDN 추가 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.1/marked.min.js"></script>
+
+    <!-- [추가] Clickjacking 방지 스크립트 (Frame Busting) -->
+    <style id="antiClickjack">body{display:none !important;}</style>
+    <script type="text/javascript">
+        if (self === top) { var antiClickjack = document.getElementById("antiClickjack"); antiClickjack.parentNode.removeChild(antiClickjack); } 
+        else { top.location = self.location; }
+    </script>
 </head>
 <body>
     <div class="bg-gradient"></div>
@@ -38,13 +51,13 @@
             <p class="profile-handle">HANGGOK</p>
 
             <div class="profile-links">
-                <a href="https://www.instagram.com/hs1xh_k/" target="_blank" title="Instagram DM" aria-label="Instagram">
+                <a href="https://www.instagram.com/hs1xh_k/" target="_blank" rel="noopener noreferrer" title="Instagram DM" aria-label="Instagram">
                     <i class="fa-brands fa-instagram"></i>
                 </a>
-                <a href="https://github.com/alexjeon5" target="_blank" title="깃허브 방문" aria-label="GitHub">
+                <a href="https://github.com/alexjeon5" target="_blank" rel="noopener noreferrer" title="깃허브 방문" aria-label="GitHub">
                     <i class="fa-brands fa-github"></i>
                 </a>
-                <a href="https://www.youtube.com/@HANGGOK" target="_blank" title="유튜브 채널" aria-label="YouTube">
+                <a href="https://www.youtube.com/@HANGGOK" target="_blank" rel="noopener noreferrer" title="유튜브 채널" aria-label="YouTube">
                     <i class="fa-brands fa-youtube"></i> 
                 </a>
             </div>
