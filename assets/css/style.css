@@ -106,7 +106,7 @@ body.light-mode .bg-gradient {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 1rem auto;
     position: relative;
     z-index: 1;
@@ -226,7 +226,11 @@ body.light-mode #theme-toggle .fa-sun { display: none; }
 .info-item-value { font-weight: 500; font-size: 1rem; }
 
 /* --- 서비스 카드 (Projects Tab) --- */
-.card-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; }
+.card-container { 
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 1.2rem; 
+}
 .card {
     background-color: var(--card-bg-color);
     backdrop-filter: blur(16px);
@@ -526,6 +530,10 @@ body.light-mode .inactive-card {
    ========================================= */
 @media (max-width: 768px) {
     /* 정보 탭 그리드 1단 변경 */
+    .card-container { 
+        grid-template-columns: 1fr; 
+    }
+    
     .info-grid { grid-template-columns: 1fr; }
     
     /* 모바일 카드 스타일 조정 */
