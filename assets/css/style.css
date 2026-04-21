@@ -425,27 +425,39 @@ body.light-mode .card:has(.srv-error) {
     z-index: 1;
 }
 
-/* [중요] 첫 번째 목록(타임라인)만 왼쪽에 줄(Line) 표시 */
 #plans-content ul:first-of-type li {
-    border-left: 2px solid var(--card-border-color);
-}
-/* [수정] 첫 번째 목록(타임라인)의 점 위치 정밀 조정 */
-#plans-content ul:first-of-type li::before {
-    /* 기존: left: -5px; */
-    left: -1px; /* 2px 두께의 선(border-left) 정중앙에 맞춤 */
-    transform: translateX(-50%); /* 점의 너비에 관계없이 항상 중심 정렬 */
-    top: 0.6rem; /* 텍스트 높이에 맞춰 세로 위치 미세 조정 */
+    border-left: none; /* 기존 border 제거 */
+    position: relative;
 }
 
-/* [추가] 마지막 아이템의 줄이 아래로 삐져나오지 않게 처리 */
-#plans-content ul:first-of-type li:last-child {
-    border-left: 2px solid transparent;
+/* 세로 줄을 위한 가상 요소 추가 */
+#plans-content ul:first-of-type li::after {
+    content: '';
+    position: absolute;
+    left: 0px;
+    transform: translateX(-50%);
+    width: 2px;
+    background: var(--card-border-color);
+    top: 0;
+    bottom: 0;
+    z-index: 0;
+}
+
+/* [수정] 첫 번째 아이템: 줄의 시작점을 점의 위치(0.6rem)로 조정 */
+#plans-content ul:first-of-type li:first-child::after {
+    top: 0.6rem;
+}
+
+/* [수정] 마지막 아이템: 줄의 끝점을 점의 위치(0.6rem)에서 멈추도록 조정 */
+#plans-content ul:first-of-type li:last-child::after {
+    bottom: auto;
+    height: 0.6rem;
 }
 
 /* [중요] 두 번째 목록(향후 계획)부터는 줄 없이 점만 표시 */
 #plans-content ul:not(:first-of-type) li {
     border-left: none;
-    padding-bottom: 0.5rem;
+    padding-bottom: 0.75rem;
 }
 
 /* 인라인 코드 스타일 */
