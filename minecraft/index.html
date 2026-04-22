@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/img/icon.png" type="image/png">
+    
+    <title>HANGGOK - Minecraft Server</title>
+    
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/purple/pace-theme-flash.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+
+    <button id="theme-toggle" title="테마 전환" aria-label="테마 전환">
+        <i class="fa-regular fa-sun"></i> <i class="fa-solid fa-moon"></i> 
+    </button>
+
+    <div class="container">
+        
+        <header class="profile">
+            <h1 class="profile-name">HANGGOK MC Server</h1>
+            <p class="profile-handle" style="color: #2ecc71;">24시간 구동 야생 마인크래프트 서버</p>
+            
+            <div class="profile-links">
+                <a href="../" title="홈으로 이동" aria-label="Home">
+                    <i class="fa-solid fa-house"></i>
+                </a>
+            </div>
+        </header>
+
+        <main>
+            <section class="service-group">
+                <div class="card-container" style="grid-template-columns: 1fr;">
+                    <div class="card" style="display: flex; flex-direction: row; flex-wrap: wrap; padding: 3rem; gap: 3rem; align-items: center;">
+                        
+                        <div style="flex: 1 1 150px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+                            <i class="fa-solid fa-cube" style="font-size: 3.5rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
+                            <h3 style="font-size: 1.3rem; margin-bottom: 0.3rem;">Server Details</h3>
+                            <p style="color: var(--text-color-secondary); font-size: 0.9rem;">야생 생존 서버</p>
+                        </div>
+
+                        <div style="flex: 2 1 300px; display: flex; flex-direction: column; gap: 1.5rem;">
+                            
+                            <div class="info-item" style="margin-bottom: 0;">
+                                <i class="fa-solid fa-network-wired fa-fw" style="color: var(--primary-color); font-size: 1.5rem; width: 35px;"></i>
+                                <div style="width: 100%;">
+                                    <span class="info-item-title" style="font-size: 0.9rem;">서버 주소 (IP)</span>
+                                    <div style="display: flex; align-items: center; gap: 12px; margin-top: 4px; flex-wrap: wrap;">
+                                        <span id="server-ip" class="info-item-value" style="font-size: 1.3rem; font-weight: 700; color: var(--primary-color); user-select: all; cursor: pointer;" title="클릭하여 선택">mc.hanggok.net</span>
+                                        
+                                        <button id="copy-btn" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; gap: 6px; border-radius: 8px;">
+                                            <i class="fa-regular fa-copy" style="font-size: 1em; width: auto; margin: 0;"></i> 서버 주소 복사하기
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="info-item" style="margin-bottom: 0;">
+                                <i class="fa-solid fa-code-branch fa-fw" style="font-size: 1.2rem; width: 35px;"></i>
+                                <div>
+                                    <span class="info-item-title" style="font-size: 0.9rem;">버전</span>
+                                    <span class="info-item-value" style="font-size: 1.1rem; font-weight: 600;">26.1.2 (Paper)</span> 
+                                </div>
+                            </div>
+                            
+                            <div class="info-item" style="margin-bottom: 0;">
+                                <i class="fa-solid fa-clock fa-fw" style="font-size: 1.2rem; width: 35px;"></i>
+                                <div>
+                                    <span class="info-item-title" style="font-size: 0.9rem;">운영 시간</span>
+                                    <span class="info-item-value" style="font-size: 1.1rem; font-weight: 600;">24시간 (상시 구동)</span> 
+                                </div>
+                            </div>
+
+                            <div class="info-item" style="margin-bottom: 0;">
+                                <i class="fa-solid fa-users fa-fw" style="font-size: 1.2rem; width: 35px;"></i>
+                                <div>
+                                    <span class="info-item-title" style="font-size: 0.9rem;">접속 방식</span>
+                                    <span class="info-item-value" style="font-size: 1.1rem; font-weight: 600;">화이트리스트 (지인 전용)</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="service-group">
+                <h2 class="group-title" style="font-size: 1.2rem; margin-top: 1rem;">
+                    <i class="fa-solid fa-book"></i> 서버 이용 안내
+                </h2>
+                <div class="card-container" style="grid-template-columns: 1fr;">
+                    <div class="card card-wide-half" style="flex-direction: column; align-items: flex-start;">
+                        <div class="card-content" style="width: 100%;">
+                            <h3 style="margin-bottom: 1rem; color: var(--primary-color);">기본 규칙</h3>
+                            <ul style="color: var(--text-color-secondary); line-height: 1.8; padding-left: 1.2rem;">
+                                <li>서버에 대한 DDoS 공격이나 운영에 심각하게 지장을 주는 행위는 엄격하게 금지됩니다.</li>
+                                <li>타인의 건축물을 허가 없이 훼손하거나 아이템을 훔치는 행위는 금지됩니다.</li>
+                                <li>서버 리소스를 과도하게 소모하는 거대한 레드스톤 회로나 공장 건설은 자제해 주세요.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div> 
+
+    <footer>
+        <p>&copy; 2026 HANGGOK. All Rights Reserved.</p>
+    </footer>
+    
+    <script src="../assets/js/script.js"></script>
+    
+    <script>
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const ipAddress = document.getElementById('server-ip').innerText;
+            const btn = this;
+            
+            navigator.clipboard.writeText(ipAddress).then(() => {
+                // 성공 시 버튼 텍스트 변경 (여백 방지 style 유지)
+                const originalContent = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-check" style="font-size: 1em; width: auto; margin: 0;"></i> 복사 완료';
+                btn.style.borderColor = 'var(--success-color)';
+                btn.style.color = 'var(--success-color)';
+                
+                // 2초 후 원래대로 복구
+                setTimeout(() => {
+                    btn.innerHTML = originalContent;
+                    btn.style.borderColor = '';
+                    btn.style.color = '';
+                }, 2000);
+            }).catch(err => {
+                console.error('복사 실패:', err);
+            });
+        });
+    </script>
+</body>
+</html>

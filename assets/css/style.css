@@ -261,7 +261,7 @@ body.light-mode #theme-toggle .fa-sun { display: none; }
 .card-link:hover { color: var(--primary-color); opacity: 1; }
 
 /* 와이드 카드 (관리자용 등) */
-.card-wide-half { grid-column: span 2; flex-direction: row; align-items: center; min-height: auto; }
+.card-wide-half { grid-column: span 2; }
 .card-wide-half .card-link { margin: 0; padding: 0; }
 
 /* 서비스 준비 중(.srv-error)인 카드의 배경을 어둡게 조정 */

@@ -157,7 +157,7 @@
                             <i class="fa-solid fa-server fa-fw"></i>
                             <div>
                                 <span class="info-item-title">Web Server</span>
-                                <span class="info-item-value">Nginx Proxy Manager</span>
+                                <span class="info-item-value">NPMplus</span>
                             </div>
                         </div>
                     </div>
@@ -166,18 +166,20 @@
             
             <section id="projects" class="tab-panel" role="tabpanel" aria-labelledby="tab-projects">
                 <div class="card-container">
-                    <div class="card">
+                    <div class="card card-wide">
                         <div class="card-content">
-                            <h3>Tistory Blog</h3>
-                            <p>HANGGOK의 IT 블로그</p>
+                        <span class="status-badge online">Online</span>
+                            <h3>Minecraft Server</h3>
+                            <p>24시간 운영되는 마인크래프트 서버</p>
                         </div>
-                        <a href="https://blog.hanggok.com/" class="card-link" aria-label="블로그 방문">
+                        <a href="minecraft/" class="card-link" aria-label="마인크래프트 서버 소개 페이지 이동">
                             <i class="fa-solid fa-link"></i>
                         </a>
                     </div>
-                    
+
                     <div class="card">
                         <div class="card-content">
+                        <span class="status-badge online">Online</span>
                             <h3>Favorite KNU Place</h3>
                             <p>내가 뽑은 경북대 주변 맛집 지도</p>
                             <p style="font-size: 0.8rem; opacity: 0.8;">* 네이버 로그인이 필요할 수 있어요.</p>
@@ -186,12 +188,35 @@
                             <i class="fa-solid fa-link"></i>
                         </a>
                     </div>
+
                     <div class="card">
                         <div class="card-content">
+                        <span class="status-badge online">Online</span>
                             <h3>Old Version Website</h3>
                             <p>초기 마크다운 버전 웹사이트</p>
                         </div>
                         <a href="old/" class="card-link" aria-label="구버전 이동">
+                            <i class="fa-solid fa-link"></i>
+                        </a>
+                    </div>
+
+                    <div class="card inactive-card">
+                        <span class="status-badge offline">Offline</span>
+                        <div class="card-content">
+                            <h3>HANGGOK Drive</h3>
+                            <p>NAS 드라이브 (개인용)</p>
+                        </div>
+                        <a href="#" class="card-link srv-error" aria-label="접속 불가">
+                            <i class="fa-solid fa-link"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-content">
+                            <h3>Tistory Blog</h3>
+                            <p>HANGGOK의 IT 블로그</p>
+                        </div>
+                        <a href="https://blog.hanggok.com/" class="card-link" aria-label="블로그 방문">
                             <i class="fa-solid fa-link"></i>
                         </a>
                     </div>
@@ -204,26 +229,7 @@
                             <i class="fa-solid fa-link"></i>
                         </a>
                     </div>
-                    <div class="card inactive-card">
-                        <span class="status-badge offline">Offline</span>
-                        <div class="card-content">
-                            <h3>HANGGOK Drive</h3>
-                            <p>NAS 드라이브 (개인용)</p>
-                        </div>
-                        <a href="#" class="card-link srv-error" aria-label="접속 불가">
-                            <i class="fa-solid fa-link"></i>
-                        </a>
-                    </div>
-                    <div class="card inactive-card">
-                        <span class="status-badge offline">Offline</span>
-                        <div class="card-content">
-                            <h3>Constructing..</h3>
-                            <p>또 어떤 기능이 추가될까요?</p>
-                        </div>
-                        <a href="#" class="card-link srv-error" aria-label="">
-                            <i class="fa-solid fa-link"></i>
-                        </a>
-                    </div>
+
                     <div class="card card-wide-half">
                         <div class="card-content">
                             <h3>Admin Console</h3>
@@ -233,6 +239,18 @@
                             <i class="fa-solid fa-link"></i>
                         </a>
                     </div>
+
+                    <div class="card inactive-card card-wide-half">
+                        <span class="status-badge offline">Offline</span>
+                        <div class="card-content">
+                            <h3>Constructing..</h3>
+                            <p>또 어떤 기능이 추가될까요?</p>
+                        </div>
+                        <a href="#" class="card-link srv-error" aria-label="">
+                            <i class="fa-solid fa-link"></i>
+                        </a>
+                    </div>
+                    
                 </div>
             </section>
 
@@ -252,12 +270,12 @@
     <div id="srv-error-overlay" class="modal-overlay"></div>
     <div id="srv-error" class="modal-window">
         <h2><i class="fa-solid fa-triangle-exclamation"></i> 알림</h2>
-        <p>현재 준비 중인 서비스입니다.<br>조금만 기다려주세요!</p>
+        <p>현재 서비스를 준비하고 있습니다.<br>조금만 기다려주세요!</p>
         <button id="srv-error-close-btn" class="btn btn-secondary">확인</button>
     </div>
     
     <footer>
-        <p>Last Update: 2026.04.21</p>
+        <p>Last Update: 2026.04.22</p>
         <p>&copy; 2026 HANGGOK. All Rights Reserved.</p>
     </footer>
     
