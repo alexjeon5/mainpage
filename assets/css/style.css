@@ -116,16 +116,45 @@ body.light-mode .bg-gradient {
    5. UI 컴포넌트 스타일
    ========================================= */
 
-/* --- 테마 토글 버튼 --- */
-#theme-toggle {
+/* --- 상단 컨트롤 (언어 선택 & 테마 토글) --- */
+.top-controls {
     position: fixed;
     top: 1.5rem; right: 1.5rem;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    z-index: 1000;
+}
+
+.lang-select {
     background: var(--card-bg-color);
     border: 1px solid var(--card-border-color);
     backdrop-filter: blur(10px);
     color: var(--text-color);
     cursor: pointer;
-    z-index: 1000;
+    padding: 0.5rem 0.8rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    text-align: center;
+}
+
+.lang-select:hover {
+    border-color: var(--primary-color);
+}
+
+#theme-toggle {
+    background: var(--card-bg-color);
+    border: 1px solid var(--card-border-color);
+    backdrop-filter: blur(10px);
+    color: var(--text-color);
+    cursor: pointer;
     padding: 0.6rem;
     border-radius: 50%;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -136,7 +165,6 @@ body.light-mode .bg-gradient {
 #theme-toggle .fa-sun { display: block; }
 body.light-mode #theme-toggle .fa-moon { display: block; }
 body.light-mode #theme-toggle .fa-sun { display: none; }
-
 /* --- 프로필 섹션 --- */
 .profile { text-align: center; margin-bottom: 2.5rem; }
 .profile-img {
