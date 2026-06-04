@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 
+    <script crossorigin src="https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js"></script>
+
     <style>
         /* =========================================
            1. HANGGOK 테마 시스템 (CSS 변수)
@@ -231,11 +233,11 @@
         <h2><i class="fa-solid fa-gem" style="color: var(--primary-color);"></i> 1회 계산 결제</h2>
         <p style="margin-top: 0;">계산기 무료 이용 횟수가 만료되었습니다.<br>추가 계산 시 1회당 결제가 필요합니다.</p>
         
-        <button class="apple-pay-btn" id="apple-pay-btn" onclick="processApplePay()">
+        <button class="apple-pay-btn" id="apple-pay-btn" onclick="processApplePay()" style="display: none;">
             <img src="Apple_Pay_Mark_RGB_041619.svg" alt="Apple Pay" class="apple-pay-logo">
         </button>
 
-        <div class="divider"><span>또는 신용카드 결제</span></div>
+        <div class="divider" id="apple-pay-divider" style="display: none;"><span>또는 신용카드 결제</span></div>
 
         <div class="payment-form">
             <div class="input-group">
@@ -282,9 +284,7 @@
         let currentExpression = '';
         let shouldResetDisplay = false;
         let isCalculating = false;
-        let calculationCount = 0; // 계산 횟수 추적
-        
-        // 💡 isPremium(무제한 모드) 변수는 제거되었습니다.
+        let calculationCount = 0; 
 
         function updateDisplay(value) { display.value = value; }
 
@@ -315,18 +315,33 @@
         function calculate() {
             if (currentExpression === '' || isCalculating) return;
             
-            // 💡 1회 이상 계산했다면 결제창 띄움 (무제한 패스 없음)
+            // 💡 1회 이상 계산했다면 결제창 띄움
             if (calculationCount >= 1) {
+                // 결제창 열기
                 document.getElementById('payment-overlay').classList.add('active');
                 document.getElementById('payment-modal').classList.add('active');
+
+                // 🌟 이미지 기반: Apple Pay 기기 호환성 확인 로직
+                const isApplePaySupported = window.ApplePaySession && ApplePaySession.canMakePayments();
+                
+                const applePayBtn = document.getElementById('apple-pay-btn');
+                const applePayDivider = document.getElementById('apple-pay-divider');
+
+                if (isApplePaySupported) {
+                    applePayBtn.style.display = 'flex';
+                    applePayDivider.style.display = 'flex';
+                } else {
+                    applePayBtn.style.display = 'none';
+                    applePayDivider.style.display = 'none';
+                }
+                
                 return; 
             }
             
-            // 무료 1회차일 경우 바로 계산 함수 실행
             executeCalculation();
         }
 
-        // 실제 계산 진행 (Thinking 모달 10초 대기)
+        // 실제 계산 진행 (Thinking 모달 5초 대기)
         function executeCalculation() {
             isCalculating = true;
             document.getElementById('thinking-overlay').classList.add('active');
@@ -339,7 +354,7 @@
                     updateDisplay(result);
                     currentExpression = result.toString();
                     shouldResetDisplay = true;
-                    calculationCount++; // 계산 완료 시 카운트 증가
+                    calculationCount++; 
                 } catch (error) {
                     updateDisplay('Error');
                     currentExpression = '';
@@ -349,7 +364,7 @@
                     document.getElementById('thinking-modal').classList.remove('active');
                     isCalculating = false;
                 }
-            }, 5000); 
+            }, 5000); // 👈 5초로 수정됨
         }
 
         function clearDisplay() {
@@ -357,6 +372,7 @@
             currentExpression = '';
             updateDisplay('0');
             shouldResetDisplay = false;
+            // 만약 C를 누를 때 카운트도 리셋하려면: calculationCount = 0;
         }
 
         // ==========================================
@@ -395,13 +411,10 @@
             appleBtn.disabled = true;
 
             setTimeout(() => {
-                // 알림 텍스트 변경: 무제한 -> 1회 진행
                 alert(' Apple Pay 결제가 성공적으로 완료되었습니다!\n1회 계산이 진행됩니다.');
                 closePaymentModal();
                 appleBtn.innerHTML = originalHTML; 
                 appleBtn.disabled = false;
-                
-                // 💡 곧바로 1회 계산 로직 직접 호출
                 executeCalculation(); 
             }, 2000);
         }
@@ -426,11 +439,9 @@
             cancelBtn.disabled = true;
 
             setTimeout(() => {
-                // 알림 텍스트 변경: 무제한 -> 1회 진행
                 alert('✅ 카드 결제가 승인되었습니다!\n1회 계산이 진행됩니다.');
                 closePaymentModal();
                 
-                // 결제창 초기화
                 document.getElementById('card-number').value = '';
                 document.getElementById('card-expiry').value = '';
                 document.getElementById('card-cvc').value = '';
@@ -440,7 +451,6 @@
                 btn.disabled = false;
                 cancelBtn.disabled = false;
                 
-                // 💡 곧바로 1회 계산 로직 직접 호출
                 executeCalculation(); 
             }, 1500); 
         }
