@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HANGGOK Calculator</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+
+    <style>
+        /* =========================================
+           1. HANGGOK 테마 시스템 (CSS 변수)
+           ========================================= */
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #e0e0e0;
+            --text-color-secondary: #8b949e;
+            --primary-color: #58a6ff;
+            --card-bg-color: rgba(22, 27, 34, 0.6);
+            --card-border-color: rgba(240, 246, 252, 0.1);
+            --btn-secondary-bg: #21262d;
+            --btn-secondary-border: #30363d;
+            --danger-color: #e74c3c;
+            --warn-color: #f1c40f;
+            --body-font: "Pretendard Variable", Pretendard, sans-serif;
+        }
+
+        body.light-mode {
+            --bg-color: #f4f7f6;
+            --text-color: #1f2328;
+            --text-color-secondary: #656d76;
+            --primary-color: #0969da;
+            --card-bg-color: rgba(255, 255, 255, 0.7);
+            --card-border-color: rgba(210, 213, 218, 0.5);
+            --btn-secondary-bg: #f6f8fa;
+            --btn-secondary-border: #d0d7de;
+            --danger-color: #c0392b;
+            --warn-color: #d4ac0d;
+        }
+
+        /* =========================================
+           2. 기본 스타일 & 배경 그라디언트
+           ========================================= */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--body-font);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .bg-gradient {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none;
+            background: radial-gradient(circle at 15% 50%, rgba(88, 166, 255, 0.15), transparent 25%),
+                        radial-gradient(circle at 85% 30%, rgba(139, 88, 255, 0.15), transparent 25%);
+            filter: blur(40px); opacity: 0.8; transition: background 0.3s;
+        }
+        body.light-mode .bg-gradient {
+            background: radial-gradient(circle at 15% 50%, rgba(9, 105, 218, 0.1), transparent 25%),
+                        radial-gradient(circle at 85% 30%, rgba(40, 167, 69, 0.1), transparent 25%);
+        }
+
+        /* =========================================
+           3. 테마 토글 버튼
+           ========================================= */
+        #theme-toggle {
+            position: fixed; top: 1.5rem; right: 1.5rem;
+            background: var(--card-bg-color); border: 1px solid var(--card-border-color);
+            backdrop-filter: blur(10px); color: var(--text-color);
+            cursor: pointer; width: 45px; height: 45px; border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: all 0.3s ease;
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem;
+        }
+        #theme-toggle:hover { transform: rotate(15deg) scale(1.1); }
+        #theme-toggle .fa-moon { display: none; }
+        #theme-toggle .fa-sun { display: block; }
+        body.light-mode #theme-toggle .fa-moon { display: block; }
+        body.light-mode #theme-toggle .fa-sun { display: none; }
+
+        /* =========================================
+           4. 계산기 본체
+           ========================================= */
+        .calculator {
+            background-color: var(--card-bg-color);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border-color); border-radius: 16px;
+            padding: 2rem; width: 320px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .calculator:hover { border-color: var(--primary-color); box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
+
+        .display {
+            width: 100%; background: rgba(0, 0, 0, 0.2); color: var(--text-color);
+            border: 1px inset var(--card-border-color); border-radius: 12px;
+            padding: 15px; font-size: 2.2rem; text-align: right;
+            margin-bottom: 20px; outline: none; font-family: inherit;
+            font-weight: 600; letter-spacing: 2px;
+        }
+        body.light-mode .display { background: rgba(255, 255, 255, 0.4); border-color: var(--btn-secondary-border); }
+
+        .keys { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+
+        button.calc-btn {
+            background: var(--btn-secondary-bg); color: var(--text-color);
+            border: 1px solid var(--btn-secondary-border); border-radius: 10px;
+            font-family: inherit; font-size: 1.2rem; font-weight: 500;
+            padding: 18px 0; cursor: pointer; transition: all 0.2s ease;
+        }
+        button.calc-btn:hover { border-color: var(--primary-color); background: var(--primary-color); color: #fff; transform: translateY(-2px); }
+        button.operator { color: var(--primary-color); background: rgba(88, 166, 255, 0.1); font-weight: 600; }
+        button.clear { color: var(--danger-color); background: rgba(231, 76, 60, 0.1); grid-column: span 2; }
+        button.clear:hover { background: var(--danger-color); border-color: var(--danger-color); }
+        button.equals { background: var(--primary-color); color: #fff; border-color: var(--primary-color); font-weight: 600; }
+        button.zero { grid-column: span 2; }
+
+        /* =========================================
+           5. 모달 및 폼(Form) UI 시스템
+           ========================================= */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 1000;
+            opacity: 0; visibility: hidden; transition: 0.3s;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-window {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -40%);
+            background: var(--bg-color); border: 1px solid var(--card-border-color);
+            border-radius: 16px; padding: 2.5rem; width: 90%; max-width: 420px;
+            z-index: 1001; text-align: center; opacity: 0; visibility: hidden;
+            transition: 0.3s; box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .modal-window h2 { font-size: 1.4rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 0.5rem; }
+        .modal-window p { line-height: 1.6; font-size: 0.95rem; color: var(--text-color-secondary); word-break: keep-all; }
+        .modal-overlay.active, .modal-window.active { opacity: 1; visibility: visible; }
+        .modal-window.active { transform: translate(-50%, -50%); }
+
+        /* 🍏 Apple Pay 가이드라인 맞춤 버튼 */
+        .apple-pay-btn {
+            display: flex; justify-content: center; align-items: center; gap: 6px;
+            width: 100%; height: 48px; background-color: #000; color: #fff;
+            border: none; border-radius: 10px; cursor: pointer; 
+            transition: background 0.2s; margin-top: 1.5rem;
+        }
+        .apple-pay-btn:hover { background-color: #222; }
+        .apple-pay-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+        .apple-pay-logo { height: 26px; width: auto; object-fit: contain; pointer-events: none; }
+
+        /* 구분선 (Or) */
+        .divider {
+            display: flex; align-items: center; text-align: center;
+            margin: 1.2rem 0; color: var(--text-color-secondary); font-size: 0.85rem;
+        }
+        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--btn-secondary-border); }
+        .divider span { padding: 0 12px; }
+
+        /* 카드 결제 폼 */
+        .payment-form { display: flex; flex-direction: column; gap: 12px; text-align: left; }
+        .input-group { display: flex; flex-direction: column; gap: 6px; }
+        .row-inputs { display: flex; gap: 12px; }
+        .row-inputs .input-group { flex: 1; min-width: 0; }
+        .input-group label { font-size: 0.85rem; color: var(--text-color-secondary); font-weight: 500; }
+        .input-group input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2); border: 1px solid var(--btn-secondary-border);
+            color: var(--text-color); padding: 12px 14px; border-radius: 10px;
+            font-family: inherit; font-size: 1rem; outline: none; transition: border-color 0.3s;
+        }
+        body.light-mode .input-group input { background: rgba(255, 255, 255, 0.5); }
+        .input-group input:focus { border-color: var(--primary-color); }
+
+        .modal-buttons { display: flex; gap: 10px; justify-content: center; margin-top: 1.5rem; }
+        .btn { display: inline-block; padding: 0.8rem 1.5rem; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; border: none; font-family: inherit; flex: 1; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .btn-primary { background: var(--primary-color); color: #fff; }
+        .btn-primary:not(:disabled):hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(88, 166, 255, 0.3); }
+        .btn-secondary { background: var(--btn-secondary-bg); color: var(--text-color); border: 1px solid var(--btn-secondary-border); }
+        .btn-secondary:not(:disabled):hover { background: var(--primary-color); color: #fff; border-color: var(--primary-color); }
+    </style>
+</head>
+<body>
+
+    <div class="bg-gradient"></div>
+
+    <button id="theme-toggle" title="테마 전환">
+        <i class="fa-regular fa-sun"></i> <i class="fa-solid fa-moon"></i> 
+    </button>
+
+    <div class="calculator">
+        <input type="text" class="display" id="display" disabled value="0">
+        
+        <div class="keys">
+            <button class="calc-btn clear" onclick="clearDisplay()">C</button>
+            <button class="calc-btn operator" onclick="appendOperator('/')"><i class="fa-solid fa-divide"></i></button>
+            <button class="calc-btn operator" onclick="appendOperator('*')"><i class="fa-solid fa-xmark"></i></button>
+            <button class="calc-btn" onclick="appendNumber('7')">7</button>
+            <button class="calc-btn" onclick="appendNumber('8')">8</button>
+            <button class="calc-btn" onclick="appendNumber('9')">9</button>
+            <button class="calc-btn operator" onclick="appendOperator('-')"><i class="fa-solid fa-minus"></i></button>
+            <button class="calc-btn" onclick="appendNumber('4')">4</button>
+            <button class="calc-btn" onclick="appendNumber('5')">5</button>
+            <button class="calc-btn" onclick="appendNumber('6')">6</button>
+            <button class="calc-btn operator" onclick="appendOperator('+')"><i class="fa-solid fa-plus"></i></button>
+            <button class="calc-btn" onclick="appendNumber('1')">1</button>
+            <button class="calc-btn" onclick="appendNumber('2')">2</button>
+            <button class="calc-btn" onclick="appendNumber('3')">3</button>
+            <button class="calc-btn equals" style="grid-row: span 2;" onclick="calculate()">=</button>
+            <button class="calc-btn zero" onclick="appendNumber('0')">0</button>
+            <button class="calc-btn" onclick="appendNumber('.')">.</button>
+        </div>
+    </div>
+
+    <div id="thinking-overlay" class="modal-overlay"></div>
+    <div id="thinking-modal" class="modal-window">
+        <h2><i class="fa-solid fa-spinner fa-spin" style="color: var(--primary-color);"></i> Thinking...</h2>
+        <p>수식을 처리하고 있습니다.<br>잠시만 기다려 주세요.</p>
+    </div>
+
+    <div id="payment-overlay" class="modal-overlay"></div>
+    <div id="payment-modal" class="modal-window">
+        <h2><i class="fa-solid fa-gem" style="color: var(--primary-color);"></i> 1회 계산 결제</h2>
+        <p style="margin-top: 0;">계산기 무료 이용 횟수가 만료되었습니다.<br>추가 계산 시 1회당 결제가 필요합니다.</p>
+        
+        <button class="apple-pay-btn" id="apple-pay-btn" onclick="processApplePay()">
+            <img src="Apple_Pay_Mark_RGB_041619.svg" alt="Apple Pay" class="apple-pay-logo">
+        </button>
+
+        <div class="divider"><span>또는 신용카드 결제</span></div>
+
+        <div class="payment-form">
+            <div class="input-group">
+                <label>카드 번호</label>
+                <input type="tel" id="card-number" placeholder="0000 0000 0000 0000" maxlength="19">
+            </div>
+            <div class="row-inputs">
+                <div class="input-group">
+                    <label>유효기간 (MM/YY)</label>
+                    <input type="tel" id="card-expiry" placeholder="MM/YY" maxlength="5">
+                </div>
+                <div class="input-group">
+                    <label>CVC</label>
+                    <input type="password" id="card-cvc" placeholder="***" maxlength="3">
+                </div>
+            </div>
+            <div class="input-group">
+                <label>비밀번호 앞 2자리</label>
+                <input type="password" id="card-pwd" placeholder="**" maxlength="2">
+            </div>
+        </div>
+
+        <div class="modal-buttons">
+            <button class="btn btn-secondary" onclick="closePaymentModal()">취소</button>
+            <button class="btn btn-primary" id="pay-submit-btn" onclick="processCardPayment()">결제하기</button>
+        </div>
+    </div>
+
+    <script>
+        // 테마 관리
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        const prefersLightScheme = window.matchMedia('(prefers-color-scheme: light)').matches;
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light' || (!savedTheme && prefersLightScheme)) { body.classList.add('light-mode'); }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            localStorage.setItem('theme', body.classList.contains('light-mode') ? 'light' : 'dark');
+        });
+
+        // 계산기 상태 변수
+        const display = document.getElementById('display');
+        let currentExpression = '';
+        let shouldResetDisplay = false;
+        let isCalculating = false;
+        let calculationCount = 0; // 계산 횟수 추적
+        
+        // 💡 isPremium(무제한 모드) 변수는 제거되었습니다.
+
+        function updateDisplay(value) { display.value = value; }
+
+        function appendNumber(number) {
+            if (isCalculating) return;
+            if (display.value === '0' || shouldResetDisplay || display.value === 'Error') {
+                currentExpression = number;
+                updateDisplay(currentExpression);
+                shouldResetDisplay = false;
+            } else {
+                currentExpression += number;
+                updateDisplay(currentExpression);
+            }
+        }
+
+        function appendOperator(operator) {
+            if (isCalculating) return;
+            if (currentExpression === '' && display.value !== '0') { currentExpression = display.value; }
+            const lastChar = currentExpression.slice(-1);
+            if (['+', '-', '*', '/'].includes(lastChar)) {
+                currentExpression = currentExpression.slice(0, -1) + operator;
+            } else { currentExpression += operator; }
+            updateDisplay(currentExpression);
+            shouldResetDisplay = false;
+        }
+
+        // = 버튼 클릭 시 실행
+        function calculate() {
+            if (currentExpression === '' || isCalculating) return;
+            
+            // 💡 1회 이상 계산했다면 결제창 띄움 (무제한 패스 없음)
+            if (calculationCount >= 1) {
+                document.getElementById('payment-overlay').classList.add('active');
+                document.getElementById('payment-modal').classList.add('active');
+                return; 
+            }
+            
+            // 무료 1회차일 경우 바로 계산 함수 실행
+            executeCalculation();
+        }
+
+        // 실제 계산 진행 (Thinking 모달 10초 대기)
+        function executeCalculation() {
+            isCalculating = true;
+            document.getElementById('thinking-overlay').classList.add('active');
+            document.getElementById('thinking-modal').classList.add('active');
+            
+            setTimeout(() => {
+                try {
+                    let result = new Function('return ' + currentExpression)();
+                    result = Math.round(result * 10000000000) / 10000000000;
+                    updateDisplay(result);
+                    currentExpression = result.toString();
+                    shouldResetDisplay = true;
+                    calculationCount++; // 계산 완료 시 카운트 증가
+                } catch (error) {
+                    updateDisplay('Error');
+                    currentExpression = '';
+                    shouldResetDisplay = true;
+                } finally {
+                    document.getElementById('thinking-overlay').classList.remove('active');
+                    document.getElementById('thinking-modal').classList.remove('active');
+                    isCalculating = false;
+                }
+            }, 5000); 
+        }
+
+        function clearDisplay() {
+            if (isCalculating) return;
+            currentExpression = '';
+            updateDisplay('0');
+            shouldResetDisplay = false;
+        }
+
+        // ==========================================
+        // 폼 자동완성 및 정규식
+        // ==========================================
+        document.getElementById('card-number').addEventListener('input', function (e) {
+            let val = e.target.value.replace(/\D/g, ''); 
+            val = val.replace(/(\d{4})(?=\d)/g, '$1 ');
+            e.target.value = val;
+        });
+        document.getElementById('card-expiry').addEventListener('input', function (e) {
+            let val = e.target.value.replace(/\D/g, ''); 
+            if (val.length > 2) { val = val.substring(0, 2) + '/' + val.substring(2, 4); }
+            e.target.value = val;
+        });
+        document.getElementById('card-cvc').addEventListener('input', function (e) {
+            e.target.value = e.target.value.replace(/\D/g, '').substring(0, 3);
+        });
+        document.getElementById('card-pwd').addEventListener('input', function (e) {
+            e.target.value = e.target.value.replace(/\D/g, '').substring(0, 2);
+        });
+
+        // ==========================================
+        // 결제 후 "딱 1번만 계산 진행" 로직
+        // ==========================================
+        function closePaymentModal() {
+            document.getElementById('payment-overlay').classList.remove('active');
+            document.getElementById('payment-modal').classList.remove('active');
+        }
+
+        function processApplePay() {
+            const appleBtn = document.getElementById('apple-pay-btn');
+            const originalHTML = appleBtn.innerHTML;
+            
+            appleBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="font-size: 1.25rem;"></i> <span style="font-size: 1rem; font-weight: 500; margin-left: 5px;">Face ID / Touch ID...</span>';
+            appleBtn.disabled = true;
+
+            setTimeout(() => {
+                // 알림 텍스트 변경: 무제한 -> 1회 진행
+                alert(' Apple Pay 결제가 성공적으로 완료되었습니다!\n1회 계산이 진행됩니다.');
+                closePaymentModal();
+                appleBtn.innerHTML = originalHTML; 
+                appleBtn.disabled = false;
+                
+                // 💡 곧바로 1회 계산 로직 직접 호출
+                executeCalculation(); 
+            }, 2000);
+        }
+
+        function processCardPayment() {
+            const num = document.getElementById('card-number').value;
+            const expiry = document.getElementById('card-expiry').value;
+            const cvc = document.getElementById('card-cvc').value;
+            const pwd = document.getElementById('card-pwd').value;
+
+            if(num.length < 19 || expiry.length < 5 || cvc.length < 3 || pwd.length < 2) {
+                alert('모든 카드 정보를 정확한 형식으로 입력해주세요.');
+                return;
+            }
+
+            const btn = document.getElementById('pay-submit-btn');
+            const cancelBtn = document.querySelector('.btn-secondary');
+            const originalHTML = btn.innerHTML;
+            
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 처리중...';
+            btn.disabled = true;
+            cancelBtn.disabled = true;
+
+            setTimeout(() => {
+                // 알림 텍스트 변경: 무제한 -> 1회 진행
+                alert('✅ 카드 결제가 승인되었습니다!\n1회 계산이 진행됩니다.');
+                closePaymentModal();
+                
+                // 결제창 초기화
+                document.getElementById('card-number').value = '';
+                document.getElementById('card-expiry').value = '';
+                document.getElementById('card-cvc').value = '';
+                document.getElementById('card-pwd').value = '';
+                
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+                cancelBtn.disabled = false;
+                
+                // 💡 곧바로 1회 계산 로직 직접 호출
+                executeCalculation(); 
+            }, 1500); 
+        }
+    </script>
+</body>
+</html>
