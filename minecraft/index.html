@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../assets/img/icon.png" type="image/png">
+  <meta name="description" content="HANGGOK 마인크래프트 서버 — 24시간 운영되는 야생 생존 서버">
+  <meta property="og:title" content="HANGGOK — Minecraft Server">
+  <meta property="og:description" content="24시간 운영되는 야생 생존 마인크래프트 서버">
+  <meta property="og:image" content="../assets/img/profile.png">
+  <meta name="theme-color" content="#f7f5f0">
+
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; img-src 'self' data: https:; connect-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://cloudflareinsights.com https://api.mcsrvstat.us; object-src 'none'; base-uri 'self';">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <title>HANGGOK — Minecraft Server</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- top bar -->
+    <header class="topbar">
+      <div class="brand">HANGGOK<span class="brand-sub">/ minecraft</span></div>
+      <div class="topbar-right">
+        <nav class="nav">
+          <a href="../">← Main</a>
+        </nav>
+        <button id="theme-toggle" class="toggle" aria-label="테마 전환">
+          <span class="toggle-dot"></span><span id="theme-label">Dark</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- hero -->
+    <section class="hero mc-hero">
+      <div class="hero-text">
+        <div class="eyebrow" id="server-status">
+          <span class="status-dot checking" id="status-dot"></span><span id="status-text">상태 확인 중…</span>
+        </div>
+        <h1 class="hero-title">Minecraft<span class="dot">.</span></h1>
+        <p class="hero-desc">24시간 상시 구동되는 야생 생존 서버입니다. 아래 주소로 접속해 함께 플레이하세요.</p>
+      </div>
+    </section>
+
+    <!-- connect -->
+    <section class="section" id="connect">
+      <div class="sec-head">
+        <span class="sec-num">01</span>
+        <h2 class="sec-title">Connect</h2>
+        <span class="sec-sub">서버 접속</span>
+      </div>
+
+      <div class="connect-box">
+        <div class="connect-ip">
+          <span class="connect-label">SERVER ADDRESS</span>
+          <span id="server-ip" class="ip-value" title="클릭하여 선택">mc.hanggok.net</span>
+        </div>
+        <button id="copy-btn" class="btn copy-btn" type="button">
+          <span class="copy-text">주소 복사</span>
+        </button>
+      </div>
+
+      <div class="meta-grid">
+        <div class="meta-cell">
+          <span class="meta-k">VERSION</span>
+          <span class="meta-v" id="server-version">26.1.2 (Paper)</span>
+        </div>
+        <div class="meta-cell">
+          <span class="meta-k">UPTIME</span>
+          <span class="meta-v">24시간 상시 구동</span>
+        </div>
+        <div class="meta-cell">
+          <span class="meta-k">TYPE</span>
+          <span class="meta-v">야생 생존 (Survival)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- rules -->
+    <section class="section" id="rules">
+      <div class="sec-head">
+        <span class="sec-num">02</span>
+        <h2 class="sec-title">Rules</h2>
+        <span class="sec-sub">서버 이용 안내</span>
+      </div>
+      <ol class="rule-list">
+        <li class="rule-item">
+          <span class="rule-num">01</span>
+          <p class="rule-text">서버에 대한 DDoS 공격 등 운영에 심각하게 지장을 주는 행위는 엄격히 금지됩니다.</p>
+        </li>
+        <li class="rule-item">
+          <span class="rule-num">02</span>
+          <p class="rule-text">타인의 건축물을 허가 없이 훼손하거나 아이템을 훔치는 행위는 금지됩니다.</p>
+        </li>
+        <li class="rule-item">
+          <span class="rule-num">03</span>
+          <p class="rule-text">서버 리소스를 과도하게 소모하는 거대 레드스톤 회로나 자동 공장 건설은 자제해 주세요.</p>
+        </li>
+      </ol>
+    </section>
+
+    <footer class="footer">
+      <span>© 2026 HANGGOK · Minecraft</span>
+      <span>mc.hanggok.net</span>
+    </footer>
+
+  </div>
+
+  <script src="../assets/js/script.js"></script>
+  <script>
+    (function () {
+      var btn = document.getElementById("copy-btn");
+      var ipEl = document.getElementById("server-ip");
+      if (!btn || !ipEl) return;
+      var label = btn.querySelector(".copy-text");
+      btn.addEventListener("click", function () {
+        var ip = ipEl.innerText.trim();
+        navigator.clipboard.writeText(ip).then(function () {
+          var original = label.textContent;
+          label.textContent = "복사 완료";
+          btn.classList.add("copied");
+          setTimeout(function () {
+            label.textContent = original;
+            btn.classList.remove("copied");
+          }, 2000);
+        }).catch(function (err) { console.error("복사 실패:", err); });
+      });
+    })();
+
+    /* ---- 서버 실시간 상태 조회 (mcsrvstat.us) ---- */
+    (function () {
+      var SERVER_ADDRESS = "mc.hanggok.net";
+      var API = "https://api.mcsrvstat.us/3/" + SERVER_ADDRESS;
+
+      var dot = document.getElementById("status-dot");
+      var text = document.getElementById("status-text");
+      var versionEl = document.getElementById("server-version");
+      if (!dot || !text) return;
+
+      function setStatus(state, message) {
+        dot.classList.remove("checking", "online", "offline");
+        dot.classList.add(state);
+        text.textContent = message;
+      }
+
+      function fetchStatus() {
+        fetch(API, { headers: { "Accept": "application/json" } })
+          .then(function (res) {
+            if (!res.ok) throw new Error("HTTP " + res.status);
+            return res.json();
+          })
+          .then(function (data) {
+            if (data && data.online) {
+              setStatus("online", "Online · 서버 접속 가능");
+              if (versionEl && data.version) {
+                versionEl.textContent = data.version;
+              }
+            } else {
+              setStatus("offline", "Offline · 서버 점검 중");
+            }
+          })
+          .catch(function (err) {
+            console.error("서버 상태 확인 실패:", err);
+            setStatus("offline", "상태를 확인할 수 없음");
+          });
+      }
+
+      fetchStatus();
+      // 60초마다 자동 갱신 (API 캐시 주기와 동일)
+      setInterval(fetchStatus, 60000);
+    })();
+  </script>
+</body>
+</html>

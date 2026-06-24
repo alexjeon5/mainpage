@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HANGGOK Calculator</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+    
+    <script crossorigin src="https://applepay.cdn-apple.com/jsapi/1.latest/apple-pay-sdk.js"></script>
+
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="calc.css">
+</head>
+<body style="display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; margin: 0; padding: 0;">
+
+    <div class="bg-gradient"></div>
+
+    <button id="theme-toggle" title="테마 전환">
+        <i class="fa-regular fa-sun"></i> <i class="fa-solid fa-moon"></i> 
+    </button>
+
+    <div class="calculator">
+        <input type="text" class="display" id="display" disabled value="0">
+        
+        <div class="keys">
+            <button class="calc-btn clear" onclick="clearDisplay()">C</button>
+            <button class="calc-btn operator" onclick="appendOperator('/')"><i class="fa-solid fa-divide"></i></button>
+            <button class="calc-btn operator" onclick="appendOperator('*')"><i class="fa-solid fa-xmark"></i></button>
+            <button class="calc-btn" onclick="appendNumber('7')">7</button>
+            <button class="calc-btn" onclick="appendNumber('8')">8</button>
+            <button class="calc-btn" onclick="appendNumber('9')">9</button>
+            <button class="calc-btn operator" onclick="appendOperator('-')"><i class="fa-solid fa-minus"></i></button>
+            <button class="calc-btn" onclick="appendNumber('4')">4</button>
+            <button class="calc-btn" onclick="appendNumber('5')">5</button>
+            <button class="calc-btn" onclick="appendNumber('6')">6</button>
+            <button class="calc-btn operator" onclick="appendOperator('+')"><i class="fa-solid fa-plus"></i></button>
+            <button class="calc-btn" onclick="appendNumber('1')">1</button>
+            <button class="calc-btn" onclick="appendNumber('2')">2</button>
+            <button class="calc-btn" onclick="appendNumber('3')">3</button>
+            <button class="calc-btn equals" style="grid-row: span 2;" onclick="calculate()">=</button>
+            <button class="calc-btn zero" onclick="appendNumber('0')">0</button>
+            <button class="calc-btn" onclick="appendNumber('.')">.</button>
+        </div>
+    </div>
+
+    <div id="thinking-overlay" class="modal-overlay"></div>
+    <div id="thinking-modal" class="modal-window">
+        <h2><i class="fa-solid fa-spinner fa-spin" style="color: var(--primary-color);"></i> Thinking...</h2>
+        <p>수식을 처리하고 있습니다.<br>잠시만 기다려 주세요.</p>
+    </div>
+
+    <div id="payment-overlay" class="modal-overlay"></div>
+    <div id="payment-modal" class="modal-window">
+        <h2><i class="fa-solid fa-gem" style="color: var(--primary-color);"></i> 1회 계산 결제</h2>
+        <p style="margin-top: 0;">계산기 무료 이용 횟수가 만료되었습니다.<br>추가 계산 시 1회당 결제가 필요합니다.</p>
+        
+        <button class="apple-pay-btn" id="apple-pay-btn" onclick="processApplePay()" style="display: none;">
+            <img src="Apple_Pay_Mark_RGB_041619.svg" alt="Apple Pay" class="apple-pay-logo">
+        </button>
+
+        <div class="divider" id="apple-pay-divider" style="display: none;"><span>또는 신용카드 결제</span></div>
+
+        <div class="payment-form">
+            <div class="input-group">
+                <label>카드 번호</label>
+                <div class="card-input-wrapper">
+                    <i class="fa-solid fa-credit-card card-logo-icon" id="card-brand-icon"></i>
+                    <input type="tel" id="card-number" placeholder="0000 0000 0000 0000" maxlength="19">
+                </div>
+            </div>
+            <div class="row-inputs">
+                <div class="input-group">
+                    <label>유효기간 (MM/YY)</label>
+                    <input type="tel" id="card-expiry" placeholder="MM/YY" maxlength="5">
+                </div>
+                <div class="input-group">
+                    <label>CVC</label>
+                    <input type="password" id="card-cvc" placeholder="***" maxlength="3">
+                </div>
+            </div>
+            <div class="input-group">
+                <label>비밀번호 앞 2자리</label>
+                <input type="password" id="card-pwd" placeholder="**" maxlength="2">
+            </div>
+        </div>
+
+        <div class="modal-buttons">
+            <button class="btn btn-secondary" onclick="closePaymentModal()">취소</button>
+            <button class="btn btn-primary" id="pay-submit-btn" onclick="processCardPayment()">결제하기</button>
+        </div>
+    </div>
+
+    <script src="../assets/js/script.js"></script>
+    <script src="calc.js"></script>
+</body>
+</html>

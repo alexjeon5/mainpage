@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>비디오 프레임 추출기 (드래그 앤 드롭 지원본)</title>
+    <!-- Tailwind & DaisyUI적용 -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.0/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- ZIP 압축을 위한 JSZip 라이브러리 추가 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <style>
+        .hidden-section { display: none !important; }
+        /* 드래그 오버 시 애니메이션 효과를 위한 클래스 */
+        .drag-active {
+            border-color: var(--fallback-p,oklch(var(--p)/1)) !important;
+            background-color: var(--fallback-p,oklch(var(--p)/0.2)) !important;
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body class="bg-base-100 text-base-content min-h-screen">
+    <div class="container mx-auto flex max-w-6xl flex-col items-center gap-12 p-8">
+        
+        <!-- 타이틀 로고 영역 -->
+        <a href="#" class="flex flex-col items-center gap-2 text-center text-3xl tracking-tighter sm:flex-row sm:items-center sm:text-left md:text-4xl mt-4">
+            <span class="inline-block h-[1em] w-[1em] flex-shrink-0">
+                <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" class="fill-current text-base-content"><path d="M488 64h-8v20c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12V64H96v20c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12V64h-8C10.7 64 0 74.7 0 88v336c0 13.3 10.7 24 24 24h8v-20c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v20h320v-20c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v20h8c13.3 0 24-10.7 24-24V88c0-13.3-10.7-24-24-24zM96 372c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12H44c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm272 208c0 6.6-5.4 12-12 12H156c-6.6 0-12-5.4-12-12v-96c0-6.6 5.4-12 12-12h200c6.6 0 12 5.4 12 12v96zm0-168c0 6.6-5.4 12-12 12H156c-6.6 0-12-5.4-12-12v-96c0-6.6 5.4-12 12-12h200c6.6 0 12 5.4 12 12v96zm112 152c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40zm0-96c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40z"></path></svg>
+            </span>
+            <span class="leading-tight break-words font-bold">비디오 프레임 추출기</span>
+        </a>
+
+        <!-- 1. 파일 업로드 섹션 -->
+        <div id="upload-view" class="w-full max-w-124 md:w-[31rem] flex flex-col items-center">
+            <!-- drag-zone ID 추가 -->
+            <label id="drag-zone" class="flex h-22 w-full cursor-pointer appearance-none justify-center rounded-lg border-2 border-dashed border-primary/40 bg-gradient-to-br from-primary/5 to-primary/10 px-4 transition-all duration-300 hover:border-primary/70 hover:from-primary/10 hover:to-primary/20 hover:shadow-lg focus:outline-none md:h-32">
+                <span class="flex items-center space-x-2 pointer-events-none">
+                    <span class="text-sm font-medium text-base-content sm:text-base">비디오 파일을 끌어놓거나 <span class="font-semibold text-primary underline decoration-primary/50 underline-offset-4">찾아보기</span></span>
+                </span>
+                <input type="file" id="video-upload" class="hidden" accept="video/*">
+            </label>
+            <div class="prose text-center text-base-content text-xs md:text-base mt-6">
+                <p>비디오 파일이 컴퓨터를 벗어나지 않습니다. <br> 프레임 추출은 브라우저 내에서 수행됩니다. <br> 프레임은 비디오의 원본 해상도로 추출됩니다.</p>
+            </div>
+        </div>
+
+        <!-- 2. 비디오 플레이어 및 추출 옵션 섹션 -->
+        <div id="extract-view" class="hidden-section w-full max-w-4xl flex flex-col items-center gap-6">
+            
+            <div class="relative overflow-hidden rounded-lg bg-black w-full flex justify-center shadow-lg">
+                <video id="video-preview" controls class="h-auto max-h-[400px] w-full" preload="auto" playsinline></video>
+                <button id="reload-btn" class="btn absolute top-2 right-2 btn-sm bg-base-300/80 hover:bg-base-300 border-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mr-1 inline h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    비디오 다시 로드
+                </button>
+            </div>
+
+            <div class="prose text-center text-base-content md:text-base mt-2">
+                프레임 추출 시작 위치: <strong id="current-time">00:00:00.000</strong> <br>
+                <span class="text-sm opacity-70">(비디오 플레이어에서 조정 가능)</span>
+            </div>
+
+            <!-- 컨트롤 옵션 -->
+            <div class="grid items-end gap-4 md:grid-cols-3 w-full">
+                <fieldset class="flex flex-col gap-2">
+                    <label class="text-sm font-semibold opacity-80">추출할 프레임 수</label>
+                    <input type="number" id="frame-count" class="input input-bordered w-full" value="5" min="1">
+                </fieldset>
+                
+                <fieldset class="flex flex-col gap-2">
+                    <label class="text-sm font-semibold opacity-80">프레임 간격</label>
+                    <label class="input input-bordered flex items-center gap-2">
+                        <input type="number" id="frame-interval" class="grow" value="1000" min="1">
+                        <span class="text-sm opacity-50">밀리초</span>
+                    </label>
+                </fieldset>
+                
+                <fieldset class="flex flex-col">
+                    <button id="extract-btn" class="btn btn-primary w-full text-lg">추출</button>
+                </fieldset>
+            </div>
+
+            <div class="prose text-center text-base-content text-xs md:text-base mt-4">
+                <p>여러 프레임을 추출하면 흐리지 않은 프레임을 얻는 데 도움이 됩니다. <br> 프레임은 비디오의 원본 해상도로 추출됩니다.</p>
+            </div>
+
+            <!-- 상태 메시지 및 ZIP 전체 다운로드 버튼 -->
+            <div class="flex flex-col sm:flex-row items-center justify-between w-full border-t border-base-300 pt-4 mt-2 gap-4">
+                <div id="status-text" class="text-base font-bold text-primary"></div>
+                <button id="download-zip-btn" class="btn btn-accent text-md hidden-section gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    ZIP 파일로 통합 저장
+                </button>
+            </div>
+            
+            <!-- 추출 결과물 갤러리 영역 -->
+            <div id="result-gallery" class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full mt-2"></div>
+        </div>
+    </div>
+
+    <!-- 기능 동작 자바스크립트 -->
+    <script>
+        const uploadView = document.getElementById('upload-view');
+        const extractView = document.getElementById('extract-view');
+        const videoUpload = document.getElementById('video-upload');
+        const dragZone = document.getElementById('drag-zone');
+        const videoPreview = document.getElementById('video-preview');
+        const reloadBtn = document.getElementById('reload-btn');
+        const currentTimeDisplay = document.getElementById('current-time');
+        const extractBtn = document.getElementById('extract-btn');
+        const downloadZipBtn = document.getElementById('download-zip-btn');
+        const resultGallery = document.getElementById('result-gallery');
+        const statusText = document.getElementById('status-text');
+
+        let videoFileUrl = null;
+        let extractedFrames = []; 
+
+        // 시간 포맷 변환 함수
+        function formatTime(seconds) {
+            const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
+            const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+            const s = Math.floor(seconds % 60).toString().padStart(2, '0');
+            const ms = Math.floor((seconds % 1) * 1000).toString().padStart(3, '0');
+            return `${h}:${m}:${s}.${ms}`;
+        }
+
+        // 파일 처리 공통 함수
+        function processFile(file) {
+            if (file && file.type.startsWith('video/')) {
+                videoFileUrl = URL.createObjectURL(file);
+                videoPreview.src = videoFileUrl;
+                
+                uploadView.classList.add('hidden-section');
+                extractView.classList.remove('hidden-section');
+                resultGallery.innerHTML = '';
+                statusText.innerText = '';
+                downloadZipBtn.classList.add('hidden-section');
+                extractedFrames = [];
+            } else {
+                alert('비디오 파일만 업로드할 수 있습니다. (mp4, webm 등)');
+            }
+        }
+
+        // 1. 파일 찾아보기 클릭 (Input Change)
+        videoUpload.addEventListener('change', function(event) {
+            processFile(event.target.files[0]);
+        });
+
+        // 1-1. 드래그 앤 드롭 지원 이벤트 추가
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dragZone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        // 마우스가 올라왔을 때 하이라이트 효과
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dragZone.addEventListener(eventName, () => dragZone.classList.add('drag-active'), false);
+        });
+
+        // 마우스가 벗어났을 때 원래대로
+        ['dragleave', 'drop'].forEach(eventName => {
+            dragZone.addEventListener(eventName, () => dragZone.classList.remove('drag-active'), false);
+        });
+
+        // 실제 파일 드롭 시 처리
+        dragZone.addEventListener('drop', function(e) {
+            let dt = e.dataTransfer;
+            let files = dt.files;
+            if (files.length > 0) {
+                processFile(files[0]);
+            }
+        });
+
+        // 2. 비디오 다시 로드
+        reloadBtn.addEventListener('click', function() {
+            if (videoFileUrl) URL.revokeObjectURL(videoFileUrl);
+            videoPreview.src = '';
+            videoUpload.value = '';
+            extractedFrames = [];
+            
+            extractView.classList.add('hidden-section');
+            uploadView.classList.remove('hidden-section');
+        });
+
+        // 3. 비디오 재생 시간 UI 업데이트
+        videoPreview.addEventListener('timeupdate', function() {
+            currentTimeDisplay.innerText = formatTime(videoPreview.currentTime);
+        });
+
+        // 4. 프레임 추출 로직 (Canvas 사용)
+        extractBtn.addEventListener('click', async function() {
+            const count = parseInt(document.getElementById('frame-count').value);
+            const intervalMs = parseInt(document.getElementById('frame-interval').value);
+            const startTime = videoPreview.currentTime;
+
+            if (isNaN(count) || count <= 0) return alert('유효한 프레임 수를 입력하세요.');
+            if (isNaN(intervalMs) || intervalMs <= 0) return alert('유효한 간격을 입력하세요.');
+
+            extractBtn.disabled = true;
+            extractBtn.innerText = "추출 중...";
+            downloadZipBtn.classList.add('hidden-section');
+            resultGallery.innerHTML = '';
+            extractedFrames = [];
+            
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            
+            canvas.width = videoPreview.videoWidth;
+            canvas.height = videoPreview.videoHeight;
+
+            for (let i = 0; i < count; i++) {
+                const targetTime = startTime + (i * (intervalMs / 1000));
+                
+                if (targetTime > videoPreview.duration) break;
+
+                statusText.innerText = `프레임 추출 중... (${i + 1}/${count})`;
+                
+                videoPreview.currentTime = targetTime;
+                
+                await new Promise((resolve) => {
+                    videoPreview.addEventListener('seeked', resolve, { once: true });
+                });
+
+                context.drawImage(videoPreview, 0, 0, canvas.width, canvas.height);
+                
+                const dataUrl = canvas.toDataURL('image/jpeg', 0.95);
+                const filename = `frame_${formatTime(targetTime).replace(/[:.]/g, '-')}.jpg`;
+                
+                extractedFrames.push({ filename, dataUrl });
+                
+                const imgContainer = document.createElement('div');
+                imgContainer.className = "flex flex-col gap-2 p-2 border border-base-300 rounded-lg bg-base-200";
+                
+                const imgElement = document.createElement('img');
+                imgElement.src = dataUrl;
+                imgElement.className = "w-full rounded";
+                
+                const downloadBtn = document.createElement('a');
+                downloadBtn.href = dataUrl;
+                downloadBtn.download = filename;
+                downloadBtn.className = "btn btn-xs btn-outline btn-primary";
+                downloadBtn.innerText = "저장";
+
+                imgContainer.appendChild(imgElement);
+                imgContainer.appendChild(downloadBtn);
+                resultGallery.appendChild(imgContainer);
+            }
+
+            videoPreview.currentTime = startTime;
+            statusText.innerText = `추출 완료! (총 ${extractedFrames.length}개)`;
+            extractBtn.disabled = false;
+            extractBtn.innerText = "추출";
+
+            if (extractedFrames.length > 0) {
+                downloadZipBtn.classList.remove('hidden-section');
+            }
+        });
+
+        // 5. ZIP 압축 및 다운로드 이벤트
+        downloadZipBtn.addEventListener('click', function() {
+            if (extractedFrames.length === 0) return alert('압축할 프레임이 없습니다.');
+
+            downloadZipBtn.disabled = true;
+            downloadZipBtn.innerText = 'ZIP 압축 중...';
+
+            const zip = new JSZip();
+
+            extractedFrames.forEach(frame => {
+                const base64Data = frame.dataUrl.split(',')[1];
+                zip.file(frame.filename, base64Data, { base64: true });
+            });
+
+            zip.generateAsync({ type: 'blob' }).then(function(content) {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(content);
+                link.download = `extracted_frames_${Date.now()}.zip`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                downloadZipBtn.disabled = false;
+                downloadZipBtn.innerText = 'ZIP 파일로 통합 저장';
+            }).catch(err => {
+                console.error(err);
+                alert('ZIP 압축 중 오류가 발생했습니다.');
+                downloadZipBtn.disabled = false;
+                downloadZipBtn.innerText = 'ZIP 파일로 통합 저장';
+            });
+        });
+    </script>
+</body>
+</html>

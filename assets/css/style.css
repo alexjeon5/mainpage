@@ -1,538 +1,721 @@
-/* =========================================
-   1. 폰트 및 라이브러리 임포트
-   ========================================= */
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap');
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
-
-/* =========================================
-   2. CSS 변수 설정 (테마 시스템)
-   ========================================= */
+/* =========================================================
+   HANGGOK — Paper Editorial
+   Theme tokens: light default + [data-theme="dark"] override
+   ========================================================= */
 :root {
-    /* [다크 모드 기본값] */
-    --bg-color: #0d1117;
-    --text-color: #e0e0e0;
-    --text-color-secondary: #8b949e;
-    --primary-color: #58a6ff;
-    
-    /* 글래스모피즘 스타일 (카드 배경/테두리) */
-    --card-bg-color: rgba(22, 27, 34, 0.6);
-    --card-border-color: rgba(240, 246, 252, 0.1);
-    
-    /* 버튼 스타일 */
-    --btn-secondary-bg: #21262d;
-    --btn-secondary-border: #30363d;
-    
-    /* 기본 폰트 */
-    --body-font: "Pretendard Variable", Pretendard, sans-serif;
+  --bg: #f7f5f0;
+  --ink: #1b1a17;
+  --body: #56524b;
+  --muted: #76726a;
+  --faint: #9b968c;
+  --line: #e3ded4;
+  --line2: #d8d2c7;
+  --accent: #b8542f;
+  --surface: #ece7dd;
+  --surface2: #f2eee6;
+}
+[data-theme="dark"] {
+  --bg: #161512;
+  --ink: #ece8e1;
+  --body: #b3ada3;
+  --muted: #9a948a;
+  --faint: #6f695f;
+  --line: #2c2a26;
+  --line2: #34312b;
+  --accent: #d9743f;
+  --surface: #221f1b;
+  --surface2: #2a2722;
 }
 
-body.light-mode {
-    /* [라이트 모드 값] - body에 클래스 추가 시 적용 */
-    --bg-color: #f4f7f6;
-    --text-color: #1f2328;
-    --text-color-secondary: #656d76;
-    --primary-color: #0969da;
-    
-    --card-bg-color: rgba(255, 255, 255, 0.7);
-    --card-border-color: rgba(210, 213, 218, 0.5);
-    
-    --btn-secondary-bg: #f6f8fa;
-    --btn-secondary-border: #d0d7de;
-}
+* { box-sizing: border-box; }
 
-/* =========================================
-   3. 기본 스타일 (Reset & Base)
-   ========================================= */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-/* [추가] 커스텀 스크롤바 디자인 */
-::-webkit-scrollbar {
-    width: 10px;
-}
-::-webkit-scrollbar-track {
-    background: var(--bg-color);
-}
-::-webkit-scrollbar-thumb {
-    background: var(--btn-secondary-border);
-    border-radius: 5px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: var(--text-color-secondary);
-}
+html, body { margin: 0; }
 
 body {
-    font-family: var(--body-font);
-    line-height: 1.6;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    transition: background-color 0.3s, color 0.3s;
-    padding: 1rem;
-    overflow-x: hidden; /* 가로 스크롤 방지 */
-    min-height: 100vh;
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+  background-color: var(--bg);
+  color: var(--ink);
+  transition: background-color .35s ease, color .35s ease;
+  min-height: 100vh;
 }
 
-/* =========================================
-   4. 배경 효과 (글래스모피즘 강화)
-   ========================================= */
-/* [추가] 은은한 그라디언트 배경 애니메이션 */
-.bg-gradient {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: -1; /* 콘텐츠 뒤로 배치 */
-    pointer-events: none;
-    background: radial-gradient(circle at 15% 50%, rgba(88, 166, 255, 0.15), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(139, 88, 255, 0.15), transparent 25%);
-    filter: blur(40px);
-    opacity: 0.8;
-}
-body.light-mode .bg-gradient {
-    background: radial-gradient(circle at 15% 50%, rgba(9, 105, 218, 0.1), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(40, 167, 69, 0.1), transparent 25%);
+::selection { background: rgba(184, 84, 47, .2); }
+
+a { color: inherit; }
+
+.wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 40px;
 }
 
-.container {
-    max-width: 800px;
-    margin: 1rem auto;
-    position: relative;
-    z-index: 1;
+/* ---------- top bar ---------- */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 26px 0;
+  border-bottom: 1px solid var(--line);
+}
+.brand {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -.01em;
+}
+.topbar-right { display: flex; gap: 30px; align-items: center; }
+.nav {
+  display: flex;
+  gap: 30px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.nav a { text-decoration: none; transition: color .2s; }
+.nav a:hover { color: var(--accent); }
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--line2);
+  border-radius: 40px;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: border-color .2s, color .35s ease;
+}
+.toggle:hover { border-color: var(--accent); }
+.toggle-dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: inline-block;
 }
 
-/* =========================================
-   5. UI 컴포넌트 스타일
-   ========================================= */
-
-/* --- 테마 토글 버튼 --- */
-#theme-toggle {
-    position: fixed;
-    top: 1.5rem; right: 1.5rem;
-    background: var(--card-bg-color);
-    border: 1px solid var(--card-border-color);
-    backdrop-filter: blur(10px);
-    color: var(--text-color);
-    cursor: pointer;
-    z-index: 1000;
-    padding: 0.6rem;
-    border-radius: 50%;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
+/* ---------- hero ---------- */
+.hero {
+  padding: 80px 0 64px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 48px;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
 }
-#theme-toggle:hover { transform: rotate(15deg) scale(1.1); }
-#theme-toggle .fa-moon { display: none; }
-#theme-toggle .fa-sun { display: block; }
-body.light-mode #theme-toggle .fa-moon { display: block; }
-body.light-mode #theme-toggle .fa-sun { display: none; }
-
-/* --- 프로필 섹션 --- */
-.profile { text-align: center; margin-bottom: 2.5rem; }
-.profile-img {
-    width: 140px; height: 140px;
-    border-radius: 50%;
-    border: 4px solid var(--card-bg-color);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-    transition: transform 0.3s ease;
+.eyebrow {
+  font-family: "IBM Plex Mono", "Pretendard Variable", Pretendard, monospace;
+  font-size: 12px;
+  letter-spacing: .14em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 24px;
 }
-.profile-img:hover { transform: scale(1.05); }
-.profile-name { font-size: 2rem; font-weight: 700; margin-top: 1rem; }
-.profile-handle { color: var(--primary-color); font-weight: 500; margin-bottom: 1.5rem; }
-.profile-links { display: flex; justify-content: center; gap: 1.5rem; }
-.profile-links a {
-    font-size: 1.6rem; color: var(--text-color-secondary);
-    transition: color 0.2s, transform 0.2s;
+.hero-title {
+  font-family: "Space Grotesk", "Pretendard Variable", Pretendard, sans-serif;
+  font-weight: 700;
+  font-size: 72px;
+  line-height: .98;
+  letter-spacing: -.03em;
+  margin: 0 0 22px;
 }
-.profile-links a:hover { color: var(--primary-color); transform: translateY(-3px); }
-.admin-profile-handle { color: var(--primary-color); font-weight: 500; margin-top: 0.5rem; }
+.hero-title .dot { color: var(--accent); }
+.hero-desc {
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--body);
+  max-width: 30em;
+  margin: 0;
+  word-break: keep-all;
+}
+.socials { display: flex; gap: 14px; margin-top: 34px; flex-wrap: wrap; }
+.social {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 20px;
+  border: 1px solid var(--line2);
+  border-radius: 2px;
+  text-decoration: none;
+  transition: border-color .2s;
+}
+.social:hover { border-color: var(--accent); }
+.social-name { font-family: "Space Grotesk", sans-serif; font-weight: 600; font-size: 14px; }
+.social-handle { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--faint); }
 
-/* --- 탭 네비게이션 --- */
-.tabs {
-    display: flex; 
-    justify-content: center;
-    border-radius: 50px;
-    padding: 0.3rem;
-    max-width: 380px;
-    margin: 0 auto 2.5rem;
-    position: relative;
-    overflow: hidden;
+.avatar {
+  width: 230px; height: 230px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--line2);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+}
+.avatar img { width: 200px; height: auto; display: block; }
 
-    /* [Liquid Glass 핵심 1] 배경 블러 및 색상 필터 강화 */
-    background-color: rgba(255, 255, 255, 0.05); /* 매우 투명한 배경 */
-    backdrop-filter: blur(25px) contrast(110%) saturate(160%);
-    -webkit-backdrop-filter: blur(25px) contrast(110%) saturate(160%);
+/* ---------- section heads ---------- */
+.section { padding: 64px 0; border-bottom: 1px solid var(--line); }
+.sec-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 40px; }
+.sec-num { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--accent); }
+.sec-title { font-family: "Space Grotesk", sans-serif; font-weight: 600; font-size: 30px; letter-spacing: -.02em; margin: 0; }
+.sec-sub { font-size: 14px; color: var(--faint); }
 
-    /* [Liquid Glass 핵심 2] 유리 질감을 위한 다중 반사광(Highlights) */
-    box-shadow: 
-        0 10px 30px rgba(0, 0, 0, 0.3),                 /* 외부 그림자 */
-        inset 0 1px 1px rgba(255, 255, 255, 0.4),      /* 상단 아주 밝은 모서리 */
-        inset 0 10px 20px rgba(255, 255, 255, 0.1),    /* 내부 은은한 광택 */
-        inset -1px -1px 1px rgba(0, 0, 0, 0.2);        /* 하단 어두운 모서리 */
-    
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    
-    /* 굴절 효과 필터 연결 (HTML에 정의할 ID) */
-    filter: url(#glass-refraction);
+/* ---------- about / specs ---------- */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-top: 1px solid var(--line);
+}
+.about-col { padding: 28px; border-right: 1px solid var(--line); }
+.about-col:first-child { padding-left: 0; }
+.about-col:last-child { padding-right: 0; border-right: none; }
+.about-label {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+.info-list { display: flex; flex-direction: column; gap: 14px; }
+.info-row { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; }
+.info-k { color: var(--faint); }
+.info-v { font-weight: 500; text-align: right; }
+.spec-list { display: flex; flex-direction: column; gap: 14px; }
+.spec-row { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; }
+.spec-k { color: var(--faint); }
+.spec-v { font-weight: 500; text-align: right; }
+
+/* ---------- portfolio (가로형 작업물 쇼케이스) ---------- */
+.pf-list { display: flex; flex-direction: column; gap: 28px; }
+.pf-item {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 32px;
+  padding: 28px 0;
+  border-top: 1px solid var(--line);
+  align-items: start;
+}
+.pf-thumb {
+  aspect-ratio: 16 / 10;
+  border: 1px solid var(--line2);
+  border-radius: 2px;
+  background: repeating-linear-gradient(45deg, var(--surface), var(--surface) 9px, var(--surface2) 9px, var(--surface2) 18px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.pf-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pf-thumb-placeholder {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: var(--faint);
+  background: var(--bg);
+  padding: 4px 8px;
+}
+.pf-body { display: flex; flex-direction: column; gap: 8px; }
+.pf-tag {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: .08em;
+  color: var(--accent);
+}
+.pf-title {
+  font-family: "Space Grotesk", "Pretendard Variable", Pretendard, sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  margin: 0;
+}
+.pf-desc {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--body);
+  margin: 4px 0 0;
+  word-break: keep-all;
+}
+.pf-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.pf-chip {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: .04em;
+  color: var(--muted);
+  background: var(--surface);
+  padding: 4px 10px;
+  border-radius: 2px;
 }
 
-/* 활성화된 탭의 가시성 확보 */
-.tab.active {
-    color: #fff;
-    background-color: var(--primary-color);
-    box-shadow: 0 4px 15px rgba(88, 166, 255, 0.5);
-    z-index: 2;
+/* ---------- portfolio grid (서비스 카드) ---------- */
+.portfolio-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; }
+.card { text-decoration: none; display: flex; flex-direction: column; }
+.thumb {
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--line2);
+  border-radius: 2px;
+  background: repeating-linear-gradient(45deg, var(--surface), var(--surface) 9px, var(--surface2) 9px, var(--surface2) 18px);
+  display: flex;
+  align-items: flex-end;
+  padding: 14px;
+  position: relative;
+  overflow: hidden;
 }
-.tab {
-    flex: 1;
-    font-family: inherit; font-weight: 600;
-    background: none; border: none;
-    color: var(--text-color-secondary);
-    padding: 0.6rem 1rem; border-radius: 40px;
-    cursor: pointer; transition: all 0.3s;
+.thumb img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.thumb-cap {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  letter-spacing: .08em;
+  color: var(--faint);
+  background: var(--bg);
+  padding: 3px 7px;
+}
+.thumb-tag {
+  position: absolute;
+  top: 12px; right: 12px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  letter-spacing: .06em;
+  color: var(--accent);
+}
+.card-cat { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--faint); margin-top: 16px; }
+.card-title { font-family: "Space Grotesk", "Pretendard Variable", Pretendard, sans-serif; font-weight: 600; font-size: 18px; margin-top: 4px; }
+.card-desc { font-size: 14px; color: var(--muted); margin-top: 4px; line-height: 1.5; word-break: keep-all; }
+
+/* ---------- timeline ---------- */
+.timeline { display: flex; flex-direction: column; }
+.tl-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 24px;
+  padding: 18px 0;
+  border-top: 1px solid var(--line);
+  align-items: baseline;
+}
+.tl-date { font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--accent); }
+.tl-text { font-size: 15px; color: var(--body); line-height: 1.6; word-break: keep-all; }
+
+/* ---------- contact ---------- */
+.contact {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 40px;
+  align-items: center;
+  padding: 72px 0;
+  border-bottom: none;
+}
+.contact-title {
+  font-family: "Space Grotesk", "Pretendard Variable", Pretendard, sans-serif;
+  font-weight: 700;
+  font-size: 44px;
+  letter-spacing: -.025em;
+  margin: 14px 0 0;
+}
+.contact-desc { font-size: 16px; color: var(--muted); margin: 14px 0 0; max-width: 26em; word-break: keep-all; }
+.contact-cta {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 18px 36px;
+  background: var(--ink);
+  color: var(--bg);
+  border-radius: 2px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color .35s ease, color .35s ease;
 }
 
-/* --- 탭 패널 공통 --- */
-.tab-panel { display: none; animation: fadeIn 0.4s ease; }
-.tab-panel.active { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-/* --- 정보 그리드 (Info Tab & Layout Container) --- */
-.info-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
-    background-color: var(--card-bg-color);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--card-border-color);
-    border-radius: 16px;
-    padding: 2rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-}
-.info-title { margin-bottom: 1.2rem; color: var(--primary-color); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
-.info-item { display: flex; align-items: center; margin-bottom: 1.2rem; gap: 7px;}
-.info-item i { width: 30px; color: var(--text-color-secondary); font-size: 1.2rem; }
-.info-item-title { display: block; font-size: 0.85rem; color: var(--text-color-secondary); }
-.info-item-value { font-weight: 500; font-size: 1rem; }
-
-/* --- 서비스 카드 (Projects Tab) --- */
-.card-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; }
-.card {
-    background-color: var(--card-bg-color);
-    backdrop-filter: blur(16px);
-    border: 1px solid var(--card-border-color);
-    border-radius: 16px; padding: 1.5rem;
-    position: relative; display: flex; flex-direction: column; justify-content: space-between;
-    min-height: 160px; transition: transform 0.3s, box-shadow 0.3s;
-    overflow: hidden;
-}
-.card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.15); border-color: var(--primary-color); }
-.card h3 { margin-bottom: 0.5rem; font-size: 1.2rem; }
-.card p { font-size: 0.95rem; color: var(--text-color-secondary); }
-
-/* [수정] 카드 링크 아이콘 정렬 (오른쪽 하단 고정) */
-.card-link {
-    align-self: flex-end; /* 항상 오른쪽 정렬 */
-    margin-top: auto; padding-top: 1rem;
-    font-size: 1.2rem; color: var(--text-color); opacity: 0.6;
-}
-.card-link:hover { color: var(--primary-color); opacity: 1; }
-
-/* 와이드 카드 (관리자용 등) */
-.card-wide-half { grid-column: span 2; flex-direction: row; align-items: center; min-height: auto; }
-.card-wide-half .card-link { margin: 0; padding: 0; }
-
-/* 서비스 준비 중(.srv-error)인 카드의 배경을 어둡게 조정 */
-.card:has(.srv-error) {
-    background-color: rgba(0, 0, 0, 0.4); /* 기본 다크 모드에서 더 어두운 배경 */
-    border-color: rgba(255, 255, 255, 0.05); /* 테두리도 은은하게 변경 */
+/* ---------- footer ---------- */
+.footer {
+  padding: 24px 0;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  color: var(--faint);
 }
 
-/* 라이트 모드일 때의 배경 조정 */
-body.light-mode .card:has(.srv-error) {
-    background-color: rgba(0, 0, 0, 0.1); /* 밝은 배경에서 회색조로 어둡게 처리 */
+/* ---------- responsive ---------- */
+@media (max-width: 860px) {
+  .wrap { padding: 0 24px; }
+  .nav { display: none; }
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 48px 0;
+  }
+  .hero-title { font-size: 56px; }
+  .about-grid { grid-template-columns: 1fr; }
+  .about-col { padding: 24px 0; border-right: none; border-bottom: 1px solid var(--line); }
+  .about-col:last-child { border-bottom: none; }
+  .pf-item { grid-template-columns: 1fr; gap: 20px; }
+  .pf-thumb { max-width: 400px; }
+  .portfolio-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+  .contact { grid-template-columns: 1fr; gap: 28px; }
+  .contact-cta { justify-self: start; }
+}
+@media (max-width: 520px) {
+  .portfolio-grid { grid-template-columns: 1fr; }
+  .tl-row { grid-template-columns: 1fr; gap: 4px; }
+  .footer { flex-direction: column; gap: 6px; }
 }
 
-/* 준비 중인 항목의 마우스 호버 효과 제한 (선택 사항) */
-.card:has(.srv-error):hover {
-    transform: none; /* 들뜸 효과 제거 */
-    box-shadow: none;
-    border-color: var(--card-border-color);
+/* =========================================================
+   ADDED — 기능 복원에 따른 추가 스타일
+   (언어 전환 / 향후 계획 / 준비중 카드 / 모달)
+   ========================================================= */
+
+/* ---------- 언어 전환 버튼 ---------- */
+.lang-switch {
+  display: flex;
+  border: 1px solid var(--line2);
+  border-radius: 40px;
+  overflow: hidden;
+}
+.lang-btn {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: .08em;
+  color: var(--muted);
+  background: transparent;
+  border: none;
+  padding: 7px 12px;
+  cursor: pointer;
+  transition: color .2s, background-color .2s;
+}
+.lang-btn:hover { color: var(--accent); }
+.lang-btn.active { color: var(--bg); background: var(--ink); }
+
+/* ---------- 타임라인 로딩 텍스트 ---------- */
+.tl-loading {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  color: var(--faint);
+  padding: 18px 0;
+  border-top: 1px solid var(--line);
 }
 
-/* --- 모달 (Popup) --- */
-/* =========================================
-   6. 모달 시스템 (공용 디자인 반영)
-   ========================================= */
+/* ---------- 향후 계획 목록 ---------- */
+.plans-head { margin-top: 44px; margin-bottom: 18px; }
+.plans-list { list-style: none; margin: 0; padding: 0; }
+.plans-item {
+  position: relative;
+  padding: 14px 0 14px 22px;
+  border-top: 1px solid var(--line);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--body);
+  word-break: keep-all;
+}
+.plans-item::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-family: "IBM Plex Mono", monospace;
+}
 
-/* 배경 레이어 */
+/* ---------- 준비 중(Coming soon) 카드 ---------- */
+.card-soon { opacity: .6; }
+.card-soon .thumb { background: var(--surface); }
+.thumb-tag.off { color: var(--faint); }
+.card-soon:hover { opacity: .85; }
+
+/* ---------- 준비 중 모달 ---------- */
 .modal-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.6); z-index: 1000;
-    opacity: 0; visibility: hidden; transition: 0.3s;
-    backdrop-filter: blur(4px);
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .45);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .25s ease, visibility .25s ease;
 }
-
-/* 모달 본체 */
 .modal-window {
-    position: fixed; 
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -40%); 
-    background: var(--bg-color); 
-    border: 1px solid var(--card-border-color);
-    border-radius: 16px; 
-    padding: 3rem; 
-    width: 80%; 
-    max-width: 500px;
-    z-index: 1001; 
-    text-align: center;
-    opacity: 0; 
-    visibility: hidden; 
-    transition: 0.3s;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -44%);
+  background: var(--bg);
+  border: 1px solid var(--line2);
+  border-radius: 4px;
+  padding: 40px;
+  width: 86%;
+  max-width: 420px;
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .25s ease, visibility .25s ease, transform .25s ease;
 }
-
-/* [이미지 수정사항 반영] 제목 스타일 */
 .modal-window h2 {
-    margin-bottom: 1.2rem;   /* 제목과 본문 사이 간격 */
-    font-size: 1.4rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 14px;
 }
-
-/* [이미지 수정사항 반영] 본문 스타일 */
 .modal-window p {
-    line-height: 1.8;         /* 줄 간격 가독성 향상 */
-    margin-bottom: 1.8rem;    /* 본문과 버튼 사이 간격 */
-    word-break: keep-all;     /* 한글 단어 끊김 방지 */
-    color: var(--text-color);
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--body);
+  margin: 0 0 26px;
+  word-break: keep-all;
 }
+.modal-overlay.active,
+.modal-window.active { opacity: 1; visibility: visible; }
+.modal-window.active { transform: translate(-50%, -50%); }
 
-/* [이미지 수정사항 반영] 아이콘 스타일 */
-.modal-window i {
-    margin-right: 8px;        /* 아이콘과 텍스트 사이 간격 */
-    color: #f1c40f;           /* 경고 아이콘 색상 강조 */
-}
-
-/* 활성화 상태 */
-.modal-overlay.active, .modal-window.active { 
-    opacity: 1; 
-    visibility: visible; 
-}
-
-.modal-window.active { 
-    transform: translate(-50%, -50%); /* 시작 위치(-40%)에서 중앙(-50%)으로 이동하며 나타남 */
-}
-
-/* [버튼 스타일 - 이미지의 기본 버튼을 대체] */
 .btn {
-    display: inline-block;
-    padding: 0.8rem 2rem;
-    border-radius: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: none;
-    font-family: inherit;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 12px 28px;
+  background: var(--ink);
+  color: var(--bg);
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: opacity .2s;
+}
+.btn:hover { opacity: .85; }
+
+/* ---------- 포트폴리오 카드 hover 강조 (사용성) ---------- */
+.card { transition: transform .2s ease; }
+.card:hover .card-title { color: var(--accent); }
+.card .card-title { transition: color .2s; }
+
+/* ---------- 반응형: 모바일에서 언어 버튼 노출 유지 ---------- */
+@media (max-width: 860px) {
+  .topbar-right { gap: 14px; }
 }
 
-.btn-secondary {
-    background: var(--btn-secondary-bg);
-    color: var(--text-color);
-    border: 1px solid var(--btn-secondary-border);
+/* =========================================================
+   ADMIN — 관리자 콘솔 전용 스타일
+   ========================================================= */
+.brand-sub {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--faint);
+  margin-left: 6px;
 }
 
-.btn-secondary:hover {
-    background: var(--primary-color);
-    color: #fff;
-    border-color: var(--primary-color);
-    transform: translateY(-2px);
+.admin-hero { border-bottom: 1px solid var(--line); }
+.admin-hero .hero-title { font-family: "Space Grotesk", sans-serif; }
+
+/* 보안 안내 배너 */
+.admin-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 30px;
+  padding: 16px 18px;
+  border: 1px solid var(--line2);
+  border-left: 3px solid var(--accent);
+  border-radius: 2px;
+  background: var(--surface2);
+  max-width: 40em;
+}
+.admin-notice-tag {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  letter-spacing: .1em;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+  padding: 3px 7px;
+  white-space: nowrap;
+  margin-top: 1px;
+}
+.admin-notice-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--body);
+  word-break: keep-all;
 }
 
-/* =========================================
-   6. 타임라인 & 향후 계획 (Plans Tab)
-   ========================================= */
-/* [수정] 타임라인 컨테이너가 그리드 전체 너비를 사용하도록 변경 */
-#plans-content {
-    grid-column: 1 / -1; /* 2단 그리드 무시하고 100% 확장 */
-    width: 100%;
+/* admin 섹션 간격 */
+.admin-section:last-of-type { border-bottom: none; }
+
+/* admin 서비스 카드 — 클릭 가능한 관리 도구 */
+.admin-card .thumb {
+  aspect-ratio: 16 / 7;
+  background: var(--surface);
+}
+.admin-card .thumb-cap {
+  font-size: 11px;
+  background: var(--bg);
+}
+.admin-card .card-title { margin-top: 14px; }
+
+@media (max-width: 860px) {
+  .admin-card .thumb { aspect-ratio: 16 / 9; }
 }
 
-#plans-content h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--text-color);
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid var(--card-border-color);
-    padding-bottom: 0.5rem;
-}
-#plans-content h3:first-child { margin-top: 0; }
+/* =========================================================
+   MINECRAFT — 서버 페이지 전용 스타일
+   ========================================================= */
+.mc-hero { border-bottom: 1px solid var(--line); }
+.mc-hero .hero-title { font-family: "Space Grotesk", sans-serif; }
 
-#plans-content p {
-    color: var(--text-color-secondary);
-    line-height: 1.7;
-    margin-bottom: 1rem;
-    word-break: keep-all; /* 한글 단어 끊김 방지 */
+/* online 상태 점 */
+.status-dot {
+  display: inline-block;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--faint);
+  margin-right: 8px;
+  vertical-align: middle;
 }
-
-#plans-content ul {
-    list-style: none;
-    padding-left: 1.2rem;
-    margin-bottom: 1rem;
+.status-dot.online {
+  background: #2f9e44;
+  box-shadow: 0 0 0 0 rgba(47, 158, 68, .5);
+  animation: mc-pulse 2s infinite;
 }
-
-/* 리스트 아이템 공통 스타일 */
-#plans-content li {
-    position: relative;
-    color: var(--text-color-secondary);
-    padding-bottom: 1rem;
-    padding-left: 0.8rem;
-    word-break: keep-all;
+.status-dot.offline {
+  background: #c43d2f;
+  animation: none;
 }
-
-/* 리스트 아이콘 (점) */
-#plans-content li::before {
-    content: '';
-    position: absolute;
-    left: -4px;
-    top: 0.5rem;
-    width: 8px;
-    height: 8px;
-    background: var(--primary-color);
-    border-radius: 50%;
-    z-index: 1;
+.status-dot.checking {
+  background: var(--faint);
+  animation: mc-blink 1s ease-in-out infinite;
+}
+@keyframes mc-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(47, 158, 68, .5); }
+  70%  { box-shadow: 0 0 0 6px rgba(47, 158, 68, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(47, 158, 68, 0); }
+}
+@keyframes mc-blink {
+  0%, 100% { opacity: .3; }
+  50%      { opacity: 1; }
 }
 
-/* [중요] 첫 번째 목록(타임라인)만 왼쪽에 줄(Line) 표시 */
-#plans-content ul:first-of-type li {
-    border-left: 2px solid var(--card-border-color);
+/* 상태 색상에 맞춘 eyebrow 텍스트 */
+#server-status { color: var(--accent); }
+
+/* 접속 주소 박스 */
+.connect-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 28px 32px;
+  border: 1px solid var(--line2);
+  border-radius: 4px;
+  background: var(--surface2);
 }
-/* [수정] 첫 번째 목록(타임라인)의 점 위치 정밀 조정 */
-#plans-content ul:first-of-type li::before {
-    /* 기존: left: -5px; */
-    left: -1px; /* 2px 두께의 선(border-left) 정중앙에 맞춤 */
-    transform: translateX(-50%); /* 점의 너비에 관계없이 항상 중심 정렬 */
-    top: 0.6rem; /* 텍스트 높이에 맞춰 세로 위치 미세 조정 */
+.connect-ip { display: flex; flex-direction: column; gap: 8px; }
+.connect-label {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: .12em;
+  color: var(--faint);
+}
+.ip-value {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: -.01em;
+  user-select: all;
+  cursor: pointer;
+  word-break: break-all;
 }
 
-/* [추가] 마지막 아이템의 줄이 아래로 삐져나오지 않게 처리 */
-#plans-content ul:first-of-type li:last-child {
-    border-left: 2px solid transparent;
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  transition: background-color .2s, opacity .2s;
+}
+.copy-btn::before {
+  content: "⧉";
+  font-size: 15px;
+}
+.copy-btn.copied {
+  background: #2f9e44;
+  color: #fff;
+}
+.copy-btn.copied::before { content: "✓"; }
+
+/* 메타 정보 그리드 */
+.meta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 28px;
+  border-top: 1px solid var(--line);
+}
+.meta-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 22px 24px;
+  border-right: 1px solid var(--line);
+}
+.meta-cell:first-child { padding-left: 0; }
+.meta-cell:last-child { border-right: none; padding-right: 0; }
+.meta-k {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: var(--faint);
+}
+.meta-v { font-weight: 600; font-size: 16px; }
+
+/* 규칙 목록 */
+.rule-list { list-style: none; margin: 0; padding: 0; }
+.rule-item {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 20px;
+  align-items: start;
+  padding: 22px 0;
+  border-top: 1px solid var(--line);
+}
+.rule-num {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  color: var(--accent);
+  padding-top: 2px;
+}
+.rule-text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--body);
+  word-break: keep-all;
 }
 
-/* [중요] 두 번째 목록(향후 계획)부터는 줄 없이 점만 표시 */
-#plans-content ul:not(:first-of-type) li {
-    border-left: none;
-    padding-bottom: 0.5rem;
-}
-
-/* 인라인 코드 스타일 */
-#plans-content code {
-    background-color: var(--btn-secondary-bg);
-    border-radius: 4px;
-    padding: 0.2em 0.4em;
-    font-family: 'IBM Plex Sans KR', 'Poppins', sans-serif;
-    font-size: 0.9em;
-}
-
-/* 섹션 그룹 스타일 */
-.service-group {
-    margin-bottom: 3rem;
-}
-
-.group-title {
-    font-size: 1.4rem;
-    margin-bottom: 1.5rem;
-    /* padding-left: 0.5rem; */
-    /* border-left: 4px solid var(--primary-color); */
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-/* 비활성화된 카드 스타일 (.srv-error 포함 카드) */
-.inactive-card {
-    background-color: rgba(0, 0, 0, 0.4) !important; /* 배경을 더 어둡게 */
-    opacity: 0.8;
-    filter: grayscale(0.5); /* 약간의 회색조 처리 */
-    border: 1px dashed var(--card-border-color); /* 테두리를 점선으로 변경 */
-}
-
-.inactive-card:hover {
-    transform: none; /* 호버 시 들뜸 효과 제거 */
-    box-shadow: none;
-}
-
-/* 라이트 모드 대응 */
-body.light-mode .inactive-card {
-    background-color: rgba(0, 0, 0, 0.05) !important;
-    filter: grayscale(0.8);
-}
-
-/* 상태 배지 기본 스타일 */
-.status-badge {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    padding: 2px 8px;
-    border-radius: 12px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    backdrop-filter: blur(4px);
-    z-index: 2;
-}
-
-/* Online 상태 (초록색 계열) */
-.status-badge.online {
-    background: rgba(46, 204, 113, 0.15);
-    color: #2ecc71;
-    border: 1px solid rgba(46, 204, 113, 0.3);
-}
-
-/* Offline 상태 (빨간색/회색 계열) */
-.status-badge.offline {
-    background: rgba(231, 76, 60, 0.15);
-    color: #e74c3c;
-    border: 1px solid rgba(231, 76, 60, 0.3);
-}
-
-/* 비활성화된 카드 스타일 (이전 가이드 포함 내용) */
-.inactive-card {
-    background-color: rgba(0, 0, 0, 0.4) !important;
-    opacity: 0.8;
-}
-
-/* =========================================
-   7. 반응형 스타일 (Mobile)
-   ========================================= */
-@media (max-width: 768px) {
-    /* 정보 탭 그리드 1단 변경 */
-    .info-grid { grid-template-columns: 1fr; }
-    
-    /* 모바일 카드 스타일 조정 */
-    .card-wide-half { 
-        grid-column: auto; 
-        flex-direction: column; 
-        align-items: flex-start; 
-    }
-    
-    /* [수정] 모바일에서도 카드 아이콘 오른쪽 하단 정렬 유지 */
-    .card-wide-half .card-link { 
-        margin-top: 1rem; 
-        align-self: flex-end; 
-    }
-    
-    /* 배경 흐림 효과 조정 */
-    .bg-gradient { filter: blur(60px); opacity: 0.5; }
-}
-
-/* =========================================
-   8. 푸터
-   ========================================= */
-footer { 
-    margin-top: 4rem; 
-    text-align: center; 
-    font-size: 0.85rem; 
-    color: var(--text-color-secondary); 
-    opacity: 0.7; 
+@media (max-width: 860px) {
+  .connect-box { padding: 22px 20px; }
+  .ip-value { font-size: 24px; }
+  .meta-grid { grid-template-columns: 1fr; }
+  .meta-cell {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+    padding: 16px 0;
+  }
+  .meta-cell:last-child { border-bottom: none; }
 }

@@ -1,220 +1,266 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="assets/img/icon.png" type="image/png">
-    
-    <meta name="description" content="HANGGOK의 개인 서버 및 포트폴리오 사이트입니다.">
-    <meta property="og:title" content="HANGGOK SERVER">
-    <meta property="og:description" content="HANGGOK의 개인 서버 및 포트폴리오 사이트입니다.">
-    <meta property="og:image" content="assets/img/profile.png">
-    <meta property="og:url" content="https://www.hanggok.com">
-    <meta name="theme-color" content="#0d1117">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="assets/img/icon.png" type="image/png">
+  <meta name="description" content="행국(HANGGOK)의 개인 서버 및 포트폴리오 사이트입니다.">
+  <meta property="og:title" content="HANGGOK">
+  <meta property="og:description" content="행국(HANGGOK)의 개인 서버 및 포트폴리오 사이트입니다.">
+  <meta property="og:image" content="assets/img/profile.png">
+  <meta property="og:url" content="https://www.hanggok.com">
+  <meta name="theme-color" content="#f7f5f0">
 
-    <title>HANGGOK SERVER</title>
-    
-    <link rel="stylesheet" href="assets/css/style.css">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; img-src 'self' data: https:; connect-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://cloudflareinsights.com; object-src 'none'; base-uri 'self';">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@latest/themes/purple/pace-theme-flash.css">
+  <title>HANGGOK</title>
 
-    <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <div class="bg-gradient"></div>
+  <div class="wrap">
 
-    <button id="theme-toggle" title="테마 전환" aria-label="테마 전환">
-        <i class="fa-regular fa-sun"></i> <i class="fa-solid fa-moon"></i> 
-    </button>
-
-    <div class="container">
-        
-        <header class="profile">
-            <img src="assets/img/profile.png" alt="프로필 사진" class="profile-img">
-            <h1 class="profile-name">행국</h1>
-            <p class="profile-handle">HANGGOK</p>
-
-            <div class="profile-links">
-                <a href="https://www.instagram.com/hs1xh_k/" target="_blank" title="Instagram DM" aria-label="Instagram">
-                    <i class="fa-brands fa-instagram"></i>
-                </a>
-                <a href="https://github.com/alexjeon5" target="_blank" title="깃허브 방문" aria-label="GitHub">
-                    <i class="fa-brands fa-github"></i>
-                </a>
-                <a href="https://www.youtube.com/@HANGGOK" target="_blank" title="유튜브 채널" aria-label="YouTube">
-                    <i class="fa-brands fa-youtube"></i> 
-                </a>
-            </div>
-        </header>
-
-        <nav class="tabs" role="tablist">
-            <button class="tab active" role="tab" aria-selected="true" aria-controls="info" id="tab-info" data-tab="info">정보</button>
-            <button class="tab" role="tab" aria-selected="false" aria-controls="projects" id="tab-projects" data-tab="projects">서비스</button>
-            <button class="tab" role="tab" aria-selected="false" aria-controls="plans" id="tab-plans" data-tab="plans">타임 라인</button>
+    <!-- top bar -->
+    <header class="topbar">
+      <div class="brand">HANGGOK</div>
+      <div class="topbar-right">
+        <nav class="nav">
+          <a href="#about" data-i18n="nav.about">About</a>
+          <a href="#portfolio" data-i18n="nav.portfolio">Portfolio</a>
+          <a href="#services" data-i18n="nav.services">Services</a>
+          <a href="#timeline" data-i18n="nav.timeline">Timeline</a>
+          <a href="#contact" data-i18n="nav.contact">Contact</a>
         </nav>
-
-        <div class="tab-content-wrapper">
-
-            <section id="info" class="tab-panel active" role="tabpanel" aria-labelledby="tab-info">
-                <div class="info-grid">
-                    <div class="info-column">
-                        <h3 class="info-title">Who is HANGGOK?</h3> 
-                        <div class="info-item">
-                            <i class="fa-solid fa-user-circle fa-fw"></i>
-                            <div>
-                                <span class="info-item-title">닉네임</span>
-                                <span class="info-item-value">행국</span> 
-                            </div>
-                        </div>
-                        <div class="info-item">
-                            <i class="fa-solid fa-briefcase fa-fw"></i>
-                            <div>
-                                <span class="info-item-title">직업</span>
-                                <span class="info-item-value">대학생</span> 
-                            </div>
-                        </div>
-                        
-                        <div class="info-item">
-                            <i class="fa-solid fa-globe fa-fw"></i>
-                            <div>
-                                <span class="info-item-title">영문 닉네임</span>
-                                <span class="info-item-value">HANGGOK</span> 
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <div class="info-column">
-                        <h3 class="info-title">Server Specs</h3>
-                        <div class="info-item">
-                            <i class="fa-brands fa-raspberry-pi fa-fw"></i>
-                            <div>
-                                <span class="info-item-title">Hardware</span>
-                                <span class="info-item-value">Raspberry Pi 3B</span>
-                            </div>
-                        </div>
-                        <div class="info-item">
-                            <i class="fa-brands fa-debian fa-fw"></i>
-                            <div>
-                                <span class="info-item-title">OS</span>
-                                <span class="info-item-value">Debian 13 (Trixie)</span>
-                            </div>
-                        </div>
-                        <div class="info-item">
-                            <i class="fa-brands fa-docker fa-fw"></i>
-                            <div>
-                                <span class="info-item-title">System</span>
-                                <span class="info-item-value">Docker Containers</span>
-                            </div>
-                        </div>
-                        <div class="info-item">
-                            <i class="fa-solid fa-server fa-fw"></i>
-                            <div>
-                                <span class="info-item-title">Web Server</span>
-                                <span class="info-item-value">Nginx Proxy Manager</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <section id="projects" class="tab-panel" role="tabpanel" aria-labelledby="tab-projects">
-                <div class="card-container">
-                    <div class="card">
-                        <div class="card-content">
-                            <h3>Tistory Blog</h3>
-                            <p>HANGGOK의 IT 블로그</p>
-                        </div>
-                        <a href="https://blog.hanggok.com/" class="card-link" aria-label="블로그 방문">
-                            <i class="fa-solid fa-link"></i>
-                        </a>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-content">
-                            <h3>Favorite KNU Place</h3>
-                            <p>내가 뽑은 경북대 주변 맛집 지도</p>
-                            <p style="font-size: 0.8rem; opacity: 0.8;">* 네이버 로그인이 필요할 수 있어요.</p>
-                        </div>
-                        <a href="myKNUplace/" class="card-link" aria-label="맛집 리스트 이동">
-                            <i class="fa-solid fa-link"></i>
-                        </a>
-                    </div>
-                    <div class="card">
-                        <div class="card-content">
-                            <h3>Old Version Website</h3>
-                            <p>초기 마크다운 버전 웹사이트</p>
-                        </div>
-                        <a href="old/" class="card-link" aria-label="구버전 이동">
-                            <i class="fa-solid fa-link"></i>
-                        </a>
-                    </div>
-                    <div class="card">
-                        <div class="card-content">
-                            <h3>Site Source Code</h3>
-                            <p>이 사이트의 소스코드로 이동합니다.</p>
-                        </div>
-                        <a href="https://github.com/alexjeon5/mainpage/" class="card-link" aria-label="깃허브 페이지로 이동">
-                            <i class="fa-solid fa-link"></i>
-                        </a>
-                    </div>
-                    <div class="card">
-                        <div class="card-content">
-                            <h3>HANGGOK Drive</h3>
-                            <p>NAS 드라이브 (개인용)</p>
-                        </div>
-                        <a href="#" class="card-link srv-error" aria-label="접속 불가">
-                            <i class="fa-solid fa-link"></i>
-                        </a>
-                    </div>
-                    <div class="card">
-                        <div class="card-content">
-                            <h3>Constructing..</h3>
-                            <p>또 어떤 기능이 추가될까요?</p>
-                        </div>
-                        <a href="#" class="card-link srv-error" aria-label="">
-                            <i class="fa-solid fa-link"></i>
-                        </a>
-                    </div>
-                    <div class="card card-wide-half">
-                        <div class="card-content">
-                            <h3>Admin Console</h3>
-                            <p>서버 관리자 전용</p>
-                        </div>
-                        <a href="admin/" class="card-link" aria-label="관리자 페이지">
-                            <i class="fa-solid fa-link"></i>
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            <section id="plans" class="tab-panel" role="tabpanel" aria-labelledby="tab-plans">
-                <div class="info-grid">
-                    <div id="plans-content">
-                        <p style="color: var(--text-color-secondary);">
-                            <i class="fa-solid fa-spinner fa-spin"></i> 
-                            로딩 중...
-                        </p>
-                    </div>
-                </div>
-            </section>
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button class="lang-btn" data-lang="ko">KO</button>
+          <button class="lang-btn" data-lang="en">EN</button>
         </div>
-    </div> 
+        <button id="theme-toggle" class="toggle" aria-label="테마 전환">
+          <span class="toggle-dot"></span><span id="theme-label">Dark</span>
+        </button>
+      </div>
+    </header>
 
-    <div id="srv-error-overlay" class="modal-overlay"></div>
-    <div id="srv-error" class="modal-window">
-        <h2><i class="fa-solid fa-triangle-exclamation"></i> 알림</h2>
-        <p>현재 준비 중인 서비스입니다.<br>조금만 기다려주세요!</p>
-        <button id="srv-error-close-btn" class="btn btn-secondary">확인</button>
-    </div>
-    
-    <footer>
-        <p>Last Update: 2026.03.22</p>
-        <p>&copy; 2025 HANGGOK. All Rights Reserved.</p>
+    <!-- hero -->
+    <section class="hero">
+      <div class="hero-text">
+        <div class="eyebrow" data-i18n="hero.eyebrow">Student · Self-hosted server · Builder</div>
+        <h1 class="hero-title">행국<span class="dot">.</span></h1>
+        <p class="hero-desc" data-i18n="hero.desc">라즈베리파이와 클라우드 위에 직접 서비스를 짓는 대학생. 작은 실험들을 하나씩 띄워 두는 개인 서버이자 포트폴리오 공간입니다.</p>
+        <div class="socials">
+          <a class="social" href="https://www.instagram.com/hs1xh_k/" target="_blank" rel="noopener">
+            <span class="social-name">Instagram</span><span class="social-handle">@hs1xh_k</span>
+          </a>
+          <a class="social" href="https://github.com/alexjeon5" target="_blank" rel="noopener">
+            <span class="social-name">GitHub</span><span class="social-handle">alexjeon5</span>
+          </a>
+          <a class="social" href="https://www.youtube.com/@HANGGOK" target="_blank" rel="noopener">
+            <span class="social-name">YouTube</span><span class="social-handle">@HANGGOK</span>
+          </a>
+        </div>
+      </div>
+      <div class="avatar">
+        <img src="assets/img/profile.png" alt="행국 프로필">
+      </div>
+    </section>
+
+    <!-- about / specs -->
+    <section class="section" id="about">
+      <div class="sec-head">
+        <span class="sec-num">01</span>
+        <h2 class="sec-title" data-i18n="about.title">About</h2>
+        <span class="sec-sub" data-i18n="about.sub">소개</span>
+      </div>
+      <div class="about-grid">
+        <div class="about-col">
+          <div class="about-label">Who is HANGGOK?</div>
+          <div class="info-list">
+            <div class="info-row"><span class="info-k" data-i18n="about.nick_k">닉네임</span><span class="info-v" data-i18n="about.nick_v">행국</span></div>
+            <div class="info-row"><span class="info-k" data-i18n="about.job_k">직업</span><span class="info-v" data-i18n="about.job_v">대학생</span></div>
+            <div class="info-row"><span class="info-k" data-i18n="about.en_k">영문 닉네임</span><span class="info-v">HANGGOK</span></div>
+          </div>
+        </div>
+        <div class="about-col">
+          <div class="about-label">Server 1</div>
+          <div class="spec-list">
+            <div class="spec-row"><span class="spec-k">Hardware</span><span class="spec-v">Raspberry Pi 3B</span></div>
+            <div class="spec-row"><span class="spec-k">OS</span><span class="spec-v">Debian 13 (Trixie)</span></div>
+            <div class="spec-row"><span class="spec-k">System</span><span class="spec-v">Docker Containers</span></div>
+            <div class="spec-row"><span class="spec-k">Web</span><span class="spec-v">Nginx Proxy Manager</span></div>
+          </div>
+        </div>
+        <div class="about-col">
+          <div class="about-label">Server 2</div>
+          <div class="spec-list">
+            <div class="spec-row"><span class="spec-k">Hardware</span><span class="spec-v">Oracle Cloud Ampere A1</span></div>
+            <div class="spec-row"><span class="spec-k">OS</span><span class="spec-v">Ubuntu 24.04 LTS</span></div>
+            <div class="spec-row"><span class="spec-k">System</span><span class="spec-v">Docker Containers</span></div>
+            <div class="spec-row"><span class="spec-k">Web</span><span class="spec-v">NPMplus</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- portfolio (새 가로형 — 작업물 쇼케이스) -->
+    <section class="section" id="portfolio">
+      <div class="sec-head">
+        <span class="sec-num">02</span>
+        <h2 class="sec-title" data-i18n="portfolio.title">Portfolio</h2>
+        <span class="sec-sub" data-i18n="portfolio.sub">작업물</span>
+      </div>
+      <div class="pf-list">
+
+        <article class="pf-item">
+          <div class="pf-thumb">
+            <!-- 이미지를 넣으려면: <img src="assets/img/pf-server.png" alt="서버 구축"> -->
+            <span class="pf-thumb-placeholder">PROJECT IMAGE</span>
+          </div>
+          <div class="pf-body">
+            <span class="pf-tag">Infrastructure</span>
+            <h3 class="pf-title">자체 서버 구축 및 운영</h3>
+            <p class="pf-desc">라즈베리파이 3B와 Oracle Cloud Ampere A1을 활용하여 Docker 기반 자체 서버를 구축하고, Nginx Proxy Manager / NPMplus를 통한 리버스 프록시 및 SSL 인증서 관리를 구성했습니다.</p>
+            <div class="pf-meta">
+              <span class="pf-chip">Raspberry Pi</span>
+              <span class="pf-chip">Docker</span>
+              <span class="pf-chip">Nginx</span>
+              <span class="pf-chip">Oracle Cloud</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="pf-item">
+          <div class="pf-thumb">
+            <span class="pf-thumb-placeholder">PROJECT IMAGE</span>
+          </div>
+          <div class="pf-body">
+            <span class="pf-tag">Web Development</span>
+            <h3 class="pf-title">포트폴리오 웹사이트 제작</h3>
+            <p class="pf-desc">Vanilla JS + CSS 기반 정적 사이트를 직접 설계·개발했습니다. 다크/라이트 테마, 다국어(ko/en), 반응형 레이아웃, WAI-ARIA 접근성, CSP 보안 정책을 적용했습니다.</p>
+            <div class="pf-meta">
+              <span class="pf-chip">HTML / CSS / JS</span>
+              <span class="pf-chip">i18n</span>
+              <span class="pf-chip">A11y</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 작업물을 추가하려면 이 아래에 <article class="pf-item"> ... </article> 블록을 복사해서 내용을 바꿔주세요 -->
+
+      </div>
+    </section>
+
+    <!-- services (기존 포트폴리오 → 서비스로 이름 변경) -->
+    <section class="section" id="services">
+      <div class="sec-head">
+        <span class="sec-num">03</span>
+        <h2 class="sec-title" data-i18n="services.title">Services</h2>
+        <span class="sec-sub" data-i18n="services.sub">운영 중인 서비스</span>
+      </div>
+      <div class="portfolio-grid">
+        <a class="card" href="minecraft/">
+          <div class="thumb"><span class="thumb-cap">SERVER SHOT</span><span class="thumb-tag">ONLINE</span></div>
+          <div class="card-cat">Web Service</div>
+          <div class="card-title">Minecraft Server</div>
+          <div class="card-desc" data-i18n="services.mc_desc">24시간 운영되는 마인크래프트 서버</div>
+        </a>
+        <a class="card" href="calc/">
+          <div class="thumb"><span class="thumb-cap">APP SHOT</span><span class="thumb-tag">ONLINE</span></div>
+          <div class="card-cat">Web App</div>
+          <div class="card-title">킹받는 계산기</div>
+          <div class="card-desc" data-i18n="services.calc_desc">생각하는 계산기를 만나보세요</div>
+        </a>
+        <a class="card" href="myKNUplace/">
+          <div class="thumb"><span class="thumb-cap">MAP SHOT</span><span class="thumb-tag">ONLINE</span></div>
+          <div class="card-cat">Map</div>
+          <div class="card-title">Favorite KNU Place</div>
+          <div class="card-desc" data-i18n="services.knu_desc">내가 뽑은 경북대 주변 맛집 지도</div>
+        </a>
+        <a class="card" href="https://blog.hanggok.com/" target="_blank" rel="noopener">
+          <div class="thumb"><span class="thumb-cap">BLOG SHOT</span><span class="thumb-tag">LIVE</span></div>
+          <div class="card-cat">Blog</div>
+          <div class="card-title">Tistory Blog</div>
+          <div class="card-desc" data-i18n="services.blog_desc">HANGGOK의 IT 블로그</div>
+        </a>
+        <a class="card" href="oldGlass/">
+          <div class="thumb"><span class="thumb-cap">ARCHIVE SHOT</span><span class="thumb-tag">ARCHIVE</span></div>
+          <div class="card-cat">Web</div>
+          <div class="card-title">Old (Glass) Version Site</div>
+          <div class="card-desc" data-i18n="services.old1_desc">이전에 사용한 글래스 버전 웹사이트</div>
+        </a>
+        <a class="card" href="oldMarkdown/">
+          <div class="thumb"><span class="thumb-cap">ARCHIVE SHOT</span><span class="thumb-tag">ARCHIVE</span></div>
+          <div class="card-cat">Web</div>
+          <div class="card-title">Old (Markdown) Version Site</div>
+          <div class="card-desc" data-i18n="services.old2_desc">초기 마크다운 버전 웹사이트</div>
+        </a>
+        <a class="card" href="https://github.com/alexjeon5/mainpage/" target="_blank" rel="noopener">
+          <div class="thumb"><span class="thumb-cap">REPO SHOT</span><span class="thumb-tag">REPO</span></div>
+          <div class="card-cat">Open Source</div>
+          <div class="card-title">Site Source Code</div>
+          <div class="card-desc" data-i18n="services.src_desc">이 사이트의 소스코드 (GitHub)</div>
+        </a>
+        <a class="card" href="admin/">
+          <div class="thumb"><span class="thumb-cap">ADMIN SHOT</span><span class="thumb-tag">ADMIN</span></div>
+          <div class="card-cat">Console</div>
+          <div class="card-title">Admin Console</div>
+          <div class="card-desc" data-i18n="services.admin_desc">서버 관리자 전용</div>
+        </a>
+        <a class="card card-soon srv-error" href="#">
+          <div class="thumb"><span class="thumb-cap">COMING SOON</span><span class="thumb-tag off">OFFLINE</span></div>
+          <div class="card-cat">Constructing</div>
+          <div class="card-title">Constructing..</div>
+          <div class="card-desc" data-i18n="services.soon_desc">또 어떤 기능이 추가될까요?</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- timeline -->
+    <section class="section" id="timeline">
+      <div class="sec-head">
+        <span class="sec-num">04</span>
+        <h2 class="sec-title" data-i18n="timeline.title">Timeline</h2>
+        <span class="sec-sub" data-i18n="timeline.sub">타임라인</span>
+      </div>
+      <div class="timeline" id="timeline-list">
+        <div class="tl-loading" data-i18n="global.loading">로딩 중...</div>
+      </div>
+
+      <div class="plans-head">
+        <span class="about-label" data-i18n="timeline.plans_label">향후 계획</span>
+      </div>
+      <ul class="plans-list" id="plans-list"></ul>
+    </section>
+
+    <!-- contact -->
+    <section class="section contact" id="contact">
+      <div class="contact-text">
+        <span class="sec-num">05 · Contact</span>
+        <h2 class="contact-title" data-i18n="contact.title">같이 만들어요.</h2>
+        <p class="contact-desc" data-i18n="contact.desc">프로젝트 제안이나 문의는 아래 채널로 편하게 연락 주세요.</p>
+      </div>
+      <a class="contact-cta" href="https://www.instagram.com/hs1xh_k/" target="_blank" rel="noopener">Instagram DM →</a>
+    </section>
+
+    <footer class="footer">
+      <span>© 2026 HANGGOK</span>
+      <span>Last update 2026.06.25</span>
     </footer>
-    
-    <script src="assets/js/script.js"></script>
+
+  </div>
+
+  <!-- 준비 중 모달 -->
+  <div id="srv-error-overlay" class="modal-overlay"></div>
+  <div id="srv-error" class="modal-window" role="dialog" aria-modal="true" aria-labelledby="srv-error-title">
+    <h2 id="srv-error-title" data-i18n="global.modal_notice">알림</h2>
+    <p data-i18n="global.modal_notice_desc">현재 서비스를 준비하고 있습니다.<br>조금만 기다려주세요!</p>
+    <button id="srv-error-close-btn" class="btn" data-i18n="global.modal_confirm">확인</button>
+  </div>
+
+  <script src="assets/js/script.js"></script>
 </body>
 </html>
