@@ -10,22 +10,18 @@
   <meta property="og:image" content="assets/img/profile.png">
   <meta property="og:url" content="https://www.hanggok.com">
   <meta name="theme-color" content="#f7f5f0">
-
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; img-src 'self' data: https:; connect-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://cloudflareinsights.com; object-src 'none'; base-uri 'self';">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-
   <title>HANGGOK</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body>
+<body data-page="main">
   <div class="wrap">
 
-    <!-- top bar -->
     <header class="topbar">
       <div class="brand">HANGGOK</div>
       <div class="topbar-right">
@@ -46,197 +42,63 @@
       </div>
     </header>
 
-    <!-- hero -->
     <section class="hero">
       <div class="hero-text">
         <div class="eyebrow" data-i18n="hero.eyebrow">Student · Self-hosted server · Builder</div>
         <h1 class="hero-title">행국<span class="dot">.</span></h1>
-        <p class="hero-desc" data-i18n="hero.desc">라즈베리파이와 클라우드 위에 직접 서비스를 짓는 대학생. 작은 실험들을 하나씩 띄워 두는 개인 서버이자 포트폴리오 공간입니다.</p>
+        <p class="hero-desc" data-i18n="hero.desc">라즈베리파이와 클라우드 위에 직접 서비스를 짓는 대학생.</p>
         <div class="socials">
-          <a class="social" href="https://www.instagram.com/hs1xh_k/" target="_blank" rel="noopener">
-            <span class="social-name">Instagram</span><span class="social-handle">@hs1xh_k</span>
-          </a>
-          <a class="social" href="https://github.com/alexjeon5" target="_blank" rel="noopener">
-            <span class="social-name">GitHub</span><span class="social-handle">alexjeon5</span>
-          </a>
-          <a class="social" href="https://www.youtube.com/@HANGGOK" target="_blank" rel="noopener">
-            <span class="social-name">YouTube</span><span class="social-handle">@HANGGOK</span>
-          </a>
+          <a class="social" href="https://www.instagram.com/hs1xh_k/" target="_blank" rel="noopener"><span class="social-name">Instagram</span><span class="social-handle">@hs1xh_k</span></a>
+          <a class="social" href="https://github.com/alexjeon5" target="_blank" rel="noopener"><span class="social-name">GitHub</span><span class="social-handle">alexjeon5</span></a>
+          <a class="social" href="https://www.youtube.com/@HANGGOK" target="_blank" rel="noopener"><span class="social-name">YouTube</span><span class="social-handle">@HANGGOK</span></a>
         </div>
       </div>
-      <div class="avatar">
-        <img src="assets/img/profile.png" alt="행국 프로필">
-      </div>
+      <div class="avatar"><img src="assets/img/profile.png" alt="행국 프로필"></div>
     </section>
 
-    <!-- about / specs -->
+    <!-- 01 About — 내용은 about.json에서 로드 -->
     <section class="section" id="about">
       <div class="sec-head">
         <span class="sec-num">01</span>
-        <h2 class="sec-title" data-i18n="about.title">About</h2>
-        <span class="sec-sub" data-i18n="about.sub">소개</span>
+        <h2 class="sec-title">About</h2>
+        <span class="sec-sub" data-i18n="section.about">소개</span>
       </div>
-      <div class="about-grid">
-        <div class="about-col">
-          <div class="about-label">Who is HANGGOK?</div>
-          <div class="info-list">
-            <div class="info-row"><span class="info-k" data-i18n="about.nick_k">닉네임</span><span class="info-v" data-i18n="about.nick_v">행국</span></div>
-            <div class="info-row"><span class="info-k" data-i18n="about.job_k">직업</span><span class="info-v" data-i18n="about.job_v">대학생</span></div>
-            <div class="info-row"><span class="info-k" data-i18n="about.en_k">영문 닉네임</span><span class="info-v">HANGGOK</span></div>
-          </div>
-        </div>
-        <div class="about-col">
-          <div class="about-label">Server 1</div>
-          <div class="spec-list">
-            <div class="spec-row"><span class="spec-k">Hardware</span><span class="spec-v">Raspberry Pi 3B</span></div>
-            <div class="spec-row"><span class="spec-k">OS</span><span class="spec-v">Debian 13 (Trixie)</span></div>
-            <div class="spec-row"><span class="spec-k">System</span><span class="spec-v">Docker Containers</span></div>
-            <div class="spec-row"><span class="spec-k">Web</span><span class="spec-v">Nginx Proxy Manager</span></div>
-          </div>
-        </div>
-        <div class="about-col">
-          <div class="about-label">Server 2</div>
-          <div class="spec-list">
-            <div class="spec-row"><span class="spec-k">Hardware</span><span class="spec-v">Oracle Cloud Ampere A1</span></div>
-            <div class="spec-row"><span class="spec-k">OS</span><span class="spec-v">Ubuntu 24.04 LTS</span></div>
-            <div class="spec-row"><span class="spec-k">System</span><span class="spec-v">Docker Containers</span></div>
-            <div class="spec-row"><span class="spec-k">Web</span><span class="spec-v">NPMplus</span></div>
-          </div>
-        </div>
-      </div>
+      <div class="about-grid" id="about-grid"></div>
     </section>
 
-    <!-- portfolio (새 가로형 — 작업물 쇼케이스) -->
+    <!-- 02 Portfolio — portfolio.json에서 로드, 클릭 시 상세 페이지 -->
     <section class="section" id="portfolio">
       <div class="sec-head">
         <span class="sec-num">02</span>
-        <h2 class="sec-title" data-i18n="portfolio.title">Portfolio</h2>
-        <span class="sec-sub" data-i18n="portfolio.sub">작업물</span>
+        <h2 class="sec-title">Portfolio</h2>
+        <span class="sec-sub" data-i18n="section.portfolio">작업물</span>
       </div>
-      <div class="pf-list">
-
-        <article class="pf-item">
-          <div class="pf-thumb">
-            <img src="assets/img/desc/webserver.png" alt="서버 구축">
-            <!-- <span class="pf-thumb-placeholder">PROJECT IMAGE</span> -->
-          </div>
-          <div class="pf-body">
-            <span class="pf-tag">Infrastructure</span>
-            <h3 class="pf-title">자체 서버 구축 및 운영</h3>
-            <p class="pf-desc">라즈베리파이 3B와 Oracle Cloud Ampere A1을 활용하여 Docker 기반 자체 서버를 구축하고, Nginx Proxy Manager / NPMplus를 통한 리버스 프록시 및 SSL 인증서 관리를 구성했습니다.</p>
-            <div class="pf-meta">
-              <span class="pf-chip">Raspberry Pi</span>
-              <span class="pf-chip">Docker</span>
-              <span class="pf-chip">Nginx</span>
-              <span class="pf-chip">Oracle Cloud</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="pf-item">
-          <div class="pf-thumb">
-            <img src="assets/img/desc/web.png" alt="서버 구축">
-          </div>
-          <div class="pf-body">
-            <span class="pf-tag">Web Development</span>
-            <h3 class="pf-title">포트폴리오 웹사이트 제작</h3>
-            <p class="pf-desc">Vanilla JS + CSS 기반 정적 사이트를 직접 설계·개발했습니다. 다크/라이트 테마, 다국어(ko/en), 반응형 레이아웃, WAI-ARIA 접근성, CSP 보안 정책을 적용했습니다.</p>
-            <div class="pf-meta">
-              <span class="pf-chip">HTML / CSS / JS</span>
-              <span class="pf-chip">i18n</span>
-              <span class="pf-chip">A11y</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- 작업물을 추가하려면 이 아래에 <article class="pf-item"> ... </article> 블록을 복사해서 내용을 바꿔주세요 -->
-
-      </div>
+      <div class="pf-list" id="pf-list"></div>
     </section>
 
-    <!-- services (기존 포트폴리오 → 서비스로 이름 변경) -->
+    <!-- 03 Services — services.json에서 로드 -->
     <section class="section" id="services">
       <div class="sec-head">
         <span class="sec-num">03</span>
-        <h2 class="sec-title" data-i18n="services.title">Services</h2>
-        <span class="sec-sub" data-i18n="services.sub">운영 중인 서비스</span>
+        <h2 class="sec-title">Services</h2>
+        <span class="sec-sub" data-i18n="section.services">운영 중인 서비스</span>
       </div>
-      <div class="portfolio-grid">
-        <a class="card" href="minecraft/">
-          <div class="thumb"><img src="assets/img/desc/mc.png" alt="마인크래프트 서버"></span><span class="thumb-tag">ONLINE</span></div>
-          <div class="card-cat">Web Service</div>
-          <div class="card-title">Minecraft Server</div>
-          <div class="card-desc" data-i18n="services.mc_desc">24시간 운영되는 마인크래프트 서버</div>
-        </a>
-        <a class="card" href="calc/">
-          <div class="thumb"><span class="thumb-cap">APP SHOT</span><span class="thumb-tag">ONLINE</span></div>
-          <div class="card-cat">Web App</div>
-          <div class="card-title">킹받는 계산기</div>
-          <div class="card-desc" data-i18n="services.calc_desc">생각하는 계산기를 만나보세요</div>
-        </a>
-        <a class="card" href="myKNUplace/">
-          <div class="thumb"><span class="thumb-cap">MAP SHOT</span><span class="thumb-tag">ONLINE</span></div>
-          <div class="card-cat">Map</div>
-          <div class="card-title">Favorite KNU Place</div>
-          <div class="card-desc" data-i18n="services.knu_desc">내가 뽑은 경북대 주변 맛집 지도</div>
-        </a>
-        <a class="card" href="https://blog.hanggok.com/" target="_blank" rel="noopener">
-          <div class="thumb"><span class="thumb-cap">BLOG SHOT</span><span class="thumb-tag">LIVE</span></div>
-          <div class="card-cat">Blog</div>
-          <div class="card-title">Tistory Blog</div>
-          <div class="card-desc" data-i18n="services.blog_desc">HANGGOK의 IT 블로그</div>
-        </a>
-        <a class="card" href="oldGlass/">
-          <div class="thumb"><img src="assets/img/desc/old_glass.png" alt="ARCHIVE SHOT"></span><span class="thumb-tag">ARCHIVE</span></div>
-          <div class="card-cat">Web</div>
-          <div class="card-title">Old (Glass) Version Site</div>
-          <div class="card-desc" data-i18n="services.old1_desc">이전에 사용한 글래스 버전 웹사이트</div>
-        </a>
-        <a class="card" href="oldMarkdown/">
-          <div class="thumb">><img src="assets/img/desc/old_mark.png" alt="ARCHIVE SHOT"><span class="thumb-tag">ARCHIVE</span></div>
-          <div class="card-cat">Web</div>
-          <div class="card-title">Old (Markdown) Version Site</div>
-          <div class="card-desc" data-i18n="services.old2_desc">초기 마크다운 버전 웹사이트</div>
-        </a>
-        <a class="card" href="https://github.com/alexjeon5/mainpage/" target="_blank" rel="noopener">
-          <div class="thumb"><span class="thumb-cap">REPO SHOT</span><span class="thumb-tag">REPO</span></div>
-          <div class="card-cat">Open Source</div>
-          <div class="card-title">Site Source Code</div>
-          <div class="card-desc" data-i18n="services.src_desc">이 사이트의 소스코드 (GitHub)</div>
-        </a>
-        <a class="card" href="admin/">
-          <div class="thumb"><span class="thumb-cap">ADMIN SHOT</span><span class="thumb-tag">ADMIN</span></div>
-          <div class="card-cat">Console</div>
-          <div class="card-title">Admin Console</div>
-          <div class="card-desc" data-i18n="services.admin_desc">서버 관리자 전용</div>
-        </a>
-        <a class="card card-soon srv-error" href="#">
-          <div class="thumb"><span class="thumb-cap">COMING SOON</span><span class="thumb-tag off">OFFLINE</span></div>
-          <div class="card-cat">Constructing</div>
-          <div class="card-title">Constructing..</div>
-          <div class="card-desc" data-i18n="services.soon_desc">또 어떤 기능이 추가될까요?</div>
-        </a>
-      </div>
+      <div class="portfolio-grid" id="services-grid"></div>
     </section>
 
-    <!-- timeline -->
+    <!-- 04 Timeline — timeline.json에서 로드 -->
     <section class="section" id="timeline">
       <div class="sec-head">
         <span class="sec-num">04</span>
-        <h2 class="sec-title" data-i18n="timeline.title">Timeline</h2>
-        <span class="sec-sub" data-i18n="timeline.sub">타임라인</span>
+        <h2 class="sec-title">Timeline</h2>
+        <span class="sec-sub" data-i18n="section.timeline">타임라인</span>
       </div>
-      <div class="timeline" id="timeline-list">
-        <div class="tl-loading" data-i18n="global.loading">로딩 중...</div>
-      </div>
-
-      <div class="plans-head">
-        <span class="about-label" data-i18n="timeline.plans_label">향후 계획</span>
-      </div>
+      <div class="timeline" id="timeline-list"></div>
+      <div class="plans-head"><span class="about-label" data-i18n="section.plans">향후 계획</span></div>
       <ul class="plans-list" id="plans-list"></ul>
     </section>
 
-    <!-- contact -->
+    <!-- 05 Contact -->
     <section class="section contact" id="contact">
       <div class="contact-text">
         <span class="sec-num">05 · Contact</span>
@@ -250,17 +112,19 @@
       <span>© 2026 HANGGOK</span>
       <span>Last update 2026.06.25</span>
     </footer>
-
   </div>
 
-  <!-- 준비 중 모달 -->
+  <!-- 모달 -->
   <div id="srv-error-overlay" class="modal-overlay"></div>
-  <div id="srv-error" class="modal-window" role="dialog" aria-modal="true" aria-labelledby="srv-error-title">
-    <h2 id="srv-error-title" data-i18n="global.modal_notice">알림</h2>
-    <p data-i18n="global.modal_notice_desc">현재 서비스를 준비하고 있습니다.<br>조금만 기다려주세요!</p>
-    <button id="srv-error-close-btn" class="btn" data-i18n="global.modal_confirm">확인</button>
+  <div id="srv-error" class="modal-window" role="dialog" aria-modal="true">
+    <h2 data-i18n="modal.notice">알림</h2>
+    <p data-i18n="modal.notice_desc">현재 서비스를 준비하고 있습니다.<br>조금만 기다려주세요!</p>
+    <button id="srv-error-close-btn" class="btn" data-i18n="modal.confirm">확인</button>
   </div>
 
-  <script src="assets/js/script.js"></script>
+  <!-- 포트폴리오 상세 오버레이 (Notion식) -->
+  <div id="portfolio-detail" class="pd-overlay"></div>
+
+  <script type="module" src="assets/js/app.js"></script>
 </body>
 </html>

@@ -1,0 +1,13 @@
+{
+  "items": [
+    { "href": "minecraft/", "thumb": "assets/img/desc/mc.png", "tag": "ONLINE", "cat": "Web Service", "title": "Minecraft Server", "desc": { "ko": "24시간 운영되는 마인크래프트 서버", "en": "Minecraft server running 24/7" } },
+    { "href": "calc/", "thumb": null, "thumbCap": "APP SHOT", "tag": "ONLINE", "cat": "Web App", "title": "킹받는 계산기", "desc": { "ko": "생각하는 계산기를 만나보세요", "en": "Meet the calculator that thinks" } },
+    { "href": "myKNUplace/", "thumb": null, "thumbCap": "MAP SHOT", "tag": "ONLINE", "cat": "Map", "title": "Favorite KNU Place", "desc": { "ko": "내가 뽑은 경북대 주변 맛집 지도", "en": "My pick of restaurants near KNU" } },
+    { "href": "https://blog.hanggok.com/", "external": true, "thumb": null, "thumbCap": "BLOG SHOT", "tag": "LIVE", "cat": "Blog", "title": "Tistory Blog", "desc": { "ko": "HANGGOK의 IT 블로그", "en": "HANGGOK's IT blog" } },
+    { "href": "oldGlass/", "thumb": "assets/img/desc/old_glass.png", "tag": "ARCHIVE", "cat": "Web", "title": "Old (Glass) Version Site", "desc": { "ko": "이전에 사용한 글래스 버전 웹사이트", "en": "Old glassmorphism version of the site" } },
+    { "href": "oldMarkdown/", "thumb": "assets/img/desc/old_mark.png", "tag": "ARCHIVE", "cat": "Web", "title": "Old (Markdown) Version Site", "desc": { "ko": "초기 마크다운 버전 웹사이트", "en": "Early markdown version of the site" } },
+    { "href": "https://github.com/alexjeon5/mainpage/", "external": true, "thumb": null, "thumbCap": "REPO SHOT", "tag": "REPO", "cat": "Open Source", "title": "Site Source Code", "desc": { "ko": "이 사이트의 소스코드 (GitHub)", "en": "Source code of this site (GitHub)" } },
+    { "href": "admin/", "thumb": null, "thumbCap": "ADMIN SHOT", "tag": "ADMIN", "cat": "Console", "title": "Admin Console", "desc": { "ko": "서버 관리자 전용", "en": "Server administrators only" } },
+    { "href": "#", "soon": true, "thumb": null, "thumbCap": "COMING SOON", "tag": "OFFLINE", "cat": "Constructing", "title": "Constructing..", "desc": { "ko": "또 어떤 기능이 추가될까요?", "en": "What feature comes next?" } }
+  ]
+}

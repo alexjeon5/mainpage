@@ -1,54 +1,12 @@
 {
-  "global": {
-    "loading": "Loading...",
-    "modal_notice": "Notice",
-    "modal_notice_desc": "This service is being prepared.<br>Please wait a little longer!",
-    "modal_confirm": "OK"
-  },
-  "nav": {
-    "about": "About",
-    "portfolio": "Portfolio",
-    "services": "Services",
-    "timeline": "Timeline",
-    "contact": "Contact"
-  },
+  "nav": { "about": "About", "portfolio": "Portfolio", "services": "Services", "timeline": "Timeline", "contact": "Contact" },
   "hero": {
     "eyebrow": "Student · Self-hosted server · Builder",
     "desc": "A university student building services on top of a Raspberry Pi and the cloud. A personal server and portfolio space where small experiments go live one by one."
   },
-  "about": {
-    "title": "About",
-    "sub": "Profile",
-    "nick_k": "Nickname",
-    "nick_v": "HANGGOK",
-    "job_k": "Job",
-    "job_v": "University Student",
-    "en_k": "English Name"
-  },
-  "portfolio": {
-    "title": "Portfolio",
-    "sub": "Works"
-  },
-  "services": {
-    "title": "Services",
-    "sub": "Live Services",
-    "mc_desc": "Minecraft server running 24/7",
-    "calc_desc": "Meet the calculator that thinks",
-    "knu_desc": "My pick of restaurants near KNU",
-    "blog_desc": "HANGGOK's IT blog",
-    "old1_desc": "Old glassmorphism version of the site",
-    "old2_desc": "Early markdown version of the site",
-    "src_desc": "Source code of this site (GitHub)",
-    "admin_desc": "Server administrators only",
-    "soon_desc": "What feature comes next?"
-  },
-  "timeline": {
-    "title": "Timeline",
-    "sub": "History",
-    "plans_label": "Future Plans"
-  },
-  "contact": {
-    "title": "Let's build together.",
-    "desc": "For project proposals or inquiries, feel free to reach out through the channel below."
-  }
+  "section": { "about": "Profile", "portfolio": "Works", "services": "Live Services", "timeline": "History", "plans": "Future Plans" },
+  "contact": { "title": "Let's build together.", "desc": "For project proposals or inquiries, feel free to reach out through the channel below." },
+  "modal": { "notice": "Notice", "notice_desc": "This service is being prepared.<br>Please wait a little longer!", "confirm": "OK" },
+  "portfolio_detail": { "back": "← Back", "loading": "Loading..." },
+  "global": { "loading": "Loading..." }
 }

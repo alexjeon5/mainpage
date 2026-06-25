@@ -4,15 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="../assets/img/icon.png" type="image/png">
-  <meta name="description" content="HANGGOK 서버 관리자 콘솔">
-  <meta name="theme-color" content="#f7f5f0">
   <meta name="robots" content="noindex, nofollow">
-
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; img-src 'self' data: https:; connect-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://cloudflareinsights.com; object-src 'none'; base-uri 'self';">
-  <meta name="referrer" content="strict-origin-when-cross-origin">
-
-  <title>HANGGOK — Admin Console</title>
-
+  <meta name="theme-color" content="#f7f5f0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self';">
+  <title>HANGGOK — Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
@@ -21,59 +16,31 @@
 </head>
 <body data-page="admin">
   <div class="wrap">
-
-    <!-- top bar -->
     <header class="topbar">
       <div class="brand">HANGGOK<span class="brand-sub">/ admin</span></div>
       <div class="topbar-right">
-        <nav class="nav">
-          <a href="../">← Main</a>
-        </nav>
-        <button id="theme-toggle" class="toggle" aria-label="테마 전환">
-          <span class="toggle-dot"></span><span id="theme-label">Dark</span>
-        </button>
+        <nav class="nav"><a href="../">← Main</a></nav>
+        <button id="theme-toggle" class="toggle" aria-label="테마 전환"><span class="toggle-dot"></span><span id="theme-label">Dark</span></button>
       </div>
     </header>
-
-    <!-- hero -->
     <section class="hero admin-hero">
       <div class="hero-text">
         <div class="eyebrow">Admin Console</div>
         <h1 class="hero-title">Server<span class="dot">.</span></h1>
-        <p class="hero-desc">자체 호스팅 서비스 관리 콘솔. 두 대의 서버에서 운영 중인 서비스 현황과 관리 도구 링크를 한곳에 모았습니다.</p>
+        <p class="hero-desc">자체 호스팅 서비스 관리 콘솔.</p>
         <div class="admin-notice">
           <span class="admin-notice-tag">SECURED</span>
-          <span class="admin-notice-text">Cloudflare Zero Trust로 접근이 제어됩니다. 일반 사용자는 일부 서비스 이용이 제한될 수 있어요.</span>
+          <span class="admin-notice-text">Cloudflare Zero Trust로 접근이 제어됩니다.</span>
         </div>
       </div>
     </section>
-
-    <!-- services (동적 렌더) -->
     <main id="admin-root"></main>
-
-    <footer class="footer">
-      <span>© 2026 HANGGOK · Administrator</span>
-      <span>Self-hosted services</span>
-    </footer>
-
+    <footer class="footer"><span>© 2026 HANGGOK · Admin</span><span>Self-hosted services</span></footer>
   </div>
-
-  <!-- 준비 중 모달 -->
   <div id="srv-error-overlay" class="modal-overlay"></div>
-  <div id="srv-error" class="modal-window" role="dialog" aria-modal="true" aria-labelledby="srv-error-title">
-    <h2 id="srv-error-title">알림</h2>
-    <p>현재 서비스를 준비하고 있습니다.<br>조금만 기다려주세요!</p>
-    <button id="srv-error-close-btn" class="btn">확인</button>
-  </div>
-
-  <!-- 보안 경고 모달 (진입 시 표시) -->
+  <div id="srv-error" class="modal-window"><h2>알림</h2><p>현재 서비스를 준비하고 있습니다.<br>조금만 기다려주세요!</p><button id="srv-error-close-btn" class="btn">확인</button></div>
   <div id="admin-warn-overlay" class="modal-overlay"></div>
-  <div id="admin-warn" class="modal-window" role="dialog" aria-modal="true" aria-labelledby="admin-warn-title">
-    <h2 id="admin-warn-title">보안 알림</h2>
-    <p>관리자 전용 구역입니다.<br>서비스 이용이 제한될 수 있습니다.</p>
-    <button id="admin-warn-close-btn" class="btn">확인</button>
-  </div>
-
-  <script src="../assets/js/script.js"></script>
+  <div id="admin-warn" class="modal-window"><h2>보안 알림</h2><p>관리자 전용 구역입니다.<br>서비스 이용이 제한될 수 있습니다.</p><button id="admin-warn-close-btn" class="btn">확인</button></div>
+  <script type="module" src="../assets/js/app.js"></script>
 </body>
 </html>
