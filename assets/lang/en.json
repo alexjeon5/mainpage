@@ -1,12 +1,38 @@
 {
-  "nav": { "about": "About", "portfolio": "Portfolio", "services": "Services", "timeline": "Timeline", "contact": "Contact" },
+  "nav": {
+    "about": "About",
+    "portfolio": "Portfolio",
+    "services": "Services",
+    "timeline": "Timeline",
+    "contact": "Contact",
+    "archive": "Archive"
+  },
   "hero": {
     "eyebrow": "Student · Self-hosted server · Builder",
     "desc": "A university student building services on top of a Raspberry Pi and the cloud. A personal server and portfolio space where small experiments go live one by one."
   },
-  "section": { "about": "Profile", "portfolio": "Works", "services": "Live Services", "timeline": "History", "plans": "Future Plans" },
-  "contact": { "title": "Let's build together.", "desc": "For project proposals or inquiries, feel free to reach out through the channel below." },
-  "modal": { "notice": "Notice", "notice_desc": "This service is being prepared.<br>Please wait a little longer!", "confirm": "OK" },
-  "portfolio_detail": { "back": "← Back", "loading": "Loading..." },
-  "global": { "loading": "Loading..." }
+  "section": {
+    "about": "Profile",
+    "portfolio": "Works",
+    "services": "Live Services",
+    "timeline": "History",
+    "plans": "Future Plans",
+    "archive": "Previous Versions"
+  },
+  "contact": {
+    "title": "Let's build together.",
+    "desc": "For project proposals or inquiries, feel free to reach out through the channel below."
+  },
+  "modal": {
+    "notice": "Notice",
+    "notice_desc": "This service is being prepared.<br>Please wait a little longer!",
+    "confirm": "OK"
+  },
+  "portfolio_detail": {
+    "back": "← Back",
+    "loading": "Loading..."
+  },
+  "global": {
+    "loading": "Loading..."
+  }
 }

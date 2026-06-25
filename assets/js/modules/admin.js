@@ -24,7 +24,7 @@ export class AdminRenderer {
         for (const svc of group.services) {
           const off = svc.status === 'offline';
           const cls = 'card admin-card' + (off ? ' card-soon srv-error' : '');
-          const href = off ? '#' : svc.href;
+          const href = off ? '#' : svc.url;
           const rel = (!off && svc.url && !svc.url.startsWith('#') && !svc.url.startsWith('../'))
             ? ' target="_blank" rel="noopener"' : '';
           html += `<a class="${cls}" href="${esc(href)}"${rel}>`;

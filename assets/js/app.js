@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (page === 'main') {
     const about     = new AboutRenderer('about-grid');
     const portfolio = new PortfolioRenderer('pf-list', 'portfolio-detail');
-    const services  = new ServicesRenderer('services-grid');
+    const services  = new ServicesRenderer('services-grid', 'archive-grid');
     const timeline  = new TimelineRenderer('timeline-list', 'plans-list');
 
     // 초기 렌더

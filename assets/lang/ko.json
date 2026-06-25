@@ -1,12 +1,38 @@
 {
-  "nav": { "about": "About", "portfolio": "Portfolio", "services": "Services", "timeline": "Timeline", "contact": "Contact" },
+  "nav": {
+    "about": "About",
+    "portfolio": "Portfolio",
+    "services": "Services",
+    "timeline": "Timeline",
+    "contact": "Contact",
+    "archive": "Archive"
+  },
   "hero": {
     "eyebrow": "대학생 · 자체 호스팅 서버 · 빌더",
     "desc": "라즈베리파이와 클라우드 위에 직접 서비스를 짓는 대학생. 작은 실험들을 하나씩 띄워 두는 개인 서버이자 포트폴리오 공간입니다."
   },
-  "section": { "about": "소개", "portfolio": "작업물", "services": "운영 중인 서비스", "timeline": "타임라인", "plans": "향후 계획" },
-  "contact": { "title": "같이 만들어요.", "desc": "프로젝트 제안이나 문의는 아래 채널로 편하게 연락 주세요." },
-  "modal": { "notice": "알림", "notice_desc": "현재 서비스를 준비하고 있습니다.<br>조금만 기다려주세요!", "confirm": "확인" },
-  "portfolio_detail": { "back": "← 돌아가기", "loading": "로딩 중..." },
-  "global": { "loading": "로딩 중..." }
+  "section": {
+    "about": "소개",
+    "portfolio": "작업물",
+    "services": "운영 중인 서비스",
+    "timeline": "타임라인",
+    "plans": "향후 계획",
+    "archive": "이전 버전"
+  },
+  "contact": {
+    "title": "같이 만들어요.",
+    "desc": "프로젝트 제안이나 문의는 아래 채널로 편하게 연락 주세요."
+  },
+  "modal": {
+    "notice": "알림",
+    "notice_desc": "현재 서비스를 준비하고 있습니다.<br>조금만 기다려주세요!",
+    "confirm": "확인"
+  },
+  "portfolio_detail": {
+    "back": "← 돌아가기",
+    "loading": "로딩 중..."
+  },
+  "global": {
+    "loading": "로딩 중..."
+  }
 }

@@ -225,6 +225,24 @@ h3.pd-h { font-size: 18px; font-weight: 600; }
 .pd-code { background: var(--surface); border: 1px solid var(--line2); border-radius: 4px; padding: 16px; font-family: "IBM Plex Mono", monospace; font-size: 14px; overflow-x: auto; margin: 16px 0; color: var(--body); }
 .pd-quote { border-left: 3px solid var(--line2); padding: 8px 16px; margin: 16px 0; font-style: italic; color: var(--muted); font-size: 16px; line-height: 1.7; }
 
+/* ── 6-b. 아카이브 ── */
+.archive-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.archive-card {
+  display: grid; grid-template-columns: 140px 1fr; gap: 20px;
+  padding: 20px; border: 1px solid var(--line2); border-radius: 4px;
+  text-decoration: none; transition: border-color .2s;
+}
+.archive-card:hover { border-color: var(--accent); }
+.archive-thumb {
+  aspect-ratio: 4 / 3; border-radius: 2px; overflow: hidden;
+  background: var(--surface); display: flex; align-items: center; justify-content: center;
+}
+.archive-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.archive-body { display: flex; flex-direction: column; gap: 4px; justify-content: center; }
+.archive-date { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .08em; color: var(--faint); }
+.archive-title { font-family: "Space Grotesk", "Pretendard Variable", sans-serif; font-weight: 600; font-size: 16px; }
+.archive-desc { font-size: 13px; color: var(--muted); line-height: 1.5; word-break: keep-all; }
+
 /* ── 7. 타임라인 ── */
 .timeline { display: flex; flex-direction: column; }
 .tl-row { display: grid; grid-template-columns: 140px 1fr; gap: 24px; padding: 18px 0; border-top: 1px solid var(--line); align-items: baseline; }
@@ -295,6 +313,7 @@ h3.pd-h { font-size: 18px; font-weight: 600; }
   .pf-item { grid-template-columns: 1fr; gap: 20px; }
   .pf-thumb { max-width: 400px; }
   .portfolio-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+  .archive-grid { grid-template-columns: 1fr; }
   .contact { grid-template-columns: 1fr; gap: 28px; }
   .contact-cta { justify-self: start; }
   .pd-topbar { padding: 16px 24px; }
