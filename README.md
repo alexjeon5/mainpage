@@ -69,28 +69,12 @@ WAI-ARIA 속성, 키보드 탐색(ESC/Enter), Content Security Policy, `rel="noo
 
 **Paper Editorial** — 종이 위에 활자를 배열하는 편집 디자인에서 영감을 받았습니다.
 
-<table>
-<tr>
-<td width="50%"><img src="docs/screenshots/main-light.png" alt="Light Mode"></td>
-<td width="50%"><img src="docs/screenshots/main-dark.png" alt="Dark Mode"></td>
-</tr>
-<tr>
-<td align="center"><b>Light</b></td>
-<td align="center"><b>Dark</b></td>
-</tr>
-</table>
-
 - 따뜻한 오프화이트 배경 위에 **룰(가로선)과 타이포그래피 위계**로 정보를 구성
 - 그림자·블러·둥근 모서리를 배제하고 보더와 여백만으로 구조를 표현
 - 포인트 컬러는 테라코타(`#b8542f`) 하나로 절제
 - 다크 모드는 깊은 세피아(`#161512`) 배경에 동일한 룰 구조 유지
 
 **서체** — Space Grotesk (제목) · IBM Plex Mono (라벨/번호) · Pretendard (본문/한글)
-
-<div align="center">
-<img src="docs/screenshots/portfolio-detail.png" alt="Portfolio Detail" width="80%">
-<br><i>Notion 스타일 포트폴리오 상세 페이지</i>
-</div>
 
 ---
 
