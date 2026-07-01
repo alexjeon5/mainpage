@@ -13,12 +13,6 @@
 ![No Framework](https://img.shields.io/badge/Framework-None_(Vanilla_JS)-f7df1e?style=flat-square)
 ![Architecture](https://img.shields.io/badge/Architecture-ES_Module-8b5cf6?style=flat-square)
 
-<br>
-
-![Main Page](docs/screenshots/main-light.png)
-
-</div>
-
 ---
 
 ## 목차
