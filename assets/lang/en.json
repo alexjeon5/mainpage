@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "nav": {
     "about": "About",
     "portfolio": "Portfolio",
@@ -35,57 +34,5 @@
   },
   "global": {
     "loading": "Loading..."
-=======
-  "global": {
-    "loading": "Loading...",
-    "modal_notice": "Notice",
-    "modal_notice_desc": "We are currently preparing the service.<br>Please wait a moment!",
-    "modal_confirm": "Confirm",
-    "footer_update": "Last Update: Apr 22, 2026",
-    "footer_copy": "&copy; 2026 HANGGOK. All Rights Reserved."
-  },
-  "main": {
-    "tab_info": "Info",
-    "tab_projects": "Services",
-    "tab_timeline": "Timeline",
-    "profile_name": "HANGGOK",
-    "profile_desc": "HANGGOK",
-    "info_who": "Who is HANGGOK?",
-    "info_nick_label": "Nickname",
-    "info_nick_val": "HANGGOK",
-    "info_job_label": "Occupation",
-    "info_job_val": "Univ. Student",
-    "info_en_label": "English Name",
-    "info_en_val": "HANGGOK",
-    "project_mc_title": "Minecraft Server",
-    "project_mc_desc": "24/7 Minecraft Survival Server",
-    "project_knu_title": "Favorite KNU Place",
-    "project_knu_desc1": "My Favorite KNU Places Map",
-    "project_knu_desc2": "* Naver login may be required.",
-    "project_old_title": "Old Version Website",
-    "project_old_desc": "Early Markdown version website",
-    "project_nas_title": "HANGGOK Drive",
-    "project_nas_desc": "NAS Drive (Personal)",
-    "project_blog_title": "Tistory Blog",
-    "project_blog_desc": "HANGGOK's IT Blog",
-    "project_src_title": "Site Source Code",
-    "project_src_desc": "Go to the source code of this site.",
-    "project_admin_title": "Admin Console",
-    "project_admin_desc": "Server Administrator Only",
-    "project_const_title": "Constructing..",
-    "project_const_desc": "What features will be added next?"
-  },
-  "admin": {
-    "page_title": "Admin Console",
-    "warning_msg": "Accessible by server administrators only."
-  },
-  "mc": {
-    "page_title": "Minecraft Server Status",
-    "server_status": "Server Status: Online"
-  },
-  "knu": {
-    "page_title": "KNU Tasty Map",
-    "map_desc": "Click the map to explore tasty places."
->>>>>>> main
   }
 }
