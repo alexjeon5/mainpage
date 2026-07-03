@@ -1,0 +1,30 @@
+{
+  "personal": {
+    "label": "Who is HANGGOK?",
+    "rows": [
+      { "key": { "ko": "닉네임", "en": "Nickname" }, "value": { "ko": "행국", "en": "HANGGOK" } },
+      { "key": { "ko": "직업", "en": "Job" }, "value": { "ko": "대학생", "en": "University Student" } },
+      { "key": { "ko": "영문 닉네임", "en": "English Name" }, "value": "HANGGOK" }
+    ]
+  },
+  "servers": [
+    {
+      "label": "Server 1",
+      "rows": [
+        { "key": "Hardware", "value": "Raspberry Pi 3B" },
+        { "key": "OS", "value": "Debian 13 (Trixie)" },
+        { "key": "System", "value": "Docker Containers" },
+        { "key": "Web", "value": "Nginx Proxy Manager" }
+      ]
+    },
+    {
+      "label": "Server 2",
+      "rows": [
+        { "key": "Hardware", "value": "Oracle Cloud Ampere A1" },
+        { "key": "OS", "value": "Ubuntu 24.04 LTS" },
+        { "key": "System", "value": "Docker Containers" },
+        { "key": "Web", "value": "NPMplus" }
+      ]
+    }
+  ]
+}

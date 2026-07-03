@@ -1,3 +1,339 @@
+<<<<<<< HEAD
+/* =========================================================
+   HANGGOK — Paper Editorial
+   목차:
+     1. 토큰 (색상, 폰트)
+     2. 리셋 & 기본
+     3. 레이아웃 (topbar, hero, section, grid)
+     4. 컴포넌트 (카드, 버튼, 모달, 배지)
+     5. 포트폴리오 목록
+     6. 포트폴리오 상세 (Notion식)
+     7. 타임라인
+     8. Contact & Footer
+     9. Admin / Minecraft 전용
+    10. 반응형
+   ========================================================= */
+
+/* ── 1. 토큰 ── */
+:root {
+  --bg: #f7f5f0; --ink: #1b1a17; --body: #56524b; --muted: #76726a;
+  --faint: #9b968c; --line: #e3ded4; --line2: #d8d2c7;
+  --accent: #b8542f; --surface: #ece7dd; --surface2: #f2eee6;
+}
+[data-theme="dark"] {
+  --bg: #161512; --ink: #ece8e1; --body: #b3ada3; --muted: #9a948a;
+  --faint: #6f695f; --line: #2c2a26; --line2: #34312b;
+  --accent: #d9743f; --surface: #221f1b; --surface2: #2a2722;
+}
+
+/* ── 2. 리셋 & 기본 ── */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+  background: var(--bg); color: var(--ink);
+  transition: background-color .35s, color .35s;
+  min-height: 100vh;
+}
+::selection { background: rgba(184, 84, 47, .2); }
+a { color: inherit; }
+
+/* ── 3. 레이아웃 ── */
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 40px; }
+
+.topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 26px 0; border-bottom: 1px solid var(--line);
+}
+.brand { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 18px; letter-spacing: -.01em; }
+.brand-sub { font-family: "IBM Plex Mono", monospace; font-weight: 400; font-size: 13px; color: var(--faint); margin-left: 6px; }
+.topbar-right { display: flex; gap: 30px; align-items: center; }
+.nav { display: flex; gap: 30px; font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.nav a { text-decoration: none; transition: color .2s; }
+.nav a:hover { color: var(--accent); }
+
+.toggle {
+  display: flex; align-items: center; gap: 8px;
+  font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink); background: transparent; border: 1px solid var(--line2);
+  border-radius: 40px; padding: 7px 14px; cursor: pointer; transition: border-color .2s, color .35s;
+}
+.toggle:hover { border-color: var(--accent); }
+.toggle-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); display: inline-block; }
+
+.lang-switch { display: flex; border: 1px solid var(--line2); border-radius: 40px; overflow: hidden; }
+.lang-btn {
+  font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .08em;
+  color: var(--muted); background: transparent; border: none; padding: 7px 12px; cursor: pointer; transition: color .2s, background .2s;
+}
+.lang-btn:hover { color: var(--accent); }
+.lang-btn.active { color: var(--bg); background: var(--ink); }
+
+/* hero */
+.hero {
+  padding: 80px 0 64px; display: grid; grid-template-columns: 1fr auto; gap: 48px;
+  align-items: center; border-bottom: 1px solid var(--line);
+}
+.eyebrow {
+  font-family: "IBM Plex Mono", "Pretendard Variable", Pretendard, monospace;
+  font-size: 12px; letter-spacing: .14em; color: var(--accent); text-transform: uppercase; margin-bottom: 24px;
+}
+.hero-title { font-family: "Space Grotesk", "Pretendard Variable", sans-serif; font-weight: 700; font-size: 72px; line-height: .98; letter-spacing: -.03em; margin: 0 0 22px; }
+.hero-title .dot { color: var(--accent); }
+.hero-desc { font-size: 18px; line-height: 1.7; color: var(--body); max-width: 30em; margin: 0; word-break: keep-all; }
+.socials { display: flex; gap: 14px; margin-top: 34px; flex-wrap: wrap; }
+.social { display: flex; flex-direction: column; gap: 2px; padding: 12px 20px; border: 1px solid var(--line2); border-radius: 2px; text-decoration: none; transition: border-color .2s; }
+.social:hover { border-color: var(--accent); }
+.social-name { font-family: "Space Grotesk", sans-serif; font-weight: 600; font-size: 14px; }
+.social-handle { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--faint); }
+.avatar { width: 230px; height: 230px; border-radius: 50%; background: var(--surface); border: 1px solid var(--line2); display: flex; align-items: flex-end; justify-content: center; overflow: hidden; }
+.avatar img { width: 200px; height: auto; display: block; }
+
+/* sections */
+.section { padding: 64px 0; border-bottom: 1px solid var(--line); }
+.sec-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 40px; }
+.sec-num { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--accent); }
+.sec-title { font-family: "Space Grotesk", sans-serif; font-weight: 600; font-size: 30px; letter-spacing: -.02em; margin: 0; }
+.sec-sub { font-size: 14px; color: var(--faint); }
+
+/* about grid */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; border-top: 1px solid var(--line); }
+.about-col { padding: 28px; border-right: 1px solid var(--line); }
+.about-col:first-child { padding-left: 0; }
+.about-col:last-child { padding-right: 0; border-right: none; }
+.about-label { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.info-list { display: flex; flex-direction: column; gap: 14px; }
+.info-row { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; }
+.info-k { color: var(--faint); }
+.info-v { font-weight: 500; text-align: right; }
+.spec-list { display: flex; flex-direction: column; gap: 14px; }
+.spec-row { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; }
+.spec-k { color: var(--faint); }
+.spec-v { font-weight: 500; text-align: right; }
+
+/* ── 4. 컴포넌트 ── */
+/* 서비스 카드 */
+.portfolio-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; }
+.card { text-decoration: none; display: flex; flex-direction: column; transition: transform .2s; }
+.card:hover .card-title { color: var(--accent); }
+.card .card-title { transition: color .2s; }
+.thumb {
+  aspect-ratio: 4 / 3; border: 1px solid var(--line2); border-radius: 2px;
+  background: repeating-linear-gradient(45deg, var(--surface), var(--surface) 9px, var(--surface2) 9px, var(--surface2) 18px);
+  display: flex; align-items: flex-end; padding: 14px; position: relative; overflow: hidden;
+}
+.thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.thumb-cap { font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .08em; color: var(--faint); background: var(--bg); padding: 3px 7px; position: relative; z-index: 1; }
+.thumb-tag { position: absolute; top: 12px; right: 12px; font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .06em; color: var(--accent); z-index: 1; }
+.thumb-tag.off { color: var(--faint); }
+.card-cat { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--faint); margin-top: 16px; }
+.card-title { font-family: "Space Grotesk", "Pretendard Variable", sans-serif; font-weight: 600; font-size: 18px; margin-top: 4px; }
+.card-desc { font-size: 14px; color: var(--muted); margin-top: 4px; line-height: 1.5; word-break: keep-all; }
+.card-soon { opacity: .6; }
+.card-soon .thumb { background: var(--surface); }
+.card-soon:hover { opacity: .85; }
+
+/* 버튼 */
+.btn {
+  font-family: "Space Grotesk", sans-serif; font-weight: 600; font-size: 14px;
+  padding: 12px 28px; background: var(--ink); color: var(--bg); border: none;
+  border-radius: 2px; cursor: pointer; transition: opacity .2s;
+}
+.btn:hover { opacity: .85; }
+
+/* 모달 */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 1000; opacity: 0; visibility: hidden; transition: opacity .25s, visibility .25s; }
+.modal-window { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-44%); background: var(--bg); border: 1px solid var(--line2); border-radius: 4px; padding: 40px; width: 86%; max-width: 420px; z-index: 1001; opacity: 0; visibility: hidden; transition: opacity .25s, visibility .25s, transform .25s; }
+.modal-window h2 { font-family: "IBM Plex Mono", monospace; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin: 0 0 14px; }
+.modal-window p { font-size: 15px; line-height: 1.7; color: var(--body); margin: 0 0 26px; word-break: keep-all; }
+.modal-overlay.active, .modal-window.active { opacity: 1; visibility: visible; }
+.modal-window.active { transform: translate(-50%,-50%); }
+
+/* ── 5. 포트폴리오 목록 ── */
+.pf-list { display: flex; flex-direction: column; gap: 0; }
+.pf-item {
+  display: grid; grid-template-columns: 340px 1fr; gap: 32px;
+  padding: 28px 0; border-top: 1px solid var(--line);
+  align-items: start; cursor: pointer; transition: background .15s;
+}
+.pf-item:hover { background: var(--surface2); margin: 0 -16px; padding-left: 16px; padding-right: 16px; border-radius: 4px; }
+.pf-thumb {
+  aspect-ratio: 16 / 10; border: 1px solid var(--line2); border-radius: 2px;
+  background: repeating-linear-gradient(45deg, var(--surface), var(--surface) 9px, var(--surface2) 9px, var(--surface2) 18px);
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+}
+.pf-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pf-thumb-placeholder { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .1em; color: var(--faint); background: var(--bg); padding: 4px 8px; }
+.pf-body { display: flex; flex-direction: column; gap: 8px; }
+.pf-tag { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .08em; color: var(--accent); }
+.pf-title { font-family: "Space Grotesk", "Pretendard Variable", sans-serif; font-weight: 600; font-size: 20px; margin: 0; }
+.pf-desc { font-size: 15px; line-height: 1.7; color: var(--body); margin: 4px 0 0; word-break: keep-all; }
+.pf-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.pf-chip { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .04em; color: var(--muted); background: var(--surface); padding: 4px 10px; border-radius: 2px; }
+.pf-open-hint { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--faint); margin-top: auto; transition: color .2s; }
+.pf-item:hover .pf-open-hint { color: var(--accent); }
+
+/* ── 6. 포트폴리오 상세 (Notion식 오버레이) ── */
+.pd-overlay {
+  position: fixed; inset: 0; z-index: 2000;
+  background: var(--bg); overflow-y: auto;
+  transform: translateY(100%); opacity: 0;
+  transition: transform .35s ease, opacity .25s ease;
+  pointer-events: none;
+}
+.pd-overlay.active { transform: translateY(0); opacity: 1; pointer-events: auto; }
+
+.pd-topbar {
+  position: sticky; top: 0; z-index: 10;
+  background: var(--bg); border-bottom: 1px solid var(--line);
+  padding: 16px 40px;
+}
+.pd-back {
+  font-family: "IBM Plex Mono", monospace; font-size: 13px;
+  color: var(--muted); background: none; border: none; cursor: pointer;
+  padding: 4px 0; transition: color .2s;
+}
+.pd-back:hover { color: var(--accent); }
+
+.pd-cover { max-height: 360px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: var(--surface); }
+.pd-cover img { width: 100%; height: 100%; object-fit: cover; }
+
+.pd-header { max-width: 720px; margin: 0 auto; padding: 48px 40px 0; }
+.pd-tag { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: .08em; color: var(--accent); }
+.pd-title { font-family: "Space Grotesk", "Pretendard Variable", sans-serif; font-weight: 700; font-size: 36px; letter-spacing: -.02em; margin: 12px 0 16px; line-height: 1.2; }
+.pd-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+
+/* Notion 블록 스타일 */
+.pd-body { max-width: 720px; margin: 0 auto; padding: 32px 40px 80px; }
+.pd-h { font-family: "Space Grotesk", "Pretendard Variable", sans-serif; margin: 32px 0 12px; }
+h2.pd-h { font-size: 24px; font-weight: 600; }
+h3.pd-h { font-size: 18px; font-weight: 600; }
+.pd-p { font-size: 16px; line-height: 1.8; color: var(--body); margin: 0 0 16px; word-break: keep-all; }
+.pd-list { padding-left: 1.4em; margin: 0 0 16px; }
+.pd-list li { font-size: 15px; line-height: 1.8; color: var(--body); margin-bottom: 6px; word-break: keep-all; }
+.pd-callout {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 16px 18px; margin: 16px 0;
+  background: var(--surface2); border-radius: 4px;
+  border-left: 3px solid var(--accent);
+}
+.pd-callout-icon { font-size: 20px; line-height: 1.4; }
+.pd-callout-text { font-size: 15px; line-height: 1.7; color: var(--body); word-break: keep-all; }
+.pd-divider { border: none; border-top: 1px solid var(--line); margin: 28px 0; }
+.pd-fig { margin: 20px 0; }
+.pd-fig img { width: 100%; border-radius: 4px; border: 1px solid var(--line2); }
+.pd-fig-cap { font-size: 13px; color: var(--faint); margin-top: 8px; text-align: center; display: block; }
+.pd-code { background: var(--surface); border: 1px solid var(--line2); border-radius: 4px; padding: 16px; font-family: "IBM Plex Mono", monospace; font-size: 14px; overflow-x: auto; margin: 16px 0; color: var(--body); }
+.pd-quote { border-left: 3px solid var(--line2); padding: 8px 16px; margin: 16px 0; font-style: italic; color: var(--muted); font-size: 16px; line-height: 1.7; }
+
+/* ── 6-b. 아카이브 ── */
+.archive-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.archive-card {
+  display: grid; grid-template-columns: 140px 1fr; gap: 20px;
+  padding: 20px; border: 1px solid var(--line2); border-radius: 4px;
+  text-decoration: none; transition: border-color .2s;
+}
+.archive-card:hover { border-color: var(--accent); }
+.archive-thumb {
+  aspect-ratio: 4 / 3; border-radius: 2px; overflow: hidden;
+  background: var(--surface); display: flex; align-items: center; justify-content: center;
+}
+.archive-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.archive-body { display: flex; flex-direction: column; gap: 4px; justify-content: center; }
+.archive-date { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .08em; color: var(--faint); }
+.archive-title { font-family: "Space Grotesk", "Pretendard Variable", sans-serif; font-weight: 600; font-size: 16px; }
+.archive-desc { font-size: 13px; color: var(--muted); line-height: 1.5; word-break: keep-all; }
+
+/* ── 7. 타임라인 ── */
+.timeline { display: flex; flex-direction: column; }
+.tl-row { display: grid; grid-template-columns: 140px 1fr; gap: 24px; padding: 18px 0; border-top: 1px solid var(--line); align-items: baseline; }
+.tl-date { font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--accent); }
+.tl-text { font-size: 15px; color: var(--body); line-height: 1.6; word-break: keep-all; }
+.tl-loading { font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--faint); padding: 18px 0; border-top: 1px solid var(--line); }
+.plans-head { margin-top: 44px; margin-bottom: 18px; }
+.plans-list { list-style: none; margin: 0; padding: 0; }
+.plans-item { position: relative; padding: 14px 0 14px 22px; border-top: 1px solid var(--line); font-size: 15px; line-height: 1.6; color: var(--body); word-break: keep-all; }
+.plans-item::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-family: "IBM Plex Mono", monospace; }
+
+/* ── 8. Contact & Footer ── */
+.contact { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; padding: 72px 0; border-bottom: none; }
+.contact-title { font-family: "Space Grotesk", "Pretendard Variable", sans-serif; font-weight: 700; font-size: 44px; letter-spacing: -.025em; margin: 14px 0 0; }
+.contact-desc { font-size: 16px; color: var(--muted); margin: 14px 0 0; max-width: 26em; word-break: keep-all; }
+.contact-cta { font-family: "Space Grotesk", sans-serif; font-weight: 600; font-size: 16px; padding: 18px 36px; background: var(--ink); color: var(--bg); border-radius: 2px; text-decoration: none; white-space: nowrap; transition: background .35s, color .35s; }
+.footer { padding: 24px 0; border-top: 1px solid var(--line); display: flex; justify-content: space-between; font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--faint); }
+
+/* ── 9. Admin / Minecraft 전용 ── */
+.admin-hero { border-bottom: 1px solid var(--line); }
+.admin-hero .hero-title { font-family: "Space Grotesk", sans-serif; }
+.admin-notice { display: flex; align-items: flex-start; gap: 12px; margin-top: 30px; padding: 16px 18px; border: 1px solid var(--line2); border-left: 3px solid var(--accent); border-radius: 2px; background: var(--surface2); max-width: 40em; }
+.admin-notice-tag { font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .1em; color: var(--accent); border: 1px solid var(--accent); border-radius: 2px; padding: 3px 7px; white-space: nowrap; margin-top: 1px; }
+.admin-notice-text { font-size: 14px; line-height: 1.6; color: var(--body); word-break: keep-all; }
+.admin-section:last-of-type { border-bottom: none; }
+.admin-card .thumb { aspect-ratio: 16/7; background: var(--surface); }
+.admin-card .thumb-cap { font-size: 11px; background: var(--bg); }
+.admin-card .card-title { margin-top: 14px; }
+
+.mc-hero { border-bottom: 1px solid var(--line); }
+.mc-hero .hero-title { font-family: "Space Grotesk", sans-serif; }
+.status-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--faint); margin-right: 8px; vertical-align: middle; }
+.status-dot.online { background: #2f9e44; animation: mc-pulse 2s infinite; }
+.status-dot.offline { background: #c43d2f; }
+.status-dot.checking { animation: mc-blink 1s ease-in-out infinite; }
+@keyframes mc-pulse { 0%{box-shadow:0 0 0 0 rgba(47,158,68,.5)}70%{box-shadow:0 0 0 6px rgba(47,158,68,0)}100%{box-shadow:0 0 0 0 rgba(47,158,68,0)} }
+@keyframes mc-blink { 0%,100%{opacity:.3}50%{opacity:1} }
+#server-status { color: var(--accent); }
+.connect-box { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; padding: 28px 32px; border: 1px solid var(--line2); border-radius: 4px; background: var(--surface2); }
+.connect-ip { display: flex; flex-direction: column; gap: 8px; }
+.connect-label { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .12em; color: var(--faint); }
+.ip-value { font-family: "IBM Plex Mono", monospace; font-size: 30px; font-weight: 600; color: var(--accent); letter-spacing: -.01em; user-select: all; cursor: pointer; word-break: break-all; }
+.copy-btn { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; transition: background .2s, opacity .2s; }
+.copy-btn::before { content: "⧉"; font-size: 15px; }
+.copy-btn.copied { background: #2f9e44; color: #fff; }
+.copy-btn.copied::before { content: "✓"; }
+.meta-grid { display: grid; grid-template-columns: repeat(3,1fr); margin-top: 28px; border-top: 1px solid var(--line); }
+.meta-cell { display: flex; flex-direction: column; gap: 8px; padding: 22px 24px; border-right: 1px solid var(--line); }
+.meta-cell:first-child { padding-left: 0; }
+.meta-cell:last-child { border-right: none; padding-right: 0; }
+.meta-k { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .1em; color: var(--faint); }
+.meta-v { font-weight: 600; font-size: 16px; }
+.rule-list { list-style: none; margin: 0; padding: 0; }
+.rule-item { display: grid; grid-template-columns: 48px 1fr; gap: 20px; align-items: start; padding: 22px 0; border-top: 1px solid var(--line); }
+.rule-num { font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--accent); padding-top: 2px; }
+.rule-text { margin: 0; font-size: 15px; line-height: 1.7; color: var(--body); word-break: keep-all; }
+
+/* ── 10. 반응형 ── */
+@media (max-width: 860px) {
+  .wrap { padding: 0 24px; }
+  .topbar-right { gap: 14px; }
+  .nav { display: none; }
+  .hero { grid-template-columns: 1fr; gap: 32px; padding: 48px 0; }
+  .hero-title { font-size: 56px; }
+  .about-grid { grid-template-columns: 1fr; }
+  .about-col { padding: 24px 0; border-right: none; border-bottom: 1px solid var(--line); }
+  .about-col:last-child { border-bottom: none; }
+  .pf-item { grid-template-columns: 1fr; gap: 20px; }
+  .pf-thumb { max-width: 400px; }
+  .portfolio-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+  .archive-grid { grid-template-columns: 1fr; }
+  .contact { grid-template-columns: 1fr; gap: 28px; }
+  .contact-cta { justify-self: start; }
+  .pd-topbar { padding: 16px 24px; }
+  .pd-header { padding: 32px 24px 0; }
+  .pd-body { padding: 24px 24px 60px; }
+  .pd-title { font-size: 28px; }
+  .admin-card .thumb { aspect-ratio: 16/9; }
+  .connect-box { padding: 22px 20px; }
+  .ip-value { font-size: 24px; }
+  .meta-grid { grid-template-columns: 1fr; }
+  .meta-cell { border-right: none; border-bottom: 1px solid var(--line); padding: 16px 0; }
+  .meta-cell:last-child { border-bottom: none; }
+}
+@media (max-width: 520px) {
+  .portfolio-grid { grid-template-columns: 1fr; }
+  .tl-row { grid-template-columns: 1fr; gap: 4px; }
+  .footer { flex-direction: column; gap: 6px; }
+}
+=======
 /* =========================================
    1. 폰트 및 라이브러리 임포트
    ========================================= */
@@ -603,3 +939,4 @@ footer {
     color: var(--text-color-secondary); 
     opacity: 0.7; 
 }
+>>>>>>> main

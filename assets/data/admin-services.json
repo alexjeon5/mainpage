@@ -1,0 +1,29 @@
+{
+  "groups": [
+    {
+      "server": "Server 1",
+      "label": "Raspberry Pi 3B",
+      "services": [
+        { "name": "Main Page", "desc": "기본 접속 시 표시되는 페이지", "url": "../", "status": "online" },
+        { "name": "System Monitor", "desc": "Raspberry Pi 3B 리소스 모니터링", "url": "https://dash.hanggok.com/", "status": "online" },
+        { "name": "Nginx Proxy Manager", "desc": "Reverse Proxy 및 SSL 인증서 관리", "url": "https://npm.hanggok.com/", "status": "online" },
+        { "name": "Portainer", "desc": "Docker 컨테이너 시각화 및 관리", "url": "https://portainer.hanggok.com/", "status": "online" },
+        { "name": "AdGuard Home", "desc": "광고 차단 및 콘텐츠 필터링", "url": "https://adguard.hanggok.com/", "status": "online" },
+        { "name": "UpSnap", "desc": "WoL (Wake-on-LAN) 서비스", "url": "https://wol.hanggok.com/", "status": "online" },
+        { "name": "Proxmox VE", "desc": "가상화 시스템 관리", "url": "#", "status": "offline" }
+      ]
+    },
+    {
+      "server": "Server 2",
+      "label": "Oracle Cloud Ampere A1",
+      "services": [
+        { "name": "System Monitor", "desc": "Oracle Cloud (Ampere A1) 리소스 모니터링", "url": "https://dash.hanggok.net/", "status": "online" },
+        { "name": "NPMplus", "desc": "Reverse Proxy · SSL · 침입 차단 관리", "url": "https://npm.hanggok.net/", "status": "online" },
+        { "name": "Portainer", "desc": "Docker 컨테이너 시각화 및 관리", "url": "https://portainer.hanggok.net/", "status": "online" },
+        { "name": "Metube", "desc": "YouTube에서 찾은 영상을 수집", "url": "https://ytdl.hanggok.net/", "status": "online" },
+        { "name": "Rcon", "desc": "마인크래프트 서버 관리", "url": "https://rcon.hanggok.net/", "status": "online" },
+        { "name": "준비 중", "desc": "서비스를 준비하고 있습니다", "url": "#", "status": "offline" }
+      ]
+    }
+  ]
+}

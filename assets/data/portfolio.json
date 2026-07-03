@@ -1,0 +1,72 @@
+{
+  "items": [
+    {
+      "id": "server-infra",
+      "tag": "Infrastructure",
+      "title": { "ko": "자체 서버 구축 및 운영", "en": "Self-hosted Server Infrastructure" },
+      "summary": {
+        "ko": "라즈베리파이 3B와 Oracle Cloud Ampere A1을 활용하여 Docker 기반 자체 서버를 구축하고, 리버스 프록시 및 SSL 인증서 관리를 구성했습니다.",
+        "en": "Built Docker-based self-hosted servers using Raspberry Pi 3B and Oracle Cloud Ampere A1, with reverse proxy and SSL management."
+      },
+      "thumb": "assets/img/desc/webserver.png",
+      "chips": ["Raspberry Pi", "Docker", "Nginx", "Oracle Cloud"],
+      "detail": {
+        "cover": "assets/img/desc/webserver.png",
+        "blocks": [
+          { "type": "heading", "level": 2, "text": { "ko": "프로젝트 개요", "en": "Overview" } },
+          { "type": "paragraph", "text": {
+            "ko": "가정 내 라즈베리파이 3B와 Oracle Cloud의 Ampere A1 인스턴스를 활용하여 두 대의 서버를 구축하고 운영하고 있습니다. 모든 서비스는 Docker 컨테이너로 격리되어 관리됩니다.",
+            "en": "Operating two servers using a home Raspberry Pi 3B and an Oracle Cloud Ampere A1 instance. All services are isolated and managed through Docker containers."
+          }},
+          { "type": "divider" },
+          { "type": "heading", "level": 3, "text": { "ko": "기술 스택", "en": "Tech Stack" } },
+          { "type": "list", "style": "bullet", "items": [
+            { "ko": "Docker — 컨테이너 기반 서비스 격리 및 배포", "en": "Docker — Container-based service isolation and deployment" },
+            { "ko": "Nginx Proxy Manager / NPMplus — 리버스 프록시 및 SSL 인증서 자동 관리", "en": "Nginx Proxy Manager / NPMplus — Reverse proxy and automatic SSL management" },
+            { "ko": "Portainer — Docker 컨테이너 시각화 관리", "en": "Portainer — Docker container visual management" },
+            { "ko": "AdGuard Home — DNS 기반 광고 차단", "en": "AdGuard Home — DNS-based ad blocking" }
+          ]},
+          { "type": "callout", "emoji": "💡", "text": {
+            "ko": "24시간 구동이 필요한 서비스는 Oracle Cloud로, 가정 환경 전용 서비스는 라즈베리파이에서 운영합니다.",
+            "en": "Services requiring 24/7 uptime run on Oracle Cloud, while home-environment services run on the Raspberry Pi."
+          }}
+        ]
+      }
+    },
+    {
+      "id": "portfolio-site",
+      "tag": "Web Development",
+      "title": { "ko": "포트폴리오 웹사이트 제작", "en": "Portfolio Website Development" },
+      "summary": {
+        "ko": "Vanilla JS + CSS 기반 정적 사이트를 직접 설계·개발했습니다. 다크/라이트 테마, 다국어, 반응형, 접근성, CSP 보안 정책을 적용했습니다.",
+        "en": "Designed and developed a static site with Vanilla JS + CSS. Applied dark/light theme, i18n, responsive layout, accessibility, and CSP security."
+      },
+      "thumb": "assets/img/desc/web.png",
+      "chips": ["HTML / CSS / JS", "i18n", "A11y", "CSP"],
+      "detail": {
+        "cover": "assets/img/desc/web.png",
+        "blocks": [
+          { "type": "heading", "level": 2, "text": { "ko": "프로젝트 개요", "en": "Overview" } },
+          { "type": "paragraph", "text": {
+            "ko": "프레임워크 없이 Vanilla JavaScript와 CSS만으로 개인 포트폴리오 웹사이트를 설계하고 개발했습니다. 외부 라이브러리 의존성을 최소화하면서도 현대적인 웹 표준을 충실히 따랐습니다.",
+            "en": "Designed and developed a personal portfolio website using only Vanilla JavaScript and CSS without any framework. Followed modern web standards while minimizing external library dependencies."
+          }},
+          { "type": "divider" },
+          { "type": "heading", "level": 3, "text": { "ko": "주요 기능", "en": "Key Features" } },
+          { "type": "list", "style": "bullet", "items": [
+            { "ko": "다크/라이트 테마 전환 (시스템 설정 감지 + 수동 토글)", "en": "Dark/light theme toggle (system preference detection + manual toggle)" },
+            { "ko": "한국어/영어 다국어 지원 (JSON 기반 i18n)", "en": "Korean/English bilingual support (JSON-based i18n)" },
+            { "ko": "모바일 반응형 레이아웃", "en": "Mobile responsive layout" },
+            { "ko": "WAI-ARIA 접근성 속성 적용", "en": "WAI-ARIA accessibility attributes" },
+            { "ko": "Content Security Policy 보안 헤더", "en": "Content Security Policy security headers" },
+            { "ko": "ES Module 기반 모듈화 아키텍처", "en": "ES Module-based modular architecture" }
+          ]},
+          { "type": "callout", "emoji": "🏗️", "text": {
+            "ko": "모든 콘텐츠가 JSON 데이터 파일로 분리되어, 코드 수정 없이 내용만 교체할 수 있습니다.",
+            "en": "All content is separated into JSON data files, allowing content updates without code changes."
+          }}
+        ]
+      }
+    }
+  ]
+}
