@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "nav": {
     "about": "About",
     "portfolio": "Portfolio",
@@ -34,5 +35,57 @@
   },
   "global": {
     "loading": "로딩 중..."
+=======
+  "global": {
+    "loading": "로딩 중...",
+    "modal_notice": "알림",
+    "modal_notice_desc": "현재 서비스를 준비하고 있습니다.<br>조금만 기다려주세요!",
+    "modal_confirm": "확인",
+    "footer_update": "Last Update: 2026.04.22",
+    "footer_copy": "&copy; 2026 HANGGOK. All Rights Reserved."
+  },
+  "main": {
+    "tab_info": "정보",
+    "tab_projects": "서비스",
+    "tab_timeline": "타임 라인",
+    "profile_name": "행국",
+    "profile_desc": "HANGGOK",
+    "info_who": "Who is HANGGOK?",
+    "info_nick_label": "닉네임",
+    "info_nick_val": "행국",
+    "info_job_label": "직업",
+    "info_job_val": "대학생",
+    "info_en_label": "영문 닉네임",
+    "info_en_val": "HANGGOK",
+    "project_mc_title": "Minecraft Server",
+    "project_mc_desc": "24시간 운영되는 마인크래프트 서버",
+    "project_knu_title": "Favorite KNU Place",
+    "project_knu_desc1": "내가 뽑은 경북대 주변 맛집 지도",
+    "project_knu_desc2": "* 네이버 로그인이 필요할 수 있어요.",
+    "project_old_title": "Old Version Website",
+    "project_old_desc": "초기 마크다운 버전 웹사이트",
+    "project_nas_title": "HANGGOK Drive",
+    "project_nas_desc": "NAS 드라이브 (개인용)",
+    "project_blog_title": "Tistory Blog",
+    "project_blog_desc": "HANGGOK의 IT 블로그",
+    "project_src_title": "Site Source Code",
+    "project_src_desc": "이 사이트의 소스코드로 이동합니다.",
+    "project_admin_title": "Admin Console",
+    "project_admin_desc": "서버 관리자 전용",
+    "project_const_title": "Constructing..",
+    "project_const_desc": "또 어떤 기능이 추가될까요?"
+  },
+  "admin": {
+    "page_title": "관리자 콘솔",
+    "warning_msg": "서버 관리자만 접근할 수 있습니다."
+  },
+  "mc": {
+    "page_title": "마인크래프트 서버 현황",
+    "server_status": "서버 상태: 온라인"
+  },
+  "knu": {
+    "page_title": "경북대 맛집 지도",
+    "map_desc": "지도를 클릭하여 맛집을 확인하세요."
+>>>>>>> main
   }
 }
