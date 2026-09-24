@@ -2,12 +2,14 @@
 <html lang="ko" data-theme="light">
 <head>
   <meta charset="UTF-8">
+  <!-- 첫 화면 깜빡임 방지: 렌더 전에 저장된/시스템 테마 적용 -->
+  <script>(function(){var t;try{t=localStorage.getItem('hanggok-theme')}catch(e){}if(t!=='dark'&&t!=='light')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t)})();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="assets/img/icon.png" type="image/png">
   <meta name="description" content="행국(HANGGOK)의 개인 서버 및 포트폴리오 사이트입니다.">
   <meta property="og:title" content="HANGGOK">
   <meta property="og:description" content="행국(HANGGOK)의 개인 서버 및 포트폴리오 사이트입니다.">
-  <meta property="og:image" content="assets/img/profile.png">
+  <meta property="og:image" content="https://www.hanggok.com/assets/img/profile.png">
   <meta property="og:url" content="https://www.hanggok.com">
   <meta name="theme-color" content="#f7f5f0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; img-src 'self' data: https:; connect-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://cloudflareinsights.com; object-src 'none'; base-uri 'self';">
@@ -134,7 +136,7 @@
   </div>
 
   <!-- 포트폴리오 상세 오버레이 (Notion식) -->
-  <div id="portfolio-detail" class="pd-overlay"></div>
+  <div id="portfolio-detail" class="pd-overlay" role="dialog" aria-modal="true"></div>
 
   <script type="module" src="assets/js/app.js"></script>
 </body>

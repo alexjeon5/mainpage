@@ -2,12 +2,36 @@
 
 import { loadJSON, esc, t } from './utils.js';
 
+const HASH_PREFIX = '#portfolio/';
+
 export class PortfolioRenderer {
-  constructor(listId, detailId) {
+  constructor(listId, detailId, i18n = null) {
     this.listEl = document.getElementById(listId);
     this.detailEl = document.getElementById(detailId);
+    this.i18n = i18n;
     this.data = null;
     this.lang = 'ko';
+    this.lastFocus = null;          // 상세를 열기 전 포커스 위치 (닫을 때 복귀)
+    this.initialRouteDone = false;  // 공유 링크(#portfolio/id) 초기 처리 여부
+
+    // ESC로 닫기 — 한 번만 등록
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && this.isOpen) this.closeDetail();
+    });
+  }
+
+  get isOpen() { return !!this.detailEl?.classList.contains('active'); }
+
+  /** 언어 사전에서 문구 조회 (없으면 기본값) */
+  _label(key, fallback) {
+    return this.i18n?.get(`portfolio_detail.${key}`) ?? fallback;
+  }
+
+  /** 현재 URL 해시에서 포트폴리오 id 추출 */
+  _idFromHash() {
+    if (!location.hash.startsWith(HASH_PREFIX)) return null;
+    try { return decodeURIComponent(location.hash.slice(HASH_PREFIX.length)); }
+    catch { return null; }
   }
 
   /* ───────── 목록 렌더 ───────── */
@@ -16,27 +40,36 @@ export class PortfolioRenderer {
     if (!this.listEl) return;
 
     this.data = await loadJSON('assets/data/portfolio.json');
+    const hint = this._label('open_hint', '자세히 보기 →');
+    const noImage = this._label('no_image', 'PROJECT IMAGE');
     let html = '';
 
     for (const item of this.data.items) {
       html += `<article class="pf-item" data-pf-id="${esc(item.id)}" role="button" tabindex="0">`;
       html += `<div class="pf-thumb">`;
       if (item.thumb) {
-        html += `<img src="${esc(item.thumb)}" alt="${esc(t(item.title, lang))}">`;
+        html += `<img src="${esc(item.thumb)}" alt="${esc(t(item.title, lang))}" loading="lazy">`;
       } else {
-        html += `<span class="pf-thumb-placeholder">PROJECT IMAGE</span>`;
+        html += `<span class="pf-thumb-placeholder">${esc(noImage)}</span>`;
       }
       html += `</div><div class="pf-body">`;
       html += `<span class="pf-tag">${esc(item.tag)}</span>`;
       html += `<h3 class="pf-title">${esc(t(item.title, lang))}</h3>`;
       html += `<p class="pf-desc">${esc(t(item.summary, lang))}</p>`;
       html += `<div class="pf-meta">${item.chips.map(c => `<span class="pf-chip">${esc(c)}</span>`).join('')}</div>`;
-      html += `<span class="pf-open-hint">자세히 보기 →</span>`;
+      html += `<span class="pf-open-hint">${esc(hint)}</span>`;
       html += `</div></article>`;
     }
 
     this.listEl.innerHTML = html;
     this._bindClicks();
+
+    // 공유 링크로 진입한 경우 — 데이터 로드가 끝난 뒤에 상세 열기
+    if (!this.initialRouteDone) {
+      this.initialRouteDone = true;
+      const id = this._idFromHash();
+      if (id) this.openDetail(id, { push: false });
+    }
   }
 
   /* ───────── 클릭 바인딩 ───────── */
@@ -44,12 +77,14 @@ export class PortfolioRenderer {
     this.listEl.querySelectorAll('.pf-item').forEach(el => {
       const handler = () => this.openDetail(el.dataset.pfId);
       el.addEventListener('click', handler);
-      el.addEventListener('keydown', e => { if (e.key === 'Enter') handler(); });
+      el.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handler(); }
+      });
     });
   }
 
   /* ───────── 상세 페이지 열기 ───────── */
-  openDetail(id) {
+  openDetail(id, { push = true } = {}) {
     if (!this.detailEl || !this.data) return;
     const item = this.data.items.find(i => i.id === id);
     if (!item) return;
@@ -59,7 +94,7 @@ export class PortfolioRenderer {
     let html = '';
 
     // 상단 바
-    html += `<div class="pd-topbar"><button class="pd-back" id="pd-back-btn">← ${lang === 'en' ? 'Back' : '돌아가기'}</button></div>`;
+    html += `<div class="pd-topbar"><button class="pd-back" id="pd-back-btn" type="button">${esc(this._label('back', '← 돌아가기'))}</button></div>`;
 
     // 커버 이미지
     if (detail.cover) {
@@ -76,29 +111,45 @@ export class PortfolioRenderer {
     // Notion 블록 렌더
     html += `<div class="pd-body">${this._renderBlocks(detail.blocks, lang)}</div>`;
 
+    if (!this.isOpen) this.lastFocus = document.activeElement;
+
     this.detailEl.innerHTML = html;
+    this.detailEl.setAttribute('aria-label', t(item.title, lang));
     this.detailEl.classList.add('active');
     document.body.style.overflow = 'hidden';
     this.detailEl.scrollTop = 0;
 
     // 뒤로 가기
-    document.getElementById('pd-back-btn')?.addEventListener('click', () => this.closeDetail());
+    const backBtn = document.getElementById('pd-back-btn');
+    backBtn?.addEventListener('click', () => this.closeDetail());
+    backBtn?.focus({ preventScroll: true });
 
-    // ESC로 닫기
-    this._escHandler = e => { if (e.key === 'Escape') this.closeDetail(); };
-    document.addEventListener('keydown', this._escHandler);
-
-    // URL 해시
-    history.pushState({ pf: id }, '', `#portfolio/${id}`);
+    // URL 해시 (popstate로 열린 경우에는 기록을 추가하지 않음)
+    if (push) history.pushState({ pf: id }, '', HASH_PREFIX + encodeURIComponent(id));
   }
 
   /* ───────── 상세 페이지 닫기 ───────── */
-  closeDetail() {
-    if (!this.detailEl) return;
+  closeDetail({ fromHistory = false } = {}) {
+    if (!this.isOpen) return;
     this.detailEl.classList.remove('active');
     document.body.style.overflow = '';
-    document.removeEventListener('keydown', this._escHandler);
-    history.pushState(null, '', window.location.pathname);
+
+    // 포커스를 원래 항목으로 복귀 (언어 변경으로 교체된 요소면 id로 다시 찾음)
+    let target = this.lastFocus;
+    if (target && !target.isConnected && target.dataset?.pfId) {
+      target = this.listEl?.querySelector(`[data-pf-id="${CSS.escape(target.dataset.pfId)}"]`);
+    }
+    if (target?.isConnected) target.focus({ preventScroll: true });
+    this.lastFocus = null;
+
+    if (fromHistory) return;
+    if (history.state?.pf) {
+      // 직접 연 상세 → 추가했던 기록을 되돌림
+      history.back();
+    } else {
+      // 공유 링크로 진입한 상세 → 기록을 늘리지 않고 해시만 제거
+      history.replaceState(null, '', location.pathname + location.search);
+    }
   }
 
   /* ───────── Notion 블록 → HTML 변환 ───────── */
@@ -127,7 +178,7 @@ export class PortfolioRenderer {
 
         case 'image':
           const cap = block.caption ? `<figcaption class="pd-fig-cap">${esc(t(block.caption, lang))}</figcaption>` : '';
-          return `<figure class="pd-fig"><img src="${esc(block.src)}" alt="${esc(t(block.alt || '', lang))}">${cap}</figure>`;
+          return `<figure class="pd-fig"><img src="${esc(block.src)}" alt="${esc(t(block.alt || '', lang))}" loading="lazy">${cap}</figure>`;
 
         case 'code':
           return `<pre class="pd-code"><code>${esc(t(block.text, lang))}</code></pre>`;
@@ -143,18 +194,12 @@ export class PortfolioRenderer {
 
   /* ───────── 브라우저 뒤로/앞으로 대응 ───────── */
   handlePopState() {
+    // 메뉴의 #about 같은 일반 해시 이동에서도 popstate가 발생하므로,
+    // 여기서는 기록을 조작하지 않고 상세의 열림/닫힘만 맞춘다.
     window.addEventListener('popstate', () => {
-      const hash = location.hash;
-      if (hash.startsWith('#portfolio/')) {
-        this.openDetail(hash.replace('#portfolio/', ''));
-      } else {
-        this.closeDetail();
-      }
+      const id = this._idFromHash();
+      if (id) this.openDetail(id, { push: false });
+      else this.closeDetail({ fromHistory: true });
     });
-
-    // 초기 로드 시 해시 확인
-    if (location.hash.startsWith('#portfolio/')) {
-      setTimeout(() => this.openDetail(location.hash.replace('#portfolio/', '')), 300);
-    }
   }
 }

@@ -2,6 +2,8 @@
 <html lang="ko" data-theme="light">
 <head>
   <meta charset="UTF-8">
+  <!-- 첫 화면 깜빡임 방지: 렌더 전에 저장된/시스템 테마 적용 -->
+  <script>(function(){var t;try{t=localStorage.getItem('hanggok-theme')}catch(e){}if(t!=='dark'&&t!=='light')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t)})();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="../assets/img/icon.png" type="image/png">
   <meta name="robots" content="noindex, nofollow">

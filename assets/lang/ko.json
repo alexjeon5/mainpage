@@ -30,6 +30,8 @@
   },
   "portfolio_detail": {
     "back": "← 돌아가기",
+    "open_hint": "자세히 보기 →",
+    "no_image": "PROJECT IMAGE",
     "loading": "로딩 중..."
   },
   "global": {

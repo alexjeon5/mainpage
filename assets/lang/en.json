@@ -30,6 +30,8 @@
   },
   "portfolio_detail": {
     "back": "← Back",
+    "open_hint": "View details →",
+    "no_image": "PROJECT IMAGE",
     "loading": "Loading..."
   },
   "global": {

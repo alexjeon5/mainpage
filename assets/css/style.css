@@ -289,6 +289,8 @@ h3.pd-h { font-size: 18px; font-weight: 600; }
 .copy-btn::before { content: "⧉"; font-size: 15px; }
 .copy-btn.copied { background: #2f9e44; color: #fff; }
 .copy-btn.copied::before { content: "✓"; }
+.copy-btn.copy-failed { background: #c43d2f; color: #fff; }
+.copy-btn.copy-failed::before { content: "!"; }
 .meta-grid { display: grid; grid-template-columns: repeat(3,1fr); margin-top: 28px; border-top: 1px solid var(--line); }
 .meta-cell { display: flex; flex-direction: column; gap: 8px; padding: 22px 24px; border-right: 1px solid var(--line); }
 .meta-cell:first-child { padding-left: 0; }
@@ -303,8 +305,17 @@ h3.pd-h { font-size: 18px; font-weight: 600; }
 /* ── 10. 반응형 ── */
 @media (max-width: 860px) {
   .wrap { padding: 0 24px; }
-  .topbar-right { gap: 14px; }
-  .nav { display: none; }
+  /* 모바일: 메뉴를 상단바 아래 가로 스크롤 줄로 이동 */
+  .topbar { flex-wrap: wrap; gap: 14px 12px; padding: 20px 0 0; }
+  .brand { margin-right: auto; }
+  .topbar-right { display: contents; }
+  .nav {
+    order: 3; flex: 1 0 100%; gap: 22px;
+    overflow-x: auto; white-space: nowrap; scrollbar-width: none;
+    margin: 0 -24px; padding: 4px 24px 14px;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav a { padding: 6px 0; flex-shrink: 0; }
   .hero { grid-template-columns: 1fr; gap: 32px; padding: 48px 0; }
   .hero-title { font-size: 56px; }
   .about-grid { grid-template-columns: 1fr; }
