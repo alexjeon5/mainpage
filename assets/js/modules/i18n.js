@@ -36,16 +36,19 @@ export class I18n {
     // 버튼 활성 상태
     document.querySelectorAll('.lang-btn').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.lang === lang);
+      btn.setAttribute('aria-pressed', String(btn.dataset.lang === lang));
     });
 
     // 사전 로드
     try {
-      this.dict = await loadJSON(`assets/lang/${lang}.json`);
+      const dict = await loadJSON(`assets/lang/${lang}.json`);
+      if (this.lang !== lang) return;  // 로딩 중 다른 언어가 선택됨
+      this.dict = dict;
       this.applyToDOM();
     } catch (e) { console.error('i18n load error:', e); }
 
     // 구독자들에게 알림
-    for (const fn of this.listeners) fn(lang);
+    await Promise.all(this.listeners.map(fn => fn(lang)));
   }
 
   /** 초기화 */
