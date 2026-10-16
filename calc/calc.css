@@ -1,156 +1,101 @@
 /* =========================================
-   계산기 본체 및 디스플레이
+   킹받는 계산기 — 사이트 공통 디자인(style.css 토큰) 기반
    ========================================= */
+body[data-page="calc"] { min-height: 100vh; display: flex; flex-direction: column; }
+
+.calc-main {
+  flex: 1;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: 40px 72px; padding-block: clamp(40px, 8vw, 96px);
+}
+.calc-intro { flex: 0 1 360px; display: flex; flex-direction: column; gap: 14px; }
+.calc-title { margin: 0; font: 800 clamp(40px, 6vw, 72px)/1.05 var(--font-display); letter-spacing: -.045em; }
+.calc-desc { margin: 0; font-size: 17px; line-height: 1.6; color: var(--ink-2); }
+
+/* 계산기 본체 */
 .calculator {
-    background-color: var(--card-bg-color);
-    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--card-border-color); border-radius: 16px;
-    padding: 2rem; width: 320px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    transition: border-color 0.3s, box-shadow 0.3s;
-    z-index: 1; /* 배경 위로 올리기 */
+  flex: 0 1 360px; width: 100%; max-width: 360px;
+  padding: 20px; border-radius: 32px;
+  background: var(--surface); box-shadow: 0 0 0 1px var(--line), var(--shadow);
 }
-.calculator:hover { border-color: var(--primary-color); box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
-
 .display {
-    width: 100%; background: rgba(0, 0, 0, 0.2); color: var(--text-color);
-    border: 1px inset var(--card-border-color); border-radius: 12px;
-    padding: 15px; font-size: 2.2rem; text-align: right;
-    margin-bottom: 20px; outline: none; font-family: inherit;
-    font-weight: 600; letter-spacing: 2px;
+  width: 100%; margin: 0 0 16px; padding: 22px 20px 18px;
+  border: 0; border-radius: 20px; outline: none;
+  background: var(--term-bg); color: var(--term-ink);
+  font: 600 clamp(30px, 9vw, 40px)/1.1 var(--font-mono); letter-spacing: -.02em; text-align: right;
+  -webkit-text-fill-color: var(--term-ink); opacity: 1; /* disabled 입력도 흐려지지 않게 */
 }
-body.light-mode .display { background: rgba(255, 255, 255, 0.4); border-color: var(--btn-secondary-border); }
-
-/* 키패드 및 버튼 */
-.keys { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.keys { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
 
 button.calc-btn {
-    background: var(--btn-secondary-bg); color: var(--text-color);
-    border: 1px solid var(--btn-secondary-border); border-radius: 10px;
-    font-family: inherit; font-size: 1.2rem; font-weight: 500;
-    padding: 18px 0; cursor: pointer; transition: all 0.2s ease;
+  min-height: 60px; padding: 0;
+  border: 0; border-radius: 18px;
+  background: var(--surface-2); color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--line);
+  font: 600 20px var(--font-mono); cursor: pointer;
+  transition: transform .12s var(--ux-ease, ease), background-color .15s, color .15s;
 }
-button.calc-btn:hover { border-color: var(--primary-color); background: var(--primary-color); color: #fff; transform: translateY(-2px); }
-button.operator { color: var(--primary-color); background: rgba(88, 166, 255, 0.1); font-weight: 600; }
-button.clear { color: var(--danger-color, #e74c3c); background: rgba(231, 76, 60, 0.1); grid-column: span 2; }
-button.clear:hover { background: var(--danger-color, #e74c3c); border-color: var(--danger-color, #e74c3c); color: #fff; }
-button.equals { background: var(--primary-color); color: #fff; border-color: var(--primary-color); font-weight: 600; }
+button.calc-btn:hover { background: var(--accent-soft); color: var(--accent-text); }
+button.calc-btn:active { transform: scale(.96); }
+button.operator { background: var(--accent-soft); color: var(--accent-text); }
+button.operator:hover { background: var(--accent); color: var(--accent-ink); }
+button.clear { grid-column: span 2; background: color-mix(in srgb, var(--danger-text) 12%, transparent); color: var(--danger-text); }
+button.clear:hover { background: var(--danger-text); color: var(--bg); }
+button.equals { background: var(--accent); color: var(--accent-ink); box-shadow: none; }
+button.equals:hover { background: var(--accent); color: var(--accent-ink); filter: brightness(1.08); }
 button.zero { grid-column: span 2; }
 
 /* =========================================
-   결제 모달 관련 고유 UI 
+   결제 모달 (모달 틀은 style.css 의 .modal-overlay / .modal-window)
    ========================================= */
-/* Primary Button (메인에 없으므로 추가) */
-.btn-primary { background: var(--primary-color); color: #fff; border: none; }
-.btn-primary:not(:disabled):hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(88, 166, 255, 0.3); }
-
-.modal-buttons { display: flex; gap: 10px; justify-content: center; margin-top: 1.5rem; }
+#thinking-modal h2, #payment-modal h2 { display: flex; align-items: center; gap: 10px; }
+.modal-buttons { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+.modal-buttons .btn { min-height: 48px; padding: 0 22px; }
+.btn-secondary { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1px var(--line-2); }
+.btn-primary { background: var(--accent); color: var(--accent-ink); border: 0; }
+.btn-primary:disabled { opacity: .6; cursor: not-allowed; }
 
 .apple-pay-btn {
-    display: flex; justify-content: center; align-items: center; gap: 6px;
-    width: 100%; height: 48px; background-color: #000; color: #fff;
-    border: none; border-radius: 10px; cursor: pointer; 
-    transition: background 0.2s; margin-top: 1.5rem;
+  display: flex; justify-content: center; align-items: center;
+  width: 100%; height: 48px; margin-top: 20px;
+  border: 0; border-radius: 14px; background: #000; color: #fff; cursor: pointer;
 }
-.apple-pay-btn:hover { background-color: #222; }
-.apple-pay-btn:disabled { opacity: 0.7; cursor: not-allowed; }
-.apple-pay-logo { height: 26px; width: auto; object-fit: contain; pointer-events: none; }
+.apple-pay-btn:disabled { opacity: .7; cursor: not-allowed; }
+.apple-pay-logo { height: 26px; width: auto; pointer-events: none; }
 
-.divider {
-    display: flex; align-items: center; text-align: center;
-    margin: 1.2rem 0; color: var(--text-color-secondary); font-size: 0.85rem;
-}
-.divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--btn-secondary-border); }
+.divider { display: flex; align-items: center; margin: 18px 0; color: var(--ink-2); font: 12px var(--font-mono); }
+.divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--line-2); }
 .divider span { padding: 0 12px; }
 
-/* 폼 입력 디자인 */
 .payment-form { display: flex; flex-direction: column; gap: 12px; text-align: left; }
 .input-group { display: flex; flex-direction: column; gap: 6px; }
 .row-inputs { display: flex; gap: 12px; }
 .row-inputs .input-group { flex: 1; min-width: 0; }
-.input-group label { font-size: 0.85rem; color: var(--text-color-secondary); font-weight: 500; }
+.input-group label { font: 12px var(--font-mono); color: var(--ink-2); }
 
-.card-input-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: 100%;
+.card-input-wrapper { position: relative; display: flex; align-items: center; width: 100%; }
+.input-group input {
+  width: 100%; min-height: 46px; padding: 0 14px;
+  border: 0; border-radius: 12px; outline: none;
+  background: var(--surface-2); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line-2);
+  font: 15px var(--font-mono);
 }
-.card-input-wrapper input {
-    width: 100%;
-    background: rgba(0, 0, 0, 0.2); border: 1px solid var(--btn-secondary-border);
-    color: var(--text-color); padding: 12px 14px 12px 42px !important;
-    border-radius: 10px; font-family: inherit; font-size: 1rem; outline: none; transition: border-color 0.3s, box-shadow 0.3s;
-}
-body.light-mode .card-input-wrapper input { background: rgba(255, 255, 255, 0.5); }
-.card-input-wrapper input:focus { border-color: var(--primary-color); }
-
-.card-logo-icon {
-    position: absolute;
-    left: 14px;
-    font-size: 1.4rem;
-    color: var(--text-color-secondary);
-    pointer-events: none;
-    transition: all 0.2s ease;
-    z-index: 2;
-}
+.card-input-wrapper input { padding-left: 44px; }
+.input-group input:focus { box-shadow: inset 0 0 0 2px var(--accent); }
+.card-logo-icon { position: absolute; left: 14px; font-size: 1.3rem; color: var(--ink-2); pointer-events: none; }
 .card-logo-icon.fa-cc-visa { color: #2563eb; }
 .card-logo-icon.fa-cc-mastercard { color: #f97316; }
-.card-logo-icon.fa-cc-amex { color: #06b6d4; }
+.card-logo-icon.fa-cc-amex { color: #0891b2; }
 .card-logo-icon.fa-cc-discover { color: #ef4444; }
 .card-logo-icon.fa-cc-jcb { color: #8b5cf6; }
 
-.input-group input:not([id="card-number"]) {
-    width: 100%;
-    background: rgba(0, 0, 0, 0.2); border: 1px solid var(--btn-secondary-border);
-    color: var(--text-color); padding: 12px 14px; border-radius: 10px;
-    font-family: inherit; font-size: 1rem; outline: none; transition: border-color 0.3s, box-shadow 0.3s;
-}
-body.light-mode .input-group input:not([id="card-number"]) { background: rgba(255, 255, 255, 0.5); }
-.input-group input:not([id="card-number"]):focus { border-color: var(--primary-color); }
-
-/* 실시간 에러(빨간색) 강조 */
-.input-group input.input-error,
-.card-input-wrapper input.input-error {
-    border-color: #e74c3c !important;
-    background: rgba(231, 76, 60, 0.1) !important;
-    color: #e74c3c !important;
-    box-shadow: 0 0 8px rgba(231, 76, 60, 0.3);
-}
-body.light-mode .input-group input.input-error,
-body.light-mode .card-input-wrapper input.input-error {
-    background: rgba(192, 57, 43, 0.08) !important;
+.input-group input.input-error {
+  color: var(--danger-text);
+  background: color-mix(in srgb, var(--danger-text) 10%, transparent);
+  box-shadow: inset 0 0 0 2px var(--danger-text);
 }
 
-/* =========================================
-   테마 토글 버튼 (위치 수정)
-   ========================================= */
-#theme-toggle {
-    position: fixed;        /* 화면 기준 고정 위치 */
-    top: 1.5rem;            /* 위에서부터의 간격 */
-    right: 1.5rem;          /* 오른쪽에서부터의 간격 */
-    background: var(--card-bg-color); 
-    border: 1px solid var(--card-border-color);
-    backdrop-filter: blur(10px); 
-    color: var(--text-color);
-    cursor: pointer; 
-    width: 45px; 
-    height: 45px; 
-    border-radius: 50%;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
-    transition: all 0.3s ease;
-    z-index: 1000;          /* 다른 요소들 위에 표시되도록 z-index 설정 */
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    font-size: 1.2rem;
+@media (max-width: 860px) {
+  .calc-main { flex-direction: column; align-items: stretch; }
+  .calc-intro, .calculator { flex-basis: auto; max-width: 420px; margin-inline: auto; width: 100%; }
 }
-
-#theme-toggle:hover { 
-    transform: rotate(15deg) scale(1.1); 
-}
-
-/* 아이콘 전환 로직 */
-#theme-toggle .fa-moon { display: none; }
-#theme-toggle .fa-sun { display: block; }
-body.light-mode #theme-toggle .fa-moon { display: block; }
-body.light-mode #theme-toggle .fa-sun { display: none; }

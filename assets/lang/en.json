@@ -1,27 +1,61 @@
 {
   "nav": {
-    "about": "About",
-    "portfolio": "Portfolio",
-    "services": "Services",
-    "timeline": "Timeline",
-    "contact": "Contact",
-    "archive": "Archive"
+    "live": "Live",
+    "lab": "Lab",
+    "work": "Work",
+    "log": "Log",
+    "contact": "Contact"
   },
   "hero": {
-    "eyebrow": "Student · Self-hosted server · Builder",
-    "desc": "A university student building services on top of a Raspberry Pi and the cloud. A personal server and portfolio space where small experiments go live one by one."
+    "hello": "Hi, I'm <span class=\"accent\">HANGGOK</span>.",
+    "sub": "A university student running my own servers.",
+    "alt": "HANGGOK profile",
+    "terminal": "hanggok@pi: ~",
+    "prompt": "hanggok@pi:~$",
+    "whoami": "whoami",
+    "services": "ls services/"
   },
-  "section": {
-    "about": "Profile",
-    "portfolio": "Works",
-    "services": "Live Services",
-    "timeline": "History",
-    "plans": "Future Plans",
-    "archive": "Previous Versions"
+  "stats": {
+    "servers": "servers running",
+    "services": "public services",
+    "versions": "site versions",
+    "first": "first server"
+  },
+  "live": {
+    "kicker": "01 — Live",
+    "title": "What's running now",
+    "desc": "Public services anyone can visit. Hover a name to preview it."
+  },
+  "lab": {
+    "kicker": "02 — Lab",
+    "title": "Home server and cloud, split by role",
+    "desc": "Services that need to stay online run on Oracle Cloud; home services run on the Raspberry Pi. Both use Docker to separate services and Cloudflare Tunnel to connect to the outside world.",
+    "public": "Public services",
+    "connector": "Cloudflare Tunnel"
+  },
+  "work": {
+    "kicker": "03 — Work",
+    "title": "What I learned by building",
+    "versions": "Versions of this site",
+    "read": "Read the case study →",
+    "current": "v3"
+  },
+  "log": {
+    "kicker": "04 — Log",
+    "title": "Where I've been, what's next",
+    "next": "NEXT"
   },
   "contact": {
+    "kicker": "05 — Contact",
     "title": "Let's build together.",
-    "desc": "For project proposals or inquiries, feel free to reach out through the channel below."
+    "desc": "For project proposals or inquiries, send a DM on Instagram.",
+    "cta": "Instagram DM →",
+    "github": "GitHub",
+    "youtube": "YouTube"
+  },
+  "footer": {
+    "copyright": "© 2026 HANGGOK",
+    "source": "Source on GitHub ↗"
   },
   "modal": {
     "notice": "Notice",
@@ -35,6 +69,7 @@
     "loading": "Loading..."
   },
   "global": {
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "load_error": "Could not load this content. Please try again shortly."
   }
 }

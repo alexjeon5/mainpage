@@ -9,16 +9,19 @@ export function getBasePath() {
 
 export const BASE = getBasePath();
 
-/** JSON 파일 로드 (캐시 활용) */
-const cache = {};
-export async function loadJSON(path) {
+/** JSON 파일 로드 — 진행 중인 요청(Promise)까지 캐시해서 같은 파일을 동시에 여러 번 받지 않음 */
+const cache = new Map();
+export function loadJSON(path) {
   const url = BASE + path;
-  if (cache[url]) return cache[url];
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`Failed to load: ${url}`);
-  const data = await res.json();
-  cache[url] = data;
-  return data;
+  if (!cache.has(url)) {
+    const p = fetch(url).then(res => {
+      if (!res.ok) throw new Error(`Failed to load: ${url}`);
+      return res.json();
+    });
+    p.catch(() => cache.delete(url)); // 실패한 요청은 다음에 다시 시도
+    cache.set(url, p);
+  }
+  return cache.get(url);
 }
 
 /** XSS 방지용 HTML 이스케이프 */

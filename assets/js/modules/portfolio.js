@@ -3,6 +3,7 @@
 import { loadJSON, esc, t } from './utils.js';
 
 const HASH_PREFIX = '#portfolio/';
+const attr = value => esc(value).replace(/"/g, '&quot;');
 
 export class PortfolioRenderer {
   constructor(listId, detailId, i18n = null) {
@@ -11,12 +12,20 @@ export class PortfolioRenderer {
     this.i18n = i18n;
     this.data = null;
     this.lang = 'ko';
+    this.generation = 0;
+    this.versionsEl = document.getElementById('versions-list');
     this.lastFocus = null;          // 상세를 열기 전 포커스 위치 (닫을 때 복귀)
     this.initialRouteDone = false;  // 공유 링크(#portfolio/id) 초기 처리 여부
 
     // ESC로 닫기 — 한 번만 등록
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape' && this.isOpen) this.closeDetail();
+      if (e.key === 'Tab' && this.isOpen) {
+        const focusable = [...this.detailEl.querySelectorAll('button, a[href], [tabindex="0"]')];
+        const first = focusable[0], last = focusable.at(-1);
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last?.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first?.focus(); }
+      }
     });
   }
 
@@ -38,47 +47,41 @@ export class PortfolioRenderer {
   async render(lang = 'ko') {
     this.lang = lang;
     if (!this.listEl) return;
-
-    this.data = await loadJSON('assets/data/portfolio.json');
-    const hint = this._label('open_hint', '자세히 보기 →');
-    const noImage = this._label('no_image', 'PROJECT IMAGE');
-    let html = '';
-
-    for (const item of this.data.items) {
-      html += `<article class="pf-item" data-pf-id="${esc(item.id)}" role="button" tabindex="0">`;
-      html += `<div class="pf-thumb">`;
-      if (item.thumb) {
-        html += `<img src="${esc(item.thumb)}" alt="${esc(t(item.title, lang))}" loading="lazy">`;
-      } else {
-        html += `<span class="pf-thumb-placeholder">${esc(noImage)}</span>`;
+    const generation = ++this.generation;
+    try {
+      const data = await loadJSON('assets/data/portfolio.json');
+      if (generation !== this.generation) return;
+      this.data = data;
+      this.listEl.innerHTML = data.items.map(item => `<a class="work-card" data-pf-id="${attr(item.id)}" href="${HASH_PREFIX}${encodeURIComponent(item.id)}">
+        <div class="work-thumb">${item.thumb ? `<img src="${attr(item.thumb)}" alt="" loading="lazy">` : `<span>${esc(this._label('no_image', 'PROJECT IMAGE'))}</span>`}</div>
+        <div class="work-body"><span class="work-tag">${esc(t(item.tag, lang))}</span><h3>${esc(t(item.title, lang))}</h3><p>${esc(t(item.summary, lang))}</p>
+        <div class="work-chips">${item.chips.map(chip => `<span class="chip">${esc(t(chip, lang))}</span>`).join('')}</div><span class="work-read">${esc(this.i18n.get('work.read'))}</span></div></a>`).join('');
+      if (this.versionsEl) this.versionsEl.innerHTML = data.versions.map(version => {
+        const inner = `<div class="version-thumb">${version.thumb ? `<img src="${attr(version.thumb)}" alt="" loading="lazy">` : `<span>${esc(this.i18n.get('work.current'))}</span>`}</div><div class="version-copy"><span class="version-tag">${esc(t(version.tag, lang))}</span><h4>${esc(t(version.title, lang))}</h4><p>${esc(t(version.desc, lang))}</p></div>`;
+        return `<li${version.current ? ' class="version-current"' : ''}>${version.href ? `<a href="${attr(version.href)}">${inner}</a>` : `<div aria-current="page">${inner}</div>`}</li>`;
+      }).join('');
+      this._bindClicks();
+      if (this.isOpen) this.openDetail(this.activeId, { push: false });
+      if (!this.initialRouteDone) {
+        this.initialRouteDone = true;
+        const id = this._idFromHash();
+        if (id) this.openDetail(id, { push: false });
       }
-      html += `</div><div class="pf-body">`;
-      html += `<span class="pf-tag">${esc(item.tag)}</span>`;
-      html += `<h3 class="pf-title">${esc(t(item.title, lang))}</h3>`;
-      html += `<p class="pf-desc">${esc(t(item.summary, lang))}</p>`;
-      html += `<div class="pf-meta">${item.chips.map(c => `<span class="pf-chip">${esc(c)}</span>`).join('')}</div>`;
-      html += `<span class="pf-open-hint">${esc(hint)}</span>`;
-      html += `</div></article>`;
-    }
-
-    this.listEl.innerHTML = html;
-    this._bindClicks();
-
-    // 공유 링크로 진입한 경우 — 데이터 로드가 끝난 뒤에 상세 열기
-    if (!this.initialRouteDone) {
-      this.initialRouteDone = true;
-      const id = this._idFromHash();
-      if (id) this.openDetail(id, { push: false });
+    } catch {
+      if (generation !== this.generation) return;
+      const message = this.i18n.get('global.load_error');
+      this.listEl.textContent = message;
+      if (this.versionsEl) this.versionsEl.innerHTML = `<li>${esc(message)}</li>`;
     }
   }
 
   /* ───────── 클릭 바인딩 ───────── */
   _bindClicks() {
-    this.listEl.querySelectorAll('.pf-item').forEach(el => {
+    this.listEl.querySelectorAll('.work-card').forEach(el => {
       const handler = () => this.openDetail(el.dataset.pfId);
-      el.addEventListener('click', handler);
+      el.addEventListener('click', e => { if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return; e.preventDefault(); handler(); });
       el.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handler(); }
+        if (e.key === ' ') { e.preventDefault(); handler(); }
       });
     });
   }
@@ -89,23 +92,24 @@ export class PortfolioRenderer {
     const item = this.data.items.find(i => i.id === id);
     if (!item) return;
 
+    this.activeId = id;
     const lang = this.lang;
     const detail = item.detail;
     let html = '';
 
     // 상단 바
-    html += `<div class="pd-topbar"><button class="pd-back" id="pd-back-btn" type="button">${esc(this._label('back', '← 돌아가기'))}</button></div>`;
+    html += `<div class="pd-topbar"><button class="pd-back btn btn--ghost" id="pd-back-btn" type="button">${esc(this._label('back', '← 돌아가기'))}</button></div>`;
 
     // 커버 이미지
     if (detail.cover) {
-      html += `<div class="pd-cover"><img src="${esc(detail.cover)}" alt=""></div>`;
+      html += `<div class="pd-cover"><img src="${attr(detail.cover)}" alt=""></div>`;
     }
 
     // 헤더
     html += `<div class="pd-header">`;
-    html += `<span class="pd-tag">${esc(item.tag)}</span>`;
-    html += `<h1 class="pd-title">${esc(t(item.title, lang))}</h1>`;
-    html += `<div class="pd-chips">${item.chips.map(c => `<span class="pf-chip">${esc(c)}</span>`).join('')}</div>`;
+    html += `<span class="pd-tag">${esc(t(item.tag, lang))}</span>`;
+    html += `<h1 class="pd-title" id="pd-title">${esc(t(item.title, lang))}</h1>`;
+    html += `<div class="pd-chips">${item.chips.map(c => `<span class="chip">${esc(t(c, lang))}</span>`).join('')}</div>`;
     html += `</div>`;
 
     // Notion 블록 렌더
@@ -116,6 +120,9 @@ export class PortfolioRenderer {
     this.detailEl.innerHTML = html;
     this.detailEl.setAttribute('aria-label', t(item.title, lang));
     this.detailEl.classList.add('active');
+    document.querySelector('main')?.setAttribute('inert', '');
+    document.querySelector('.site-header')?.setAttribute('inert', '');
+    document.querySelector('.site-footer')?.setAttribute('inert', '');
     document.body.style.overflow = 'hidden';
     this.detailEl.scrollTop = 0;
 
@@ -132,6 +139,10 @@ export class PortfolioRenderer {
   closeDetail({ fromHistory = false } = {}) {
     if (!this.isOpen) return;
     this.detailEl.classList.remove('active');
+    this.activeId = null;
+    document.querySelector('main')?.removeAttribute('inert');
+    document.querySelector('.site-header')?.removeAttribute('inert');
+    document.querySelector('.site-footer')?.removeAttribute('inert');
     document.body.style.overflow = '';
 
     // 포커스를 원래 항목으로 복귀 (언어 변경으로 교체된 요소면 id로 다시 찾음)
@@ -158,7 +169,7 @@ export class PortfolioRenderer {
     return blocks.map(block => {
       switch (block.type) {
         case 'heading':
-          const tag = `h${block.level || 2}`;
+          const tag = `h${[2, 3, 4, 5, 6].includes(block.level) ? block.level : 2}`;
           return `<${tag} class="pd-h">${esc(t(block.text, lang))}</${tag}>`;
 
         case 'paragraph':
@@ -171,14 +182,14 @@ export class PortfolioRenderer {
         }
 
         case 'callout':
-          return `<div class="pd-callout"><span class="pd-callout-icon">${block.emoji || '💡'}</span><span class="pd-callout-text">${esc(t(block.text, lang))}</span></div>`;
+          return `<div class="pd-callout"><span class="pd-callout-icon">${esc(block.emoji || '💡')}</span><span class="pd-callout-text">${esc(t(block.text, lang))}</span></div>`;
 
         case 'divider':
           return '<hr class="pd-divider">';
 
         case 'image':
           const cap = block.caption ? `<figcaption class="pd-fig-cap">${esc(t(block.caption, lang))}</figcaption>` : '';
-          return `<figure class="pd-fig"><img src="${esc(block.src)}" alt="${esc(t(block.alt || '', lang))}" loading="lazy">${cap}</figure>`;
+          return `<figure class="pd-fig"><img src="${attr(block.src)}" alt="${attr(t(block.alt || '', lang))}" loading="lazy">${cap}</figure>`;
 
         case 'code':
           return `<pre class="pd-code"><code>${esc(t(block.text, lang))}</code></pre>`;

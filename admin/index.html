@@ -7,38 +7,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="../assets/img/icon.png" type="image/png">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#f7f5f0">
+  <meta name="theme-color" content="#F4F2EE">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self';">
   <title>HANGGOK — Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..112,700..900&family=IBM+Plex+Sans+KR:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..112,700..900&family=IBM+Plex+Sans+KR:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap"></noscript>
   <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="modulepreload" href="../assets/js/modules/theme.js">
+  <link rel="modulepreload" href="../assets/js/modules/header.js">
+  <link rel="modulepreload" href="../assets/js/modules/modal.js">
+  <link rel="modulepreload" href="../assets/js/modules/utils.js">
+  <link rel="modulepreload" href="../assets/js/modules/admin.js">
+  <link rel="preload" href="../assets/data/admin-services.json" as="fetch" crossorigin="anonymous">
+  <link rel="stylesheet" href="../assets/css/sub.css">
 </head>
 <body data-page="admin">
-  <div class="wrap">
-    <header class="topbar">
-      <div class="brand">HANGGOK<span class="brand-sub">/ admin</span></div>
-      <div class="topbar-right">
-        <nav class="nav"><a href="../">← Main</a></nav>
-        <button id="theme-toggle" class="toggle" aria-label="테마 전환"><span class="toggle-dot"></span><span id="theme-label">Dark</span></button>
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../"><span class="brand-mark" aria-hidden="true"></span>HANGGOK<span class="brand-sub">/ admin</span></a>
+      <div class="header-actions">
+        <a class="back-link" href="../">← 메인으로</a>
+        <button id="theme-toggle" class="icon-btn theme-toggle" type="button" aria-pressed="false" aria-label="다크 모드로 전환">
+          <span class="theme-icon theme-icon--sun" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span>
+          <span class="theme-icon theme-icon--moon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg></span>
+        </button>
       </div>
-    </header>
-    <section class="hero admin-hero">
-      <div class="hero-text">
-        <div class="eyebrow">Admin Console</div>
-        <h1 class="hero-title">Server<span class="dot">.</span></h1>
-        <p class="hero-desc">자체 호스팅 서비스 관리 콘솔.</p>
+    </div>
+  </header>
+  <main class="container admin-main">
+    <section class="admin-overview" aria-label="콘솔 요약">
+      <div class="admin-heading">
+        <span class="sec-kicker">ADMIN CONSOLE</span>
+        <h1>서비스 콘솔</h1>
         <div class="admin-notice">
-          <span class="admin-notice-tag">SECURED</span>
-          <span class="admin-notice-text">Cloudflare Zero Trust로 접근이 제어됩니다.</span>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10c-4-1.7-7-5.5-7-10V6z"/><path d="M9 12l2 2l4-4"/></svg>
+          <span><span class="admin-notice-tag">SECURED</span> Cloudflare Zero Trust로 접근이 제어됩니다.</span>
         </div>
       </div>
+      <dl id="admin-summary" class="admin-summary"></dl>
     </section>
-    <main id="admin-root"></main>
-    <footer class="footer"><span>© 2026 HANGGOK · Admin</span><span>Self-hosted services</span></footer>
-  </div>
+    <div class="admin-filters" role="tablist" aria-label="서버 필터">
+      <button id="admin-tab-all" type="button" role="tab" data-filter="all" aria-selected="true" aria-controls="admin-root">전체</button>
+      <button id="admin-tab-s1" type="button" role="tab" data-filter="s1" aria-selected="false" aria-controls="admin-root" tabindex="-1">Server 1 · Pi</button>
+      <button id="admin-tab-s2" type="button" role="tab" data-filter="s2" aria-selected="false" aria-controls="admin-root" tabindex="-1">Server 2 · Cloud</button>
+    </div>
+    <div id="admin-root" role="tabpanel" aria-labelledby="admin-tab-all" tabindex="0"></div>
+  </main>
+  <footer class="site-footer"><div class="container footer-inner"><span>© 2026 HANGGOK · Admin</span><span>Self-hosted services</span></div></footer>
   <div id="srv-error-overlay" class="modal-overlay"></div>
   <div id="srv-error" class="modal-window"><h2>알림</h2><p>현재 서비스를 준비하고 있습니다.<br>조금만 기다려주세요!</p><button id="srv-error-close-btn" class="btn">확인</button></div>
   <div id="admin-warn-overlay" class="modal-overlay"></div>
