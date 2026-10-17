@@ -41,16 +41,16 @@
 ## 주요 기능
 
 ### 🎨 데이터 드리븐 아키텍처
-모든 섹션(About, Portfolio, Services, Archive, Timeline)이 JSON 파일에서 콘텐츠를 읽어 동적으로 렌더링됩니다. 새 프로젝트나 서비스를 추가할 때 HTML을 편집할 필요가 없습니다.
+메인 섹션(Live, Lab, Work, Versions, Log)과 Minecraft 접속 정보가 JSON 파일에서 콘텐츠를 읽어 동적으로 렌더링됩니다. 새 프로젝트나 서비스를 추가할 때 HTML을 편집할 필요가 없습니다.
 
 ### 📄 Notion 스타일 포트폴리오
 포트폴리오 항목을 클릭하면 전체 화면 상세 페이지가 열립니다. 제목, 단락, 목록, 콜아웃, 구분선, 이미지, 코드, 인용문 등 **8종의 블록 타입**을 JSON으로 조합하여 문서를 구성합니다. URL 해시 라우팅을 지원해 브라우저 뒤로가기와 링크 공유가 가능합니다.
 
 ### 🌗 다크 / 라이트 테마
-시스템 설정을 자동 감지하며, 수동 전환 시 `localStorage`에 저장되어 유지됩니다. CSS 커스텀 프로퍼티 기반이라 전환이 부드럽습니다.
+시스템 설정을 자동 감지하며, 수동 전환 시 `localStorage`에 저장되어 유지됩니다. CSS 커스텀 프로퍼티로 색상을 관리하고, 지원 브라우저에서는 원형 화면 전환을 사용합니다. 동작 줄이기 설정에서는 즉시 전환됩니다.
 
 ### 🌏 한국어 / 영어 다국어 (i18n)
-UI 텍스트와 콘텐츠 데이터 모두 이중 언어를 지원합니다. 옵저버 패턴으로 언어 변경 시 모든 섹션이 자동으로 다시 렌더링됩니다.
+메인 페이지의 UI 텍스트와 콘텐츠 데이터는 한국어·영어를 지원하며, Minecraft와 Admin은 한국어로 제공됩니다. 옵저버 패턴으로 언어 변경 시 모든 섹션이 자동으로 다시 렌더링됩니다.
 
 ### 🖥️ 서브 페이지
 - **Admin Console** — 두 서버의 관리 도구 링크를 한곳에 모은 콘솔 (Cloudflare Zero Trust 보호)
@@ -63,58 +63,66 @@ WAI-ARIA 속성, 키보드 탐색(ESC/Enter), Content Security Policy, `rel="noo
 
 ## 디자인
 
-**Paper Editorial** — 종이 위에 활자를 배열하는 편집 디자인에서 영감을 받았습니다.
+**Rack Board** — 직접 운영하는 서비스와 서버, 작업 기록을 하나의 보드에 정리한 디자인입니다.
 
-- 따뜻한 오프화이트 배경 위에 **룰(가로선)과 타이포그래피 위계**로 정보를 구성
-- 그림자·블러·둥근 모서리를 배제하고 보더와 여백만으로 구조를 표현
-- 포인트 컬러는 테라코타(`#b8542f`) 하나로 절제
-- 다크 모드는 깊은 세피아(`#161512`) 배경에 동일한 룰 구조 유지
+- 터미널 형태의 소개, 어두운 Live 목록, 둥근 Lab·Work 카드와 가로선으로 정보 구분
+- 라이트 모드: 따뜻한 배경 `#F4F2EE`, 흰 카드, 보라색 포인트 `#6A57F2`
+- 다크 모드: 짙은 배경 `#07080D`, 어두운 카드, 밝은 보라색 포인트 `#B7A4FF`
+- `assets/css/style.css`의 공통 토큰(`--bg`, `--surface`, `--ink`, `--accent` 등)으로 세 페이지의 색상·서체를 관리
+- Minecraft 접속 패널과 터미널은 두 테마에서 모두 어두운 배경 유지
+- 860px·520px 반응형 레이아웃, 키보드 포커스, 동작 줄이기 설정 지원
 
-**서체** — Space Grotesk (제목) · IBM Plex Mono (라벨/번호) · Pretendard (본문/한글)
+**서체** — Archivo (제목) · IBM Plex Sans KR (본문/한글) · JetBrains Mono (주소/라벨/번호)
 
 ---
 
 ## 프로젝트 구조
 
-```
+```text
 mainpage/
-├── index.html                    # 메인 페이지 (콘텐츠 없는 셸)
-├── admin/                        # 관리자 콘솔
-├── minecraft/                    # 마인크래프트 서버 페이지
-│
+├── index.html                    # 메인 페이지 셸
+├── admin/index.html              # 관리자 콘솔
+├── minecraft/index.html          # 마인크래프트 서버 접속 안내
 ├── assets/
 │   ├── css/
-│   │   └── style.css             # 단일 CSS (토큰 → 레이아웃 → 컴포넌트 → 반응형)
-│   │
+│   │   ├── style.css             # 공통 토큰·헤더·버튼·모달·푸터
+│   │   ├── home.css              # 메인 페이지·포트폴리오 상세
+│   │   └── sub.css               # Minecraft·Admin 페이지
 │   ├── js/
-│   │   ├── app.js                # 진입점 — 모듈 조합 및 초기화
-│   │   └── modules/              # 기능별 ES 모듈
-│   │       ├── utils.js          #   공용 유틸 (경로, JSON 로드, 이스케이프, 다국어)
-│   │       ├── theme.js          #   테마 토글
-│   │       ├── i18n.js           #   다국어 (옵저버 패턴)
-│   │       ├── modal.js          #   모달 팩토리
-│   │       ├── about.js          #   About 렌더러
-│   │       ├── portfolio.js      #   포트폴리오 + Notion식 상세
-│   │       ├── services.js       #   서비스 카드 + 아카이브
-│   │       ├── timeline.js       #   타임라인 + 향후 계획
-│   │       └── admin.js          #   Admin 서비스 목록
-│   │
-│   ├── data/                     # ★ 콘텐츠는 전부 여기서 관리
-│   │   ├── about.json            #   개인 정보 · 서버 스펙
-│   │   ├── portfolio.json        #   포트폴리오 (Notion 블록 포함)
-│   │   ├── services.json         #   서비스 카드 + 아카이브
-│   │   ├── timeline.json         #   타임라인 (KO)
-│   │   ├── timeline_en.json      #   타임라인 (EN)
-│   │   └── admin-services.json   #   Admin 관리 서비스
-│   │
-│   ├── lang/                     # UI 텍스트 (콘텐츠와 분리)
-│   │   ├── ko.json
-│   │   └── en.json
-│   │
+│   │   ├── app.js                # 페이지별 모듈 조합 및 초기화
+│   │   └── modules/
+│   │       ├── utils.js          # 경로·JSON 로드·이스케이프·다국어
+│   │       ├── theme.js          # 저장된 테마·원형 전환
+│   │       ├── i18n.js           # 언어 메뉴·텍스트 전환
+│   │       ├── header.js         # 모바일 메뉴·스크롤 상태
+│   │       ├── hero.js           # 터미널 소개·자동 집계 통계
+│   │       ├── modal.js          # 공통 모달
+│   │       ├── about.js          # Lab 서버 카드
+│   │       ├── services.js       # Live 서비스 목록
+│   │       ├── portfolio.js      # Work·Versions·상세 문서
+│   │       ├── timeline.js       # Log·향후 계획
+│   │       ├── minecraft.js      # 접속 안내·복사·상태 조회
+│   │       └── admin.js          # 서비스 목록·요약·서버 필터
+│   ├── data/
+│   │   ├── about.json            # 개인 정보·서버 역할/스펙/앱
+│   │   ├── services.json         # 공개 서비스
+│   │   ├── portfolio.json        # 프로젝트·상세 블록·사이트 버전
+│   │   ├── timeline.json         # 기록·계획 (KO)
+│   │   ├── timeline_en.json      # 기록·계획 (EN)
+│   │   ├── minecraft.json        # 주소·접속 단계·규칙
+│   │   └── admin-services.json   # 관리 서비스·상태
+│   ├── lang/
+│   │   ├── ko.json               # 메인 UI 문구 (KO)
+│   │   └── en.json               # 메인 UI 문구 (EN)
 │   └── img/
-│
-├── oldGlass/                     # 아카이브: 글래스모피즘 버전
-└── oldMarkdown/                  # 아카이브: 마크다운 버전
+│       └── opt/                  # 표시 크기에 맞춘 WebP (페이지에서 사용)
+├── calc/                        # 킹받는 계산기 (공용 style.css + 사이트 헤더)
+│   ├── index.html
+│   ├── calc.css                  # 계산기 전용 스타일 (사이트 토큰 사용)
+│   └── calc.js
+├── myKNUplace/                   # 기존 서비스
+├── oldGlass/                     # 글래스모피즘 버전
+└── oldMarkdown/                  # 마크다운 버전
 ```
 
 각 JS 모듈은 **단일 책임 원칙**을 따르며, `app.js`가 이들을 조합합니다. 언어가 바뀌면 `i18n` 모듈의 옵저버가 모든 렌더러를 다시 호출하는 구조입니다.
@@ -123,26 +131,63 @@ mainpage/
 
 ## 콘텐츠 수정 가이드
 
-HTML이나 JavaScript를 건드리지 않고 **JSON 파일만 편집**하면 됩니다.
+메인 콘텐츠와 Minecraft 안내, Admin 목록은 **JSON 파일만 편집**하면 됩니다. 메인 UI 문구는 `assets/lang/ko.json`, `en.json`에서 함께 관리합니다.
 
-| 수정할 내용 | 편집 파일 |
+| 수정할 내용 | 편집 파일 / 필드 |
 |---|---|
-| 개인 정보 (닉네임, 직업) | `assets/data/about.json` → `personal` |
-| 서버 스펙 | `assets/data/about.json` → `servers` |
-| 포트폴리오 추가/수정 | `assets/data/portfolio.json` |
-| 서비스 카드 | `assets/data/services.json` → `items` |
-| 아카이브 | `assets/data/services.json` → `archives` |
-| 타임라인 | `assets/data/timeline.json` (EN: `timeline_en.json`) |
-| Admin 서비스 | `assets/data/admin-services.json` |
-| UI 텍스트 (버튼, 라벨) | `assets/lang/ko.json`, `en.json` |
+| Lab 서버 정보 | `assets/data/about.json` → `servers` |
+| Live 서비스 | `assets/data/services.json` → `items` |
+| Work 프로젝트 | `assets/data/portfolio.json` → `items` |
+| 사이트 버전 | `assets/data/portfolio.json` → `versions` |
+| Log 기록·계획 | `assets/data/timeline.json`, `timeline_en.json` |
+| Minecraft 접속·규칙 | `assets/data/minecraft.json` |
+| Admin 서비스 | `assets/data/admin-services.json` → `groups` |
+| 메인 UI 문구 | `assets/lang/ko.json`, `en.json` |
+
+### 공개 서비스: services.json
+
+`items`의 각 항목은 `id`, 표시 경로 `slug`, 실제 링크 `href`, 외부 링크 여부 `external`, 미리보기 `thumb`, `title`, 분류 `cat`, 설명 `desc`, `status`, `hidden`으로 구성합니다. 서버 연관 정보를 기록하려면 선택 필드 `server`에 `s1` 또는 `s2`를 넣을 수 있습니다. 실제 링크와 공개 여부는 `href`·`status`·`hidden`으로 결정됩니다.
+
+- `status: "online"`: 접속 가능한 서비스이며 공개 서비스 통계에 포함됩니다.
+- `status: "soon"`: 준비 중인 행으로 표시하고 알림 모달을 엽니다.
+- `hidden: true`: 공개 페이지의 목록과 터미널에서 제외됩니다.
+- 관리 도구는 공개 데이터에 넣지 않고 `admin-services.json`에서만 관리합니다.
+
+### 서버 정보: about.json
+
+`servers` 항목은 `id`, `label`, 하드웨어 이름 `hw`, `badge`, 역할 설명 `role`, `spec: [{"key":"OS","value":"Debian 13 (Trixie)"}]`, 공개 앱 목록 `apps`를 사용합니다. `role`·`badge`·`apps`의 텍스트는 한국어·영어 객체를 사용할 수 있습니다. 네트워크 방식은 `spec`에 Cloudflare Tunnel로 기재합니다.
+
+### 프로젝트와 버전: portfolio.json
+
+프로젝트는 `items`에, 사이트의 과거·현재 버전은 `versions`에 추가합니다. 버전 필드는 `tag`, `title`, `desc`, `thumb`, `href`입니다. 현재 버전은 `current: true`로 표시하고 `thumb`·`href`를 `null`로 둘 수 있습니다. 프로젝트 상세는 아래 예시의 블록 구조를 유지합니다.
+
+### 기록과 계획: timeline.json / timeline_en.json
+
+`timeline`은 `{"date":"2026.04.22","text":"기록 내용"}` 형식이며 화면에서는 날짜가 최신인 순서로 정렬합니다. `plans`는 `{"title":"계획 제목","desc":"설명"}` 형식으로 작성합니다. 기존 문자열 항목도 제목만 있는 계획으로 표시할 수 있습니다. 두 언어 파일을 함께 갱신하세요.
+
+### Minecraft: minecraft.json
+
+`address`와 `statusApi`는 접속 주소와 상태 조회 API 접두사입니다. `hero.title`의 `\n`은 제목 줄바꿈입니다. `meta`는 `key`·`value` 목록이며 `id: "version"`인 항목은 서버가 온라인일 때 API 버전으로 갱신됩니다. `steps`와 `rules`의 `kicker`, `title`, `desc`, `items`로 접속 단계와 규칙을 편집합니다. 규칙의 `tone`은 `ban` 또는 `ask`, `tag`는 표시할 배지 문구입니다. 하단 운영 문구는 `footer`에서 바꿉니다.
+
+### 관리 서비스: admin-services.json
+
+`groups`는 서버 `id` (`s1` / `s2`), `server`, `label`, `services`를 포함합니다. 각 서비스는 `name`, `desc`, `url`, `status`를 사용하며, `host`는 선택 사항입니다. 생략하면 URL의 호스트를 표시하고 상대 경로는 `www.hanggok.com`으로 표시합니다.
+
+- `online`: 새 탭에서 여는 버튼
+- `disabled`: 비활성화된 버튼 (현재 Nginx Proxy Manager·NPMplus)
+- `offline`: 준비 중 안내 모달
+
+Admin 요약과 서버별 온라인 수는 데이터에서 계산합니다. 메인 통계 역시 **서버 수, 숨기지 않은 online 서비스 수, 버전 수, 가장 이른 기록의 연월**을 자동 집계하므로 숫자를 따로 수정하지 않습니다.
 
 ### 다국어 값 형식
 
-텍스트 필드는 두 가지 형식을 지원합니다.
+문자열은 두 언어에서 공통으로 사용하고, 객체는 언어별로 표시합니다.
 
 ```json
-"title": "HANGGOK"                          // 문자열 → 모든 언어 공통
-"title": { "ko": "행국", "en": "HANGGOK" }  // 객체 → 언어별 값
+{
+  "title": "HANGGOK",
+  "desc": { "ko": "직접 운영하는 서비스", "en": "Self-hosted services" }
+}
 ```
 
 ### 포트폴리오 항목 추가 예시
@@ -194,10 +239,10 @@ npx serve .
 
 ## 인프라
 
-| 서버 | 하드웨어 | OS | 웹 서버 |
+| 서버 | 하드웨어 | OS | 외부 연결 |
 |---|---|---|---|
-| Server 1 | Raspberry Pi 3B | Debian 13 (Trixie) | Nginx Proxy Manager |
-| Server 2 | Oracle Cloud Ampere A1 | Ubuntu 24.04 LTS | NPMplus |
+| Server 1 | Raspberry Pi 3B | Debian 13 (Trixie) | Cloudflare Tunnel |
+| Server 2 | Oracle Cloud Ampere A1 | Ubuntu 24.04 LTS | Cloudflare Tunnel |
 
 두 서버 모두 **Docker 컨테이너** 기반으로 운영됩니다. 24시간 구동이 필요한 서비스는 Oracle Cloud에서, 가정 환경 전용 서비스는 라즈베리파이에서 실행합니다.
 
@@ -219,6 +264,12 @@ npx serve .
 ## 라이선스
 
 이 프로젝트는 [MIT License](LICENSE)를 따릅니다.
+
+## Credits
+
+테마 토글 **#219**, 언어 전환 **#267**, Live 작업 목록 **#276**, 주소 복사 버튼 **#008**은 [Lucian UX/UI Prompt](https://lucianlabs.dev/uxui-prompt/)를 바탕으로 사이트에 맞게 적용했습니다.
+
+MIT License (c) 2026 Seokwoooo. 해당 구현 파일에 원본 라이선스와 출처를 표기했습니다.
 
 ## 제작자
 

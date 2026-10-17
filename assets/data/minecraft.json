@@ -1,0 +1,30 @@
+{
+  "address": "mc.hanggok.net",
+  "statusApi": "https://api.mcsrvstat.us/3/",
+  "hero": { "title": "24시간 열려 있는\n야생 생존 서버" },
+  "meta": [
+    { "id": "version", "key": "VERSION", "value": "26.1.2 (Paper)" },
+    { "key": "UPTIME", "value": "24시간" },
+    { "key": "MODE", "value": "야생 생존" }
+  ],
+  "steps": {
+    "kicker": "01 — How to join",
+    "title": "세 단계면 들어올 수 있어요",
+    "items": [
+      { "title": "버전 맞추기", "desc": "Minecraft Java Edition을 26.1.2 버전으로 실행하세요." },
+      { "title": "서버 추가", "desc": "멀티플레이 → 서버 추가에서 위 주소 mc.hanggok.net을 붙여 넣으세요." },
+      { "title": "접속", "desc": "목록에 뜬 서버를 눌러 들어오면 끝이에요." }
+    ]
+  },
+  "rules": {
+    "kicker": "02 — Rules",
+    "title": "같이 오래 즐기려면",
+    "desc": "작은 서버라 모두가 조금씩 배려해야 해요. 아래 세 가지만 지켜 주세요.",
+    "items": [
+      { "tone": "ban", "tag": "금지", "title": "서버 공격 금지", "desc": "DDoS 공격 등 운영에 심각한 지장을 주는 행위는 엄격히 금지됩니다." },
+      { "tone": "ban", "tag": "금지", "title": "남의 것은 건드리지 않기", "desc": "타인의 건축물을 허가 없이 훼손하거나 아이템을 훔치지 마세요." },
+      { "tone": "ask", "tag": "부탁", "title": "서버 자원 아껴 쓰기", "desc": "리소스를 과도하게 쓰는 거대 레드스톤 회로나 자동 공장은 자제해 주세요." }
+    ]
+  },
+  "footer": "Oracle Cloud Ampere A1에서 운영"
+}

@@ -1,27 +1,61 @@
 {
   "nav": {
-    "about": "About",
-    "portfolio": "Portfolio",
-    "services": "Services",
-    "timeline": "Timeline",
-    "contact": "Contact",
-    "archive": "Archive"
+    "live": "Live",
+    "lab": "Lab",
+    "work": "Work",
+    "log": "Log",
+    "contact": "Contact"
   },
   "hero": {
-    "eyebrow": "대학생 · 자체 호스팅 서버 · 빌더",
-    "desc": "라즈베리파이와 클라우드 위에 직접 서비스를 짓는 대학생. 작은 실험들을 하나씩 띄워 두는 개인 서버이자 포트폴리오 공간입니다."
+    "hello": "안녕하세요, <span class=\"accent\">행국</span>입니다.",
+    "sub": "서버를 직접 굴리는 대학생이에요.",
+    "alt": "행국 프로필",
+    "terminal": "hanggok@pi: ~",
+    "prompt": "hanggok@pi:~$",
+    "whoami": "whoami",
+    "services": "ls services/"
   },
-  "section": {
-    "about": "소개",
-    "portfolio": "작업물",
-    "services": "운영 중인 서비스",
-    "timeline": "타임라인",
-    "plans": "향후 계획",
-    "archive": "이전 버전"
+  "stats": {
+    "servers": "운영 중인 서버",
+    "services": "공개 서비스",
+    "versions": "사이트 버전",
+    "first": "첫 서버 구축"
+  },
+  "live": {
+    "kicker": "01 — Live",
+    "title": "지금 돌아가고 있는 것들",
+    "desc": "누구나 들어와 볼 수 있는 공개 서비스예요. 이름 위에 마우스를 올리면 미리보기가 떠요."
+  },
+  "lab": {
+    "kicker": "02 — Lab",
+    "title": "집 서버와 클라우드,<br>역할을 나눠 씁니다",
+    "desc": "24시간 켜져 있어야 하는 서비스는 Oracle Cloud로, 집에서만 쓰는 서비스는 라즈베리파이에서 돌려요. 두 서버 모두 Docker로 서비스를 나누고, Cloudflare Tunnel로 외부와 연결해요.",
+    "public": "공개 서비스",
+    "connector": "Cloudflare Tunnel"
+  },
+  "work": {
+    "kicker": "03 — Work",
+    "title": "만들면서 배운 것",
+    "versions": "이 사이트의 버전들",
+    "read": "케이스 스터디 읽기 →",
+    "current": "v3"
+  },
+  "log": {
+    "kicker": "04 — Log",
+    "title": "지나온 길, 다음 할 일",
+    "next": "NEXT"
   },
   "contact": {
+    "kicker": "05 — Contact",
     "title": "같이 만들어요.",
-    "desc": "프로젝트 제안이나 문의는 아래 채널로 편하게 연락 주세요."
+    "desc": "프로젝트 제안이나 문의는 인스타그램 DM으로 편하게 보내 주세요.",
+    "cta": "Instagram DM →",
+    "github": "GitHub",
+    "youtube": "YouTube"
+  },
+  "footer": {
+    "copyright": "© 2026 HANGGOK",
+    "source": "Source on GitHub ↗"
   },
   "modal": {
     "notice": "알림",
@@ -35,6 +69,7 @@
     "loading": "로딩 중..."
   },
   "global": {
-    "loading": "로딩 중..."
+    "loading": "로딩 중...",
+    "load_error": "콘텐츠를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요."
   }
 }

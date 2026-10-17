@@ -1,17 +1,46 @@
 {
   "timeline": [
-    { "date": "2025.10.14", "text": "Built Raspberry Pi server and created the initial website" },
-    { "date": "2025.11.12", "text": "Deployed the glassmorphism design" },
-    { "date": "2025.11.26", "text": "Enhanced design, fixed mobile UI alignment, improved SEO / accessibility" },
-    { "date": "2026.03.22", "text": "Added source code link and server icons, optimized usability" },
-    { "date": "2026.03.24", "text": "Implemented the Admin console and optimized usability" },
-    { "date": "2026.04.21", "text": "Updated Oracle Cloud content and fixed several bugs" },
-    { "date": "2026.04.22", "text": "Added Minecraft server content" }
+    {
+      "date": "2025.10.14",
+      "text": "Built a Raspberry Pi server and launched the first site"
+    },
+    {
+      "date": "2025.11.12",
+      "text": "Deployed the glassmorphism design"
+    },
+    {
+      "date": "2025.11.26",
+      "text": "Improved mobile layout, SEO and accessibility"
+    },
+    {
+      "date": "2026.03.22",
+      "text": "Added source code and server icons, improved usability"
+    },
+    {
+      "date": "2026.03.24",
+      "text": "Implemented the Admin console"
+    },
+    {
+      "date": "2026.04.21",
+      "text": "Updated Oracle Cloud content and fixed bugs"
+    },
+    {
+      "date": "2026.04.22",
+      "text": "Added the Minecraft server page"
+    }
   ],
   "plans": [
-    "The current low-performance Raspberry Pi server struggles to host diverse services",
-    "Renting a high-performance arm64 server from Oracle Cloud to migrate some services",
-    "Running 24/7 services in addition to essential home-environment services",
-    "Plan to build an x64-based server for NAS and some AI features (available only at certain hours due to 24/7 constraints)"
+    {
+      "title": "Build an x64 server",
+      "desc": "A stronger machine for what the Raspberry Pi can no longer handle."
+    },
+    {
+      "title": "NAS service",
+      "desc": "Personal storage on the new x64 server."
+    },
+    {
+      "title": "Some AI features",
+      "desc": "Open only at set hours, since it cannot run 24/7."
+    }
   ]
 }
