@@ -16,7 +16,12 @@ export function initHeader() {
     toggle.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
   };
   setOpen(false);
-  toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+  toggle.addEventListener('click', event => {
+    const open = toggle.getAttribute('aria-expanded') !== 'true';
+    setOpen(open);
+    // 메뉴 버튼은 Tab 순서상 메뉴 링크 뒤에 있으므로, 키보드로 열었을 때는 첫 링크로 포커스를 옮긴다.
+    if (open && event.detail === 0) nav.querySelector('a')?.focus({ preventScroll: true });
+  });
   nav.addEventListener('click', event => {
     if (event.target.closest('a')) setOpen(false);
   });
