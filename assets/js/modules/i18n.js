@@ -109,7 +109,7 @@ export class I18n {
     const current = document.getElementById('lang-current');
     if (current) current.textContent = this.lang.toUpperCase();
     const toggle = document.getElementById('lang-toggle');
-    toggle?.setAttribute('aria-label', this.lang === 'ko' ? '언어 선택: 한국어' : 'Language: English');
+    toggle?.setAttribute('aria-label', this.lang === 'ko' ? 'KO · 언어 선택' : 'EN · Language');
     document.querySelectorAll('#lang-menu [data-lang]').forEach(option => {
       option.setAttribute('aria-selected', String(option.dataset.lang === this.lang));
     });
